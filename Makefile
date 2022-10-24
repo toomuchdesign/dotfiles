@@ -14,7 +14,7 @@ sudo:
 core: brew zsh git npm
 
 brew:
-	is-executable brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
+	brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
 
 zsh: sudo
 	brew install zsh
@@ -25,9 +25,10 @@ zsh: sudo
 # Create zsh config file if necessary
 	touch ~/.zshrc
 	rm -rf ~/.oh-my-zsh
-	is-executable brew || curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
+	brew || curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
 
-git: brew install git git-extras
+git:
+	brew install git git-extras
 
 # Consider switching to fnm
 npm:
@@ -37,7 +38,7 @@ npm:
 #
 # PACKAGES
 #
-packages: brew-packages cask-apps node-packages
+packages: brew-packages cask-apps
 
 brew-packages:
 	brew bundle --file=$(DOTFILES_DIR)/install/Brewfile --no-upgrade
@@ -52,7 +53,7 @@ node-packages: npm
 # LINK
 #
 stow:
-	is-executable stow || brew install stow
+	stow || brew install stow
 
 link: sudo
 	for FILE in $$(\ls -A runcom); do if [ -f $(HOME)/$$FILE -a ! -h $(HOME)/$$FILE ]; then \

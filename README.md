@@ -22,7 +22,7 @@ xcode-select --install
 
 The Xcode Command Line Tools includes `git` and `make` (not available on stock macOS).
 
-Then, install this repo with `git ` into the desired location:
+Then, install this repo with `git` into the desired location:
 
 ```
 git clone https://github.com/toomuchdesign/dotfiles.git ~/.dotfiles
