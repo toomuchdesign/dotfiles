@@ -16,7 +16,7 @@ core: brew zsh git npm
 brew:
 	is-executable brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
 
-zsh: sudo brew
+zsh: sudo
 	brew install zsh
 # List Homebrew zsh as a possible shell
 	echo "\n/opt/homebrew/bin/zsh" | sudo tee -a /etc/shells
@@ -39,10 +39,10 @@ npm:
 #
 packages: brew-packages cask-apps node-packages
 
-brew-packages: brew
+brew-packages:
 	brew bundle --file=$(DOTFILES_DIR)/install/Brewfile --no-upgrade
 
-cask-apps: brew
+cask-apps:
 	brew bundle --file=$(DOTFILES_DIR)/install/Caskfile --no-upgrade
 
 node-packages: npm
@@ -61,7 +61,7 @@ link: sudo
 	stow -t $(HOME) runcom
 	stow -t $(XDG_CONFIG_HOME) config
 
-unlink: stow
+unlink:
 	stow --delete -t $(HOME) runcom
 	stow --delete -t $(XDG_CONFIG_HOME) config
 	for FILE in $$(\ls -A runcom); do if [ -f $(HOME)/$$FILE.bak ]; then \
