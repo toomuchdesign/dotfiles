@@ -14,19 +14,22 @@ sudo:
 core: brew zsh git npm
 
 brew:
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	is-executable brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
 
-zsh: brew
+zsh: sudo brew
 	brew install zsh
+# List Homebrew zsh as a possible shell
+	echo "\n/opt/homebrew/bin/zsh" | sudo tee -a /etc/shells
 # Make zsh default shell
-	chsh -s /usr/local/bin/zsh
+	chsh -s /opt/homebrew/bin/zsh
 # Create zsh config file if necessary
 	touch ~/.zshrc
-	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	rm -rf ~/.oh-my-zsh
+	is-executable brew || curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
 
 git: brew install git git-extras
 
-# Consider swithing to fnm
+# Consider switching to fnm
 npm:
 	if ! [ -d $(NVM_DIR)/.git ]; then git clone https://github.com/creationix/nvm.git $(NVM_DIR); fi
 	. $(NVM_DIR)/nvm.sh; nvm install --lts
