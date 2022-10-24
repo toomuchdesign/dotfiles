@@ -2,7 +2,7 @@ DOTFILES_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 NVM_DIR := $(HOME)/.nvm
 export XDG_CONFIG_HOME = $(HOME)/.config
 
-install: sudo core packages link
+install: sudo core packages link quartz-filters
 
 sudo:
 	sudo -v
@@ -54,20 +54,21 @@ node-packages: npm
 stow:
 	is-executable stow || brew install stow
 
-link: sudo stow
+link: sudo
 	for FILE in $$(\ls -A runcom); do if [ -f $(HOME)/$$FILE -a ! -h $(HOME)/$$FILE ]; then \
 		mv -v $(HOME)/$$FILE{,.bak}; fi; done
 	mkdir -p $(XDG_CONFIG_HOME)
 	stow -t $(HOME) runcom
 	stow -t $(XDG_CONFIG_HOME) config
-	stow -t / root
 
 unlink: stow
-	stow --delete -t / root
 	stow --delete -t $(HOME) runcom
 	stow --delete -t $(XDG_CONFIG_HOME) config
 	for FILE in $$(\ls -A runcom); do if [ -f $(HOME)/$$FILE.bak ]; then \
 		mv -v $(HOME)/$$FILE.bak $(HOME)/$${FILE%%.bak}; fi; done
+
+quartz-filters:
+	cp -a ./install/pdf-quartz-filters ~/Library/Filters
 
 # Stow test commands:
 # stow --adopt -nvSt ~ runcom
