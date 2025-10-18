@@ -1,0 +1,2 @@
+brew "libdvdcss"
+brew "pandoc"

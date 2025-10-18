@@ -1,3 +1,5 @@
 cask "calibre"
 cask "handbrake"
 cask "libreoffice"
+cask "keepassx"
+cask "android-file-transfer"

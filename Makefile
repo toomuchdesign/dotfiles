@@ -4,7 +4,7 @@ export XDG_CONFIG_HOME = $(HOME)/.config
 
 install: install-minimal install-extra
 install-minimal: sudo core packages link quartz-filters
-install-extra: cask-apps-extra
+install-extra: brew-packages-extra cask-apps-extra
 
 sudo:
 	sudo -v
@@ -44,6 +44,9 @@ packages: brew-packages cask-apps
 
 brew-packages:
 	brew bundle --file=$(DOTFILES_DIR)/install/Brewfile --no-upgrade
+
+brew-packages-extra:
+	brew bundle --file=$(DOTFILES_DIR)/install/Brewfile.extra --no-upgrade
 
 cask-apps:
 	brew bundle --file=$(DOTFILES_DIR)/install/Caskfile --no-upgrade
