@@ -8,7 +8,7 @@ Initially forked from https://github.com/webpro/dotfiles. It targets only macOS 
 
 - [Homebrew](https://brew.sh) (packages: [Brewfile](./install/Brewfile))
 - [homebrew-cask](https://caskroom.github.io) (packages: [Caskfile](./install/Caskfile))
-- [Node.js + npm LTS](https://nodejs.org/en/download/) (packages: [npmfile](./install/npmfile))
+- [Node.js + npm LTS](https://nodejs.org/en/download/)
 - Latest Git, ZSH, GNU coreutils, curl
 
 ## Install

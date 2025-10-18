@@ -1,5 +1,4 @@
 DOTFILES_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-NVM_DIR := $(HOME)/.nvm
 export XDG_CONFIG_HOME = $(HOME)/.config
 
 install: install-minimal install-extra
@@ -13,10 +12,13 @@ sudo:
 #
 # CORE
 #
-core: brew zsh git npm
+core: brew volta zsh git node
 
 brew:
 	brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
+
+volta:
+	curl https://get.volta.sh | bash
 
 zsh: sudo
 	brew install zsh
@@ -32,10 +34,8 @@ zsh: sudo
 git:
 	brew install git git-extras
 
-# Consider switching to fnm
-npm:
-	if ! [ -d $(NVM_DIR)/.git ]; then git clone https://github.com/creationix/nvm.git $(NVM_DIR); fi
-	. $(NVM_DIR)/nvm.sh; nvm install --lts
+node:
+	volta install node
 
 #
 # PACKAGES
@@ -53,9 +53,6 @@ cask-apps:
 
 cask-apps-extra:
 	brew bundle --file=$(DOTFILES_DIR)/install/Caskfile.extra --no-upgrade
-
-node-packages: npm
-	. $(NVM_DIR)/nvm.sh; npm install -g $(shell cat install/npmfile)
 
 #
 # LINK
