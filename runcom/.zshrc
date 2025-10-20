@@ -105,3 +105,6 @@ source $ZSH/oh-my-zsh.sh
 
 # thefuck setup
 eval $(thefuck --alias)
+
+# fnm setup
+eval "$(fnm env)"

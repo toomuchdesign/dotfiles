@@ -12,7 +12,7 @@ sudo:
 #
 # CORE
 #
-core: brew zsh volta git node
+core: brew zsh git fnm node
 
 brew:
 	brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
@@ -28,14 +28,14 @@ zsh: sudo
 	rm -rf ~/.oh-my-zsh
 	brew || curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
 
-volta:
-	curl https://get.volta.sh | bash
-
 git:
 	brew install git git-extras
 
+fnm:
+	brew install fnm
+
 node:
-	@volta install node || echo "⚠️  Failed to install Node via Volta. Please close/open you terminal and try again."
+	fnm install --lts
 
 #
 # PACKAGES
