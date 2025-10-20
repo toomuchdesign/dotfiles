@@ -106,5 +106,8 @@ source $ZSH/oh-my-zsh.sh
 # thefuck setup
 eval $(thefuck --alias)
 
-# fnm setup
-eval "$(fnm env)"
+# fnm
+FNM_PATH="/opt/homebrew/opt/fnm/bin"
+if [ -d "$FNM_PATH" ]; then
+  eval "`fnm env`"
+fi

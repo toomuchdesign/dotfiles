@@ -33,6 +33,8 @@ git:
 
 fnm:
 	brew install fnm
+# Create fnm setup to source node versions on directory change
+	fnm env --use-on-cd > ./runcom/.oh-my-zsh/custom/local.fnm.untracked.zsh
 
 node:
 	fnm install --lts

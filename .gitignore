@@ -3,4 +3,4 @@
 .idea
 .vscode
 *.lock.json
-runcom/.oh-my-zsh/custom/local.untracked.zsh
+runcom/.oh-my-zsh/custom/*.untracked.zsh
