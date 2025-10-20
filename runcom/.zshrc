@@ -106,8 +106,10 @@ source $ZSH/oh-my-zsh.sh
 # thefuck setup
 eval $(thefuck --alias)
 
-# fnm
+# fnm setup
 FNM_PATH="/opt/homebrew/opt/fnm/bin"
 if [ -d "$FNM_PATH" ]; then
   eval "`fnm env`"
 fi
+
+eval "$(fnm env --use-on-cd --shell zsh)"
