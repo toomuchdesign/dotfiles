@@ -27,6 +27,10 @@ zsh: sudo
 	touch ~/.zshrc
 	rm -rf ~/.oh-my-zsh
 	brew || curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
+# Install zsh-autosuggestions plugin
+	[ -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ] || \
+		git clone https://github.com/zsh-users/zsh-autosuggestions \
+			~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
 git:
 	brew install git git-extras
