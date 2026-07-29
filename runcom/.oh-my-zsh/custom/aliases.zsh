@@ -38,9 +38,20 @@ alias npmr='npm run'
 alias npmlinked='( ls -l node_modules ; ls -l node_modules/@* ) | grep ^l'
 
 # Execute local node modules
-alias npmexec='PATH=$(npm bin):$PATH'
 alias npmlsg='npm list -g --depth 0'
 alias nui='npx npm-check --update'
+
+# PNPM shortcuts
+alias pn='pnpm'
+alias pns='pnpm start'
+alias pnd='pnpm dev'
+alias pnr='pnpm run'
+alias pni='pnpm install'
+
+# Execute local node modules
+alias pnx='pnpm exec'
+alias pnlsg='pnpm list -g --depth 0'
+alias pui='pnpm update --interactive --latest'
 
 # Yarn shortcuts
 alias yui='yarn upgrade-interactive'
