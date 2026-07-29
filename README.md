@@ -81,6 +81,32 @@ Configure search engines (`Manage search engines`):
 - Connect `Code settings` extension to GitHub
 - Run `Sync: Download Settings`
 
+## Local overrides
+
+Machine-specific settings (work email, private hosts, secrets, per-machine tweaks) must **never** be committed. Two untracked files exist for that purpose. Both are [git-ignored](./.gitignore) and created empty by `make link`, so they are safe to edit freely:
+
+| File                                           | Overrides                         |
+| ---------------------------------------------- | --------------------------------- |
+| `config/git/config.untracked`                  | [git config](./config/git/config) |
+| `runcom/.oh-my-zsh/custom/local.untracked.zsh` | zsh setup                         |
+
+Both are read **after** their tracked counterpart, so any value they define wins. For git this is guaranteed by the position of the `[include]`; for zsh it follows from oh-my-zsh sourcing `custom/*.zsh` alphabetically (`local.*` sorts after `alias*`/`functions*`).
+
+The git one is pulled in by an `[include]` directive at the end of [config/git/config](./config/git/config) and uses standard git config syntax:
+
+```ini
+[user]
+	email = me@work-company.com
+```
+
+Verify an override is being picked up with:
+
+```
+git config --show-origin --get user.email
+```
+
+Note that `git config --global <key>` won't show included values unless `--includes` is passed — that flag is only off for explicitly scoped queries, not for git's own reads.
+
 ## Credits
 
 Many thanks to the [dotfiles community](https://dotfiles.github.io).

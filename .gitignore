@@ -4,3 +4,4 @@
 .vscode
 *.lock.json
 runcom/.oh-my-zsh/custom/*.untracked.zsh
+config/git/config.untracked
