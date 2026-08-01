@@ -5,6 +5,13 @@
 # interactive shells (IDE/agent subshells) pick up /opt/homebrew/bin.
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# User-local binaries. Most curl|sh installers and Python/Rust user installs
+# (pipx, uv, cargo-binstall…) drop executables in ~/.local/bin. Linux distros
+# add it to PATH by default, macOS does not. `typeset -U` keeps entries unique
+# so re-sourcing this file doesn't grow PATH.
+typeset -U path PATH
+path=("$HOME/.local/bin" $path)
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
