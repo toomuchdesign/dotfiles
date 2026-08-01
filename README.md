@@ -39,6 +39,8 @@ make install-minimal
 
 `make install-minimal` installs a few less applications.
 
+Most symlinked apps read their config without ever touching the file, but a few _write back_ to it — [cmux](https://github.com/manaflow-ai/cmux) rewrites [config/cmux/cmux.json](./config/cmux/cmux.json) (linked to `~/.config/cmux/cmux.json`) whenever you change a shortcut or layout option in its UI. As with iTerm2, that just shows up as a diff in this repo — commit it like any other change. cmux's session state lives separately under `~/Library/Application Support/cmux/` and is intentionally not tracked.
+
 ## App configurations
 
 Applications that can't be configured through a dotfile keep their exported settings in `install/<app-name>/`:
