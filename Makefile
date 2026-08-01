@@ -2,7 +2,7 @@ DOTFILES_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 export XDG_CONFIG_HOME = $(HOME)/.config
 
 install: install-minimal install-extra
-install-minimal: sudo core packages link quartz-filters
+install-minimal: sudo core packages link quartz-filters plannotator
 install-extra: brew-packages-extra cask-apps-extra
 
 sudo:
@@ -80,6 +80,20 @@ unlink:
 
 quartz-filters:
 	cp -a ./install/pdf-quartz-filters ~/Library/Filters
+
+#
+# PLANNOTATOR
+#
+# Not on Homebrew, so it can't live in a Brewfile/Caskfile — installed via the
+# official script (same curl-pipe-bash pattern as `brew`/oh-my-zsh above). The
+# standard install also checks out its Claude Code skills into ~/.claude/skills
+# and wires the plan hook, so no separate skills step is needed. Binary lands in
+# ~/.local/bin (already on PATH via runcom/.zshrc). --non-interactive skips the
+# extras/model-invocable prompts for a reproducible install; re-run
+# `plannotator --reconfigure` by hand to change those. Runs after `packages` so
+# the claude-code cask exists for the installer's agent integration.
+plannotator:
+	curl -fsSL https://plannotator.ai/install.sh | bash -s -- --non-interactive
 
 # Stow test commands:
 # stow --adopt -nvSt ~ runcom

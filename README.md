@@ -9,6 +9,7 @@ Initially forked from https://github.com/webpro/dotfiles. It targets only macOS 
 - [Homebrew](https://brew.sh) (packages: [Brewfile](./install/Brewfile))
 - [homebrew-cask](https://caskroom.github.io) (packages: [Caskfile](./install/Caskfile))
 - [Node.js + npm LTS](https://nodejs.org/en/download/)
+- [Plannotator](https://plannotator.ai) (not on Homebrew — installed via its official script by `make`; see [below](#plannotator))
 - Latest Git, ZSH, GNU coreutils, curl
 
 ## Install
@@ -52,6 +53,16 @@ Applications that can't be configured through a dotfile keep their exported sett
 | [PDF quartz filters](./install/pdf-quartz-filters/) | `*.qfilter` (Preview/Print → `Quartz Filter`) | `make quartz-filters` copies them to `~/Library/Filters`                                |
 
 To add another app: create `install/<app-name>/`, commit its exported configuration there, then either wire the import into the [Makefile](./Makefile) if it can be applied non-interactively, or document the manual steps under [Post-install](#post-install).
+
+## Plannotator
+
+[Plannotator](https://plannotator.ai) isn't on Homebrew, so the [`plannotator` Makefile target](./Makefile) installs it from its official script instead of a Brewfile/Caskfile. The `--non-interactive` run:
+
+- drops the `plannotator` binary in `~/.local/bin` (already on `PATH` via [`runcom/.zshrc`](./runcom/.zshrc));
+- checks out its Claude Code skills (`plannotator-review`, `plannotator-annotate`, `plannotator-last`) into `~/.claude/skills/` and wires the plan hook — **no separate skills step is needed**;
+- integrates with coding agents it detects, which is why it runs after `packages` (so the `claude-code` cask already exists).
+
+Both the binary and the skills are generated artifacts (like a `git` checkout), so nothing here is tracked in this repo. To change the extras / model-invocable choices skipped by `--non-interactive`, run `plannotator --reconfigure` by hand.
 
 ## Post-install
 
