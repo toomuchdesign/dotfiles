@@ -10,6 +10,7 @@ ignorecase = false
 
 [merge]
 conflictstyle = diff3
+	tool = vscode
 
 [push]
 autoSetupRemote = true
@@ -49,3 +50,11 @@ ff = only
 # Missing files are silently ignored by git.
 [include]
 	path = config.untracked
+[diff]
+	tool = vscode
+[difftool "vscode"]
+	cmd = code --wait --diff \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
+[mergetool "vscode"]
+	cmd = code --wait \"$MERGED\"
