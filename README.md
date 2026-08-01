@@ -39,13 +39,29 @@ make install-minimal
 
 `make install-minimal` installs a few less applications.
 
+## App configurations
+
+Applications that can't be configured through a dotfile keep their exported settings in `install/<app-name>/`:
+
+| App                                                 | Assets                                        | How it's applied                                                                        |
+| --------------------------------------------------- | --------------------------------------------- | --------------------------------------------------------------------------------------- |
+| [iTerm2](./install/iterm2/)                         | `com.googlecode.iterm2.plist`                 | iTerm2 reads and writes the folder itself, once pointed at it ([post-install](#iterm2)) |
+| [Raycast](./install/raycast/)                       | `raycast-configuration.rayconfig`, `scripts/` | Manual import ([post-install](#raycast))                                                |
+| [PDF quartz filters](./install/pdf-quartz-filters/) | `*.qfilter` (Preview/Print → `Quartz Filter`) | `make quartz-filters` copies them to `~/Library/Filters`                                |
+
+To add another app: create `install/<app-name>/`, commit its exported configuration there, then either wire the import into the [Makefile](./Makefile) if it can be applied non-interactively, or document the manual steps under [Post-install](#post-install).
+
 ## Post-install
 
-### iTerm
+### iTerm2
 
-Set zsh as default shell:
+Point iTerm2 at [install/iterm2/](./install/iterm2/) so it loads its preferences from this repo:
 
-`Preferences` > `Profiles` > `General` > `Commands` > Set `Custom shell` + `/bin/zsh`
+`Settings` > `General` > `Preferences` > check `Load preferences from a custom folder or URL` > select `~/.dotfiles/install/iterm2` > set `Save changes` to `Automatically`
+
+Restart iTerm2. Everything else (zsh as custom shell, colors, keybindings) comes from the plist, so there is nothing left to set by hand.
+
+Because iTerm2 also _writes_ to that folder, any preference changed in the UI shows up as a diff in this repo — commit it like any other change.
 
 ### DropBox
 
@@ -53,7 +69,9 @@ Login and sync DropBox.
 
 ### Raycast
 
-Import configuration from `install/raycast/raycast-configuration.rayconfig`.
+Import configuration from [install/raycast/raycast-configuration.rayconfig](./install/raycast/raycast-configuration.rayconfig).
+
+Then register the script commands: `Settings` > `Extensions` > `Script Commands` > `Add Directories` > select `~/.dotfiles/install/raycast/scripts`.
 
 ### Chrome
 
