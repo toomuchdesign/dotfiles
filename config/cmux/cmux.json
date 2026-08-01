@@ -1,0 +1,87 @@
+{
+  "$schema" : "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json",
+  "schemaVersion" : 1,
+  "shortcuts" : {
+    "bindings" : {
+      "closeTab" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "w",
+          "keyCode" : 13,
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "newSurface" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "t",
+          "keyCode" : 17,
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "newTab" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "n",
+          "keyCode" : 45,
+          "option" : false,
+          "shift" : true
+        }
+      },
+      "newWindow" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "nextSidebarTab" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "]",
+          "keyCode" : 30,
+          "option" : true,
+          "shift" : false
+        }
+      },
+      "nextSurface" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "",
+          "keyCode" : 124,
+          "option" : true,
+          "shift" : false
+        }
+      },
+      "prevSidebarTab" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "[",
+          "keyCode" : 33,
+          "option" : true,
+          "shift" : false
+        }
+      },
+      "prevSurface" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "",
+          "keyCode" : 123,
+          "option" : true,
+          "shift" : false
+        }
+      }
+    }
+  }
+}
