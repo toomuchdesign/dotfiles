@@ -2,7 +2,7 @@ DOTFILES_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 export XDG_CONFIG_HOME = $(HOME)/.config
 
 install: install-minimal install-extra
-install-minimal: sudo core packages link quartz-filters plannotator
+install-minimal: sudo core packages docker-compose link quartz-filters plannotator
 install-extra: brew-packages-extra cask-apps-extra
 
 sudo:
@@ -57,6 +57,19 @@ cask-apps:
 
 cask-apps-extra:
 	brew bundle --file=$(DOTFILES_DIR)/install/Caskfile.extra --no-upgrade
+
+#
+# DOCKER COMPOSE
+#
+# Homebrew installs docker-compose as a standalone binary but doesn't register it
+# as a Docker CLI plugin, so `docker compose` (with a space) fails on a fresh
+# install — only the hyphenated `docker-compose` works. Symlink the binary into
+# Docker's user plugin dir per the official docs
+# (https://docs.docker.com/compose/install/linux/ — ~/.docker/cli-plugins/docker-compose).
+# Runs after `packages` so the Homebrew binary exists.
+docker-compose:
+	mkdir -p $(HOME)/.docker/cli-plugins
+	ln -sfn /opt/homebrew/opt/docker-compose/bin/docker-compose $(HOME)/.docker/cli-plugins/docker-compose
 
 #
 # LINK
