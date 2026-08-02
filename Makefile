@@ -92,7 +92,8 @@ unlink:
 		mv -v $(HOME)/$$FILE.bak $(HOME)/$${FILE%%.bak}; fi; done
 
 quartz-filters:
-	cp -a ./install/pdf-quartz-filters ~/Library/Filters
+	mkdir -p ~/Library/Filters
+	cp -a ./install/pdf-quartz-filters/. ~/Library/Filters/
 
 #
 # PLANNOTATOR
