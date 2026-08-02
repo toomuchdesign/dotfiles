@@ -55,57 +55,57 @@ to dump every shortcut; the tables below cover the main ones.
 
 Installed via the [Brewfile](./install/Brewfile) / oh-my-zsh plugins and activated on shell start:
 
-| Tool                     | Invoke                       | What it does                                                        |
-| ------------------------ | ---------------------------- | ------------------------------------------------------------------ |
-| `fzf`                    | `Ctrl-R` / `Ctrl-T` / `Alt-C` | Fuzzy search history / insert a file path / `cd` into a subdir     |
-| `zoxide`                 | `z <frag>` / `zi <frag>`     | Jump to a frecent dir / pick one interactively (fzf)               |
-| `fd`                     | `fd <name>`                  | Find files **by name** (fast, respects `.gitignore`)               |
-| `rg` (ripgrep)           | `rg <pattern>`               | Search file **contents** (fast, respects `.gitignore`)             |
-| `bat`                    | `bat <file>`                 | `cat` with syntax highlighting, line numbers and a git gutter      |
-| `delta`                  | any `git diff` / `git show`  | Syntax-highlighted, line-numbered diffs (`n`/`N` to move by file)  |
-| `jq` / `yq`              | `… \| jq '.'`                | Query JSON (`jq`)                                                  |
-| `thefuck`                | `fuck`                       | Correct and rerun the previous command                             |
-| `fnm`                    | automatic on `cd`            | Switch Node version per `.nvmrc` / `.node-version`                 |
-| `zsh-autosuggestions`    | `→` / `End` to accept        | History-based inline suggestions as you type                       |
-| `zsh-syntax-highlighting`| automatic                    | Colours commands green/red for validity as you type                |
+| Tool                      | Invoke                        | What it does                                                      |
+| ------------------------- | ----------------------------- | ----------------------------------------------------------------- |
+| `fzf`                     | `Ctrl-R` / `Ctrl-T` / `Alt-C` | Fuzzy search history / insert a file path / `cd` into a subdir    |
+| `zoxide`                  | `z <frag>` / `zi <frag>`      | Jump to a frecent dir / pick one interactively (fzf)              |
+| `fd`                      | `fd <name>`                   | Find files **by name** (fast, respects `.gitignore`)              |
+| `rg` (ripgrep)            | `rg <pattern>`                | Search file **contents** (fast, respects `.gitignore`)            |
+| `bat`                     | `bat <file>`                  | `cat` with syntax highlighting, line numbers and a git gutter     |
+| `delta`                   | any `git diff` / `git show`   | Syntax-highlighted, line-numbered diffs (`n`/`N` to move by file) |
+| `jq` / `yq`               | `… \| jq '.'`                 | Query JSON (`jq`)                                                 |
+| `thefuck`                 | `fuck`                        | Correct and rerun the previous command                            |
+| `fnm`                     | automatic on `cd`             | Switch Node version per `.nvmrc` / `.node-version`                |
+| `zsh-autosuggestions`     | `→` / `End` to accept         | History-based inline suggestions as you type                      |
+| `zsh-syntax-highlighting` | automatic                     | Colours commands green/red for validity as you type               |
 
 ### Functions
 
 Defined in [`functions.zsh`](./runcom/.oh-my-zsh/custom/functions.zsh):
 
-| Function                | Usage                    | Description                                                              |
-| ----------------------- | ------------------------ | ----------------------------------------------------------------------- |
-| `mk <dir>`              | `mk src/new-feature`     | `mkdir -p` the path and `cd` into it                                     |
-| `ff <name-fragment>`    | `ff auth.controller`     | Find files by name below the cwd (uses `fd`, falls back to `find`)      |
-| `srv [port]`            | `srv 3000`               | Serve the current dir over HTTP (default `:8000`) and open the browser  |
-| `killport <port>`       | `killport 3000`          | Kill whatever process is listening on a TCP port                        |
-| `git-cleanup`           | `git-cleanup`            | Delete branches merged into `origin/master`, locally and (opt-in) on the remote |
+| Function             | Usage                | Description                                                                     |
+| -------------------- | -------------------- | ------------------------------------------------------------------------------- |
+| `mk <dir>`           | `mk src/new-feature` | `mkdir -p` the path and `cd` into it                                            |
+| `ff <name-fragment>` | `ff auth.controller` | Find files by name below the cwd (uses `fd`, falls back to `find`)              |
+| `srv [port]`         | `srv 3000`           | Serve the current dir over HTTP (default `:8000`) and open the browser          |
+| `killport <port>`    | `killport 3000`      | Kill whatever process is listening on a TCP port                                |
+| `git-cleanup`        | `git-cleanup`        | Delete branches merged into `origin/master`, locally and (opt-in) on the remote |
 
 ### Aliases
 
 Defined in [`aliases.zsh`](./runcom/.oh-my-zsh/custom/aliases.zsh) and, for macOS-specific ones, [`alias.macos.zsh`](./runcom/.oh-my-zsh/custom/alias.macos.zsh):
 
-| Group          | Highlights                                                                                             |
-| -------------- | ------------------------------------------------------------------------------------------------------ |
-| Navigation     | `..` `...` (up 1–2 levels), `-` (previous dir)                                                          |
-| Git            | `gs` status · `gdd` diff cached · `gca`/`gcaa` amend · `gp`/`gpu` pull/push · `gst`/`gsta` stash · `gls`/`gll` pretty log |
-| npm            | `npms` start · `npmd` run dev · `npmr` run · `nui` upgrade deps                                        |
-| pnpm           | `pn` · `pns` start · `pnd` dev · `pnr` run · `pni` install · `pnx` exec · `pui` update interactive     |
-| yarn           | `yui` upgrade-interactive                                                                               |
-| Docker         | `d` · `dps` ps · `dils` images · `dvls` volumes · `dcu`/`dcs`/`dcr` compose up/stop/restart            |
-| Network        | `ip` public IP · `ipl` local IP · `pubkey` copy SSH public key                                         |
-| macOS          | `showdotfiles`/`hidedotfiles` · `desktopshow`/`desktophide` · `emptytrash`                             |
+| Group      | Highlights                                                                                                                |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Navigation | `..` `...` (up 1–2 levels), `-` (previous dir)                                                                            |
+| Git        | `gs` status · `gdd` diff cached · `gca`/`gcaa` amend · `gp`/`gpu` pull/push · `gst`/`gsta` stash · `gls`/`gll` pretty log |
+| npm        | `npms` start · `npmd` run dev · `npmr` run · `nui` upgrade deps                                                           |
+| pnpm       | `pn` · `pns` start · `pnd` dev · `pnr` run · `pni` install · `pnx` exec · `pui` update interactive                        |
+| yarn       | `yui` upgrade-interactive                                                                                                 |
+| Docker     | `d` · `dps` ps · `dils` images · `dvls` volumes · `dcu`/`dcs`/`dcr` compose up/stop/restart                               |
+| Network    | `ip` public IP · `ipl` local IP · `pubkey` copy SSH public key                                                            |
+| macOS      | `showdotfiles`/`hidedotfiles` · `desktopshow`/`desktophide` · `emptytrash`                                                |
 
 ### Git aliases
 
 Defined in [`config/git/config`](./config/git/config) — invoke as `git <alias>`:
 
-| Alias            | Description                                                     |
-| ---------------- | --------------------------------------------------------------- |
-| `git lg`         | Graph log, one line per commit, relative dates                  |
-| `git stbr`       | Local branches sorted by last commit date                       |
-| `git pending`    | Local branches not yet merged into `origin/master`              |
-| `git pruneasorigin` | Delete local branches whose remote tracking branch is gone   |
+| Alias               | Description                                                |
+| ------------------- | ---------------------------------------------------------- |
+| `git lg`            | Graph log, one line per commit, relative dates             |
+| `git stbr`          | Local branches sorted by last commit date                  |
+| `git pending`       | Local branches not yet merged into `origin/master`         |
+| `git pruneasorigin` | Delete local branches whose remote tracking branch is gone |
 
 ## App configurations
 
@@ -219,7 +219,7 @@ Note that `git config --global <key>` won't show included values unless `--inclu
 
 ## Credits
 
-Many thanks to the [dotfiles community](https://dotfiles.github.io).
+Many thanks to [webpro](https://github.com/webpro/dotfiles), which provided the initial foundation.
 
 ## Todos
 
