@@ -12,7 +12,7 @@ Initially forked from https://github.com/webpro/dotfiles. It targets only macOS 
 - [Plannotator](https://plannotator.ai) (not on Homebrew — installed via its official script by `make`; see [below](#plannotator))
 - Claude Code agent skills & plugins ([superpowers](https://github.com/obra/superpowers), [mcollina/skills](https://github.com/mcollina/skills), [@playwright/cli](https://playwright.dev/docs/getting-started-cli); see [below](#claude-code-skills--plugins))
 - Latest Git, ZSH, GNU coreutils, curl
-- Modern CLI tooling — `fzf`, `zoxide`, `fd`, `ripgrep`, `bat`, `delta` (see [Shell](#shell))
+- Modern CLI tooling — [Starship](https://starship.rs) prompt, `fzf`, `zoxide`, `fd`, `ripgrep`, `bat`, `delta` (see [Shell](#shell))
 
 ## Install
 
@@ -46,10 +46,11 @@ Most symlinked apps read their config without ever touching the file, but a few 
 
 ## Shell
 
-The shell is [oh-my-zsh](https://ohmyz.sh) (theme `skaro`) with custom aliases and
-functions under [`runcom/.oh-my-zsh/custom/`](./runcom/.oh-my-zsh/custom/), plus a
-set of modern CLI tools wired up in [`runcom/.zshrc`](./runcom/.zshrc). Run `alias`
-to dump every shortcut; the tables below cover the main ones.
+The shell is [oh-my-zsh](https://ohmyz.sh) (for plugins) with the
+[Starship](https://starship.rs) prompt and custom aliases and functions under
+[`runcom/.oh-my-zsh/custom/`](./runcom/.oh-my-zsh/custom/), plus a set of modern
+CLI tools wired up in [`runcom/.zshrc`](./runcom/.zshrc). Run `alias` to dump
+every shortcut; the tables below cover the main ones.
 
 ### Interactive tools
 
@@ -57,6 +58,7 @@ Installed via the [Brewfile](./install/Brewfile) / oh-my-zsh plugins and activat
 
 | Tool                      | Invoke                        | What it does                                                      |
 | ------------------------- | ----------------------------- | ----------------------------------------------------------------- |
+| `starship`                | the prompt itself             | Prompt showing dir, git branch/status, Node version, cmd duration, exit status ([`starship.toml`](./config/starship.toml)) |
 | `fzf`                     | `Ctrl-R` / `Ctrl-T` / `Alt-C` | Fuzzy search history / insert a file path / `cd` into a subdir    |
 | `zoxide`                  | `z <frag>` / `zi <frag>`      | Jump to a frecent dir / pick one interactively (fzf)              |
 | `fd`                      | `fd <name>`                   | Find files **by name** (fast, respects `.gitignore`)              |
