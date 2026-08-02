@@ -12,7 +12,3 @@ cask "monitorcontrol"
 cask "obsidian"
 cask "claude-code"
 cask "cmux"
-
-# Nerd Font for the Starship prompt glyphs (git branch, read-only, etc.).
-# Point iTerm2 at "MesloLGS Nerd Font" after install — see README post-install.
-cask "font-meslo-lg-nerd-font"
