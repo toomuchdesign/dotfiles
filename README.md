@@ -155,11 +155,11 @@ Point iTerm2 at [install/iterm2/](./install/iterm2/) so it loads its preferences
 
 Restart iTerm2. Everything else (zsh as custom shell, colors, keybindings) comes from the plist.
 
-One thing to set once, so the [Starship](#shell) prompt's glyphs render instead of tofu boxes. The `font-symbols-only-nerd-font` cask installs just the icon glyphs (~2 MB), so you keep your normal text font and add the symbols as a fallback:
+One thing to set once, so the [Starship](#shell) prompt's glyphs render instead of tofu boxes: point iTerm2 at the Nerd Font installed by the `font-meslo-lg-nerd-font` cask —
 
-`Settings` > `Profiles` > `Text` > check `Use a different font for non-ASCII text` > set the non-ASCII font to **Symbols Nerd Font Mono**
+`Settings` > `Profiles` > `Text` > `Font` > select **MesloLGS Nerd Font**
 
-Because iTerm2 also _writes_ to the preferences folder, that choice (and any other UI change) is captured back into the tracked plist — so it only needs doing once, then commit the diff like any other change.
+Because iTerm2 also _writes_ to the preferences folder, that font choice (and any other UI change) is captured back into the tracked plist — so it only needs doing once, then commit the diff like any other change.
 
 ### DropBox
 
