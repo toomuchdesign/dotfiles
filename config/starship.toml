@@ -1,0 +1,47 @@
+# Starship prompt — https://starship.rs
+# Symlinked to ~/.config/starship.toml by stow. Replaces the oh-my-zsh `skaro`
+# theme (ZSH_THEME="" in runcom/.zshrc). Colours follow the Monokai palette used
+# by delta + bat. Nerd Font glyphs need a Nerd Font selected in iTerm2 — see the
+# README "Fonts" post-install note.
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# No blank line before each prompt — keeps the two-line prompt compact.
+add_newline = false
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$cmd_duration\
+$line_break\
+$character"""
+
+[directory]
+style = "cyan bold"
+truncation_length = 3
+truncate_to_repo = true
+read_only = " "
+
+[git_branch]
+symbol = " "
+style = "purple bold"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "yellow"
+format = "([$all_status$ahead_behind]($style) )"
+
+[nodejs]
+symbol = "⬢ "
+style = "green bold"
+format = "[$symbol($version )]($style)"
+
+[cmd_duration]
+min_time = 500
+style = "yellow"
+format = "took [$duration]($style) "
+
+[character]
+success_symbol = "[❯](green bold)"
+error_symbol = "[❯](red bold)"
