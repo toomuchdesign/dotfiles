@@ -7,6 +7,15 @@ user = toomuchdesign
 
 [core]
 ignorecase = false
+	pager = delta
+
+# Syntax-highlighted, line-numbered diffs via delta (brew "git-delta").
+# `navigate = true` lets n/N jump between files in the pager.
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
 
 [merge]
 conflictstyle = diff3
