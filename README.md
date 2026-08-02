@@ -151,9 +151,13 @@ Point iTerm2 at [install/iterm2/](./install/iterm2/) so it loads its preferences
 
 `Settings` > `General` > `Preferences` > check `Load preferences from a custom folder or URL` > select `~/.dotfiles/install/iterm2` > set `Save changes` to `Automatically`
 
-Restart iTerm2. Everything else (zsh as custom shell, colors, keybindings) comes from the plist, so there is nothing left to set by hand.
+Restart iTerm2. Everything else (zsh as custom shell, colors, keybindings) comes from the plist.
 
-Because iTerm2 also _writes_ to that folder, any preference changed in the UI shows up as a diff in this repo — commit it like any other change.
+One thing to set once, so the [Starship](#shell) prompt's glyphs render instead of tofu boxes: point iTerm2 at the Nerd Font installed by the `font-meslo-lg-nerd-font` cask —
+
+`Settings` > `Profiles` > `Text` > `Font` > select **MesloLGS Nerd Font**
+
+Because iTerm2 also _writes_ to the preferences folder, that font choice (and any other UI change) is captured back into the tracked plist — so it only needs doing once, then commit the diff like any other change.
 
 ### DropBox
 
