@@ -62,7 +62,7 @@ Installed via the [Brewfile](./install/Brewfile) / oh-my-zsh plugins and activat
 | `fd`                      | `fd <name>`                   | Find files **by name** (fast, respects `.gitignore`)              |
 | `rg` (ripgrep)            | `rg <pattern>`                | Search file **contents** (fast, respects `.gitignore`)            |
 | `bat`                     | `bat <file>`                  | `cat` with syntax highlighting, line numbers and a git gutter     |
-| `delta`                   | any `git diff` / `git show`   | Syntax-highlighted, line-numbered diffs (`n`/`N` to move by file) |
+| `delta`                   | any `git diff` / `git show`   | Side-by-side, syntax-highlighted diffs (`n`/`N` to move by file)  |
 | `jq` / `yq`               | `… \| jq '.'`                 | Query JSON (`jq`)                                                 |
 | `thefuck`                 | `fuck`                        | Correct and rerun the previous command                            |
 | `fnm`                     | automatic on `cd`             | Switch Node version per `.nvmrc` / `.node-version`                |
