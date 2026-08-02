@@ -17,6 +17,13 @@ ignorecase = false
 	navigate = true
 	line-numbers = true
 	side-by-side = true
+	# Make file paths / line numbers in the diff clickable, opening in VS Code.
+	# iTerm2 renders OSC 8 hyperlinks; ⌘-click a path to jump to that line.
+	hyperlinks = true
+	hyperlinks-file-link-format = "vscode://file/{path}:{line}"
+	# Syntax theme (a bat/less theme). Preview alternatives with
+	# `delta --show-syntax-themes`; list names with `delta --list-syntax-themes`.
+	syntax-theme = Monokai Extended
 
 [merge]
 conflictstyle = diff3
