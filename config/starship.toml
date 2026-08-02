@@ -8,6 +8,13 @@
 # No blank line before each prompt — keeps the two-line prompt compact.
 add_newline = false
 
+# Optional Gruvbox colour scheme. Uncomment the line below (and the palettes
+# table at the end of this file) to try it during real work.
+# It overrides the ANSI colour names used in the module styles with Gruvbox hex
+# values, so nothing else needs changing. Comment both back out to return to the
+# terminal's ANSI palette. Requires a truecolor terminal (iTerm2 is fine).
+# palette = "gruvbox"
+
 format = """
 $directory\
 $git_branch\
@@ -45,3 +52,13 @@ format = "took [$duration]($style) "
 [character]
 success_symbol = "[❯](green bold)"
 error_symbol = "[❯](red bold)"
+
+# Gruvbox (dark, "bright") palette — see the `palette` note near the top. These
+# entries shadow the standard ANSI colour names referenced in the styles above,
+# so activating the palette recolours the whole prompt without further edits.
+# [palettes.gruvbox]
+# cyan = "#8ec07c"    # directory     (gruvbox aqua)
+# purple = "#d3869b"  # git_branch
+# yellow = "#fabd2f"  # git_status, cmd_duration
+# green = "#b8bb26"   # nodejs, prompt success
+# red = "#fb4934"     # prompt error
