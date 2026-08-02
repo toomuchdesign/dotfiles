@@ -34,8 +34,11 @@ ZSH_THEME=skaro
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
+# Auto-update behavior. `disabled` kills both the "Would you like to update?"
+# reminder prompt AND the periodic `git fetch` against the omz repo that runs on
+# shell startup when a check is due — that network call is a prime suspect for
+# the first-tab-after-a-while hang. Run `omz update` by hand when you want it.
+zstyle ':omz:update' mode disabled
 # zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
@@ -83,6 +86,18 @@ ZSH_THEME=skaro
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git zsh-autosuggestions)
 
+# De-duplicate fpath before oh-my-zsh runs compinit. Because `brew shellenv`
+# runs in more than one startup file and fpath (unlike PATH) is not auto-unique,
+# Homebrew's site-functions dir was landing in fpath ~5x, making compinit/compaudit
+# stat the same directories over and over.
+typeset -U fpath FPATH
+
+# Skip oh-my-zsh's completion-security audit (compaudit). Homebrew's
+# group-writable share/zsh dirs make that audit stat a pile of directories on
+# every launch — slow on a cold filesystem and the usual cause of multi-second
+# startup hangs. We trust these dirs, so skip the check.
+ZSH_DISABLE_COMPFIX=true
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -110,9 +125,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Enable auto-update checks
-export UPDATE_ZSH_DAYS=14
 
 # autojump setup
 [ -f $HOMEBREW_PREFIX/etc/profile.d/autojump.sh ] && . $HOMEBREW_PREFIX/etc/profile.d/autojump.sh
