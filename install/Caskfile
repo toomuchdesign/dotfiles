@@ -13,6 +13,8 @@ cask "obsidian"
 cask "claude-code"
 cask "cmux"
 
-# Nerd Font for the Starship prompt glyphs (git branch, read-only, etc.).
-# Point iTerm2 at "MesloLGS Nerd Font" after install — see README post-install.
-cask "font-meslo-lg-nerd-font"
+# Icon glyphs for the Starship prompt (git branch, read-only, etc.). The
+# symbols-only Nerd Font is ~2MB (two .ttf) vs 112MB for a full patched family:
+# keep your normal text font and set this as iTerm2's non-ASCII fallback font.
+# See README post-install.
+cask "font-symbols-only-nerd-font"
