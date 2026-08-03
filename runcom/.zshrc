@@ -12,123 +12,64 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 typeset -U path PATH
 path=("$HOME/.local/bin" $path)
 
-# Path to your oh-my-zsh installation.
+# ─────────────────────────────────────────────────────────────────────────────
+# oh-my-zsh — used as a LIBRARY, not as the full framework.
+#
+# We deliberately do NOT `source $ZSH/oh-my-zsh.sh`. That entry point mass-loads
+# all ~22 lib/*.zsh files, runs an update check, and runs a completion-security
+# audit over ~1k Homebrew completion files on every start — the bulk of omz's
+# startup cost and the cause of the old cold-start hangs. Instead we init
+# completion ourselves and source only the handful of omz pieces we actually use.
+#
+# The prompt is Starship (below), not an omz theme. To go back to the full
+# framework, restore the `ZSH_THEME` / `plugins=()` / `source $ZSH/oh-my-zsh.sh`
+# block from git history. See docs/shell-framework-options.md for the rationale.
+# ─────────────────────────────────────────────────────────────────────────────
 export ZSH=$HOME/.oh-my-zsh
+export ZSH_CACHE_DIR=$ZSH/cache
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# Prompt is Starship (initialised at the bottom of this file), not an oh-my-zsh
-# theme — leave this empty so omz doesn't render one on top of it.
-ZSH_THEME=""
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "skaro" "af-magic" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Auto-update behavior. `disabled` kills both the "Would you like to update?"
-# reminder prompt AND the periodic `git fetch` against the omz repo that runs on
-# shell startup when a check is due — that network call is a prime suspect for
-# the first-tab-after-a-while hang. Run `omz update` by hand when you want it.
-zstyle ':omz:update' mode disabled
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-# zsh-syntax-highlighting must be listed LAST — it wraps the line editor and
-# expects every other plugin to have hooked in first.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
-
-# De-duplicate fpath before oh-my-zsh runs compinit. Because `brew shellenv`
-# runs in more than one startup file and fpath (unlike PATH) is not auto-unique,
-# Homebrew's site-functions dir was landing in fpath ~5x, making compinit/compaudit
-# stat the same directories over and over.
+# De-duplicate fpath before compinit. `brew shellenv` runs in both .zprofile and
+# this file, so Homebrew's site-functions dir would otherwise land on fpath twice
+# and compinit would scan it twice.
 typeset -U fpath FPATH
 
-# Skip oh-my-zsh's completion-security audit (compaudit). Homebrew's
-# group-writable share/zsh dirs make that audit stat a pile of directories on
-# every launch — slow on a cold filesystem and the usual cause of multi-second
-# startup hangs. We trust these dirs, so skip the check.
-ZSH_DISABLE_COMPFIX=true
+# Completion. `-i` silently ignores "insecure directory" warnings (single-user
+# Mac) — this is what `ZSH_DISABLE_COMPFIX=true` used to select under the
+# framework, and it skips the slow audit of ~1k Homebrew completion files.
+autoload -Uz compinit
+compinit -i -d "$ZSH_CACHE_DIR/zcompdump-$ZSH_VERSION"
 
-source $ZSH/oh-my-zsh.sh
+# omz library pieces we keep (each sources standalone; the rest of lib/ is prompt,
+# theming, update and diagnostic machinery we don't use):
+source $ZSH/lib/completion.zsh    # menu-select, case-insensitive matching, colors
+source $ZSH/lib/history.zsh       # shared history, ignore-dups, HISTSIZE=50000
+source $ZSH/lib/directories.zsh   # ll/la/l, md/rd, ..=cd .., 1-9 dir-stack jumps
+source $ZSH/lib/key-bindings.zsh  # emacs keys, Up/Down = prefix history search, Home/End
+source $ZSH/lib/grep.zsh          # colorized grep with sensible --exclude-dir defaults
+source $ZSH/lib/termsupport.zsh   # set the terminal tab/window title to cwd + command
 
-# User configuration
+# The one omz plugin we use: git (aliases + helper functions). lib/git.zsh MUST
+# come first — it defines git_current_branch, which several git-plugin aliases
+# call (ggpull, gpsup, ggsup, gluc…). We use Starship for the prompt, so disable
+# omz's async git-prompt handler (it lives in lib/async_prompt.zsh, which we don't
+# load; without this it would error trying to register a precmd hook).
+zstyle ':omz:alpha:lib:git' async-prompt no
+source $ZSH/lib/git.zsh
+source $ZSH/plugins/git/git.plugin.zsh
+# Add another omz plugin the same way:  source $ZSH/plugins/<name>/<name>.plugin.zsh
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# zsh-autosuggestions — installed as a Homebrew formula (brew upgrade keeps it
+# current; no manual git pull, no plugin manager). zsh-syntax-highlighting is
+# sourced LAST, at the very bottom of this file.
+[[ -r $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] \
+  && source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Our aliases / functions / macOS aliases / local overrides. omz used to
+# auto-source custom/*.zsh; we do it explicitly now. Sourced alphabetically, so
+# local.untracked.zsh (machine-specific overrides) is loaded last and wins.
+for _f in $ZSH/custom/*.zsh(N); do source $_f; done; unset _f
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# ── interactive tools ──────────────────────────────────────────────────────
 
 # fzf shell integration — key bindings + completion (fzf >= 0.48).
 #   Ctrl-R  fuzzy history search   Ctrl-T  fuzzy file picker   Alt-C  fuzzy cd
@@ -149,5 +90,10 @@ fuck() {
 # fnm setup
 eval "$(fnm env --use-on-cd --shell zsh)"
 
-# Starship prompt — must init after oh-my-zsh (ZSH_THEME is left empty above).
+# Starship prompt.
 eval "$(starship init zsh)"
+
+# zsh-syntax-highlighting MUST be sourced last — it wraps the line editor and
+# expects every other widget (fzf, zoxide, …) to be defined first.
+[[ -r $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] \
+  && source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

@@ -27,14 +27,9 @@ zsh: sudo
 	touch ~/.zshrc
 	rm -rf ~/.oh-my-zsh
 	brew || curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
-# Install zsh-autosuggestions plugin
-	[ -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ] || \
-		git clone https://github.com/zsh-users/zsh-autosuggestions \
-			~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-# Install zsh-syntax-highlighting plugin
-	[ -d ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ] || \
-		git clone https://github.com/zsh-users/zsh-syntax-highlighting \
-			~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+# zsh-autosuggestions and zsh-syntax-highlighting are installed as Homebrew
+# formulae (see the Brewfile) and sourced directly in .zshrc — no git clone,
+# updated by `brew upgrade`.
 
 git:
 	brew install git git-extras
