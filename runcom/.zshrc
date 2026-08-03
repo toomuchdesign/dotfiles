@@ -19,7 +19,9 @@ export ZSH=$HOME/.oh-my-zsh
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME=skaro
+# Prompt is Starship (initialised at the bottom of this file), not an oh-my-zsh
+# theme — leave this empty so omz doesn't render one on top of it.
+ZSH_THEME=""
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -146,3 +148,6 @@ fuck() {
 
 # fnm setup
 eval "$(fnm env --use-on-cd --shell zsh)"
+
+# Starship prompt — must init after oh-my-zsh (ZSH_THEME is left empty above).
+eval "$(starship init zsh)"
