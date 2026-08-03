@@ -11,7 +11,7 @@ macOS dotfiles. See `README.md` for install, per-app config, and local-override 
 
 ## Keep docs in sync
 
-- **The `## Shell` section in `README.md` is a hand-maintained reference for the commands this repo provides.** Whenever you add, rename, or remove a function (`runcom/.oh-my-zsh/custom/functions.zsh`), an alias (`aliases.zsh`, `alias.macos.zsh`), a git alias (`config/git/config`), or an interactive CLI tool wired up in `runcom/.zshrc` / the `Brewfile`, update the matching table in that section in the same change. It won't regenerate itself.
+- **The `## Shell` section in `README.md` is a hand-maintained reference for the commands this repo provides.** Whenever you add, rename, or remove a function (`runcom/.zsh/functions.zsh`), an alias (`runcom/.zsh/aliases.zsh`, `alias.macos.zsh`), a git alias (`config/git/config`), or an interactive CLI tool wired up in `runcom/.zshrc` / the `Brewfile`, update the matching table in that section in the same change. It won't regenerate itself.
 
 ## Validation
 

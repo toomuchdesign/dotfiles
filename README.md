@@ -46,15 +46,17 @@ Most symlinked apps read their config without ever touching the file, but a few 
 
 ## Shell
 
-The shell is [oh-my-zsh](https://ohmyz.sh) (for plugins) with the
-[Starship](https://starship.rs) prompt and custom aliases and functions under
-[`runcom/.oh-my-zsh/custom/`](./runcom/.oh-my-zsh/custom/), plus a set of modern
-CLI tools wired up in [`runcom/.zshrc`](./runcom/.zshrc). Run `alias` to dump
-every shortcut; the tables below cover the main ones.
+The shell is plain zsh (no framework) with the [Starship](https://starship.rs)
+prompt, custom aliases and functions under [`runcom/.zsh/`](./runcom/.zsh/), and
+a set of modern CLI tools — all wired up in [`runcom/.zshrc`](./runcom/.zshrc).
+The git aliases come from a vendored copy of oh-my-zsh's git plugin
+([`runcom/.zsh/vendor/git.plugin.zsh`](./runcom/.zsh/vendor/git.plugin.zsh)); the
+completion/history/keybinding defaults omz used to provide are inlined in
+`.zshrc`. Run `alias` to dump every shortcut; the tables below cover the main ones.
 
 ### Interactive tools
 
-Installed via the [Brewfile](./install/Brewfile) / oh-my-zsh plugins and activated on shell start:
+Installed via the [Brewfile](./install/Brewfile) and activated on shell start:
 
 | Tool                      | Invoke                        | What it does                                                      |
 | ------------------------- | ----------------------------- | ----------------------------------------------------------------- |
@@ -73,7 +75,7 @@ Installed via the [Brewfile](./install/Brewfile) / oh-my-zsh plugins and activat
 
 ### Functions
 
-Defined in [`functions.zsh`](./runcom/.oh-my-zsh/custom/functions.zsh):
+Defined in [`functions.zsh`](./runcom/.zsh/functions.zsh):
 
 | Function             | Usage                | Description                                                                     |
 | -------------------- | -------------------- | ------------------------------------------------------------------------------- |
@@ -85,7 +87,7 @@ Defined in [`functions.zsh`](./runcom/.oh-my-zsh/custom/functions.zsh):
 
 ### Aliases
 
-Defined in [`aliases.zsh`](./runcom/.oh-my-zsh/custom/aliases.zsh) and, for macOS-specific ones, [`alias.macos.zsh`](./runcom/.oh-my-zsh/custom/alias.macos.zsh):
+Defined in [`aliases.zsh`](./runcom/.zsh/aliases.zsh) and, for macOS-specific ones, [`alias.macos.zsh`](./runcom/.zsh/alias.macos.zsh):
 
 | Group      | Highlights                                                                                                                |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -210,11 +212,11 @@ Machine-specific settings (work email, private hosts, secrets, per-machine tweak
 | File                                           | Overrides                         | Created by `make link`                                                                                       |
 | ---------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `config/git/config.untracked`                  | [git config](./config/git/config) | Copied from [`config.untracked.example`](./config/git/config.untracked.example) if absent (never overwritten) |
-| `runcom/.oh-my-zsh/custom/local.untracked.zsh` | zsh setup                         | Created empty                                                                                                 |
+| `runcom/.zsh/local.untracked.zsh`              | zsh setup                         | Created empty                                                                                                 |
 
 The git template is committed (with commented placeholders only — no real values), so a fresh machine gets a documented starting point without any secret ever being tracked. `make link` seeds the copy only when it's missing, so re-running never clobbers your machine's populated file.
 
-Both are read **after** their tracked counterpart, so any value they define wins. For git this is guaranteed by the position of the `[include]`; for zsh it follows from oh-my-zsh sourcing `custom/*.zsh` alphabetically (`local.*` sorts after `alias*`/`functions*`).
+Both are read **after** their tracked counterpart, so any value they define wins. For git this is guaranteed by the position of the `[include]`; for zsh it follows from `.zshrc` sourcing `~/.zsh/*.zsh` alphabetically (`local.*` sorts after `alias*`/`functions*`).
 
 The git one is pulled in by an `[include]` directive at the end of [config/git/config](./config/git/config) and uses standard git config syntax:
 
