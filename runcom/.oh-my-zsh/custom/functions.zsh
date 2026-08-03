@@ -3,9 +3,16 @@ mk() {
   mkdir -p "$@" && cd "$@"
 }
 
-# Fuzzy find file/dir
-ff() { find . -type f -iname "*$1*";}
-fd() { find . -type d -iname "*$1*";}
+# Find files by name anywhere below the current directory.
+# Uses fd (fast, respects .gitignore) when available, else falls back to find.
+# Usage: ff <name-fragment>   e.g.  ff auth.controller
+ff() {
+  if command -v fd >/dev/null 2>&1; then
+    fd --hidden --type f "$1"
+  else
+    find . -type f -iname "*$1*"
+  fi
+}
 
 # Start an HTTP server from a directory, optionally specifying the port
 srv() {
