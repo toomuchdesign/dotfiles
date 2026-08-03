@@ -7,6 +7,32 @@ user = toomuchdesign
 
 [core]
 ignorecase = false
+	pager = delta
+
+# Syntax-highlighted, line-numbered diffs via delta (brew "git-delta").
+# `navigate = true` lets n/N jump between files in the pager.
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+	side-by-side = true
+	# Make file paths / line numbers in the diff clickable, opening in VS Code.
+	# iTerm2 renders OSC 8 hyperlinks; ⌘-click a path to jump to that line.
+	hyperlinks = true
+	hyperlinks-file-link-format = "vscode://file/{path}:{line}"
+	# Color theme via a preset "feature" (colors, syntax-theme and hunk chrome
+	# all come from the theme — no hand-tuned styles here). Presets are vendored
+	# in themes.gitconfig (included below). Preview them all against a real diff
+	# with `delta --show-themes`, or try one live with `git diff | delta
+	# --features <name>`. Swap the active theme by moving the comment.
+	features = arctic-fox
+	# features = mellow-barbet
+
+# Vendored from delta's official themes.gitconfig — defines the preset
+# "features" referenced above.
+[include]
+	path = themes.gitconfig
 
 [merge]
 conflictstyle = diff3
