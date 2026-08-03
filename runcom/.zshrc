@@ -84,7 +84,9 @@ zstyle ':omz:update' mode disabled
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions)
+# zsh-syntax-highlighting must be listed LAST — it wraps the line editor and
+# expects every other plugin to have hooked in first.
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
 # De-duplicate fpath before oh-my-zsh runs compinit. Because `brew shellenv`
 # runs in more than one startup file and fpath (unlike PATH) is not auto-unique,
