@@ -130,8 +130,9 @@ source $ZSH/oh-my-zsh.sh
 #   Ctrl-R  fuzzy history search   Ctrl-T  fuzzy file picker   Alt-C  fuzzy cd
 command -v fzf >/dev/null && source <(fzf --zsh)
 
-# autojump setup
-[ -f $HOMEBREW_PREFIX/etc/profile.d/autojump.sh ] && . $HOMEBREW_PREFIX/etc/profile.d/autojump.sh
+# zoxide setup — smarter `cd` that learns your most-used dirs.
+#   z <fragment>   jump to best match      zi <fragment>   interactive (fzf) pick
+eval "$(zoxide init zsh)"
 
 # thefuck setup — lazy-loaded so `thefuck --alias`
 # only runs the first time `fuck` is invoked, instead of on every shell launch.
