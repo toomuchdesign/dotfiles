@@ -1,0 +1,4 @@
+# bat config — one CLI flag per line. Symlinked to ~/.config/bat/config by stow.
+# Match delta's syntax-theme (delta uses bat's theme engine) so code renders
+# consistently in `bat` and in git diffs. Preview others: `bat --list-themes`.
+--theme="Monokai Extended"
