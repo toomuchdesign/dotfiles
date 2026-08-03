@@ -21,18 +21,18 @@ ignorecase = false
 	# iTerm2 renders OSC 8 hyperlinks; ⌘-click a path to jump to that line.
 	hyperlinks = true
 	hyperlinks-file-link-format = "vscode://file/{path}:{line}"
-	# Syntax theme (a bat/less theme). Preview alternatives with
-	# `delta --show-syntax-themes`; list names with `delta --list-syntax-themes`.
-	syntax-theme = Monokai Extended
-	# UI chrome colors (independent of syntax-theme): warm taupe instead of the
-	# default hard-to-read blue-on-black for file titles, rules, hunk box, and
-	# the gutter line numbers.
-	file-style = "#b3a58a"
-	file-decoration-style = "#4a463c ul"
-	hunk-header-decoration-style = "#4a463c box"
-	hunk-header-line-number-style = "#8a8069"
-	line-numbers-left-style = "#8a8069"
-	line-numbers-right-style = "#8a8069"
+	# Color theme via a preset "feature" (colors, syntax-theme and hunk chrome
+	# all come from the theme — no hand-tuned styles here). Presets are vendored
+	# in themes.gitconfig (included below). Preview them all against a real diff
+	# with `delta --show-themes`, or try one live with `git diff | delta
+	# --features <name>`. Swap the active theme by moving the comment.
+	features = arctic-fox
+	# features = mellow-barbet
+
+# Vendored from delta's official themes.gitconfig — defines the preset
+# "features" referenced above.
+[include]
+	path = themes.gitconfig
 
 [merge]
 conflictstyle = diff3
