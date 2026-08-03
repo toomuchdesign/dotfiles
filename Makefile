@@ -25,16 +25,9 @@ zsh: sudo
 	chsh -s /opt/homebrew/bin/zsh
 # Create zsh config file if necessary
 	touch ~/.zshrc
-	rm -rf ~/.oh-my-zsh
-	brew || curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
-# Install zsh-autosuggestions plugin
-	[ -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ] || \
-		git clone https://github.com/zsh-users/zsh-autosuggestions \
-			~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-# Install zsh-syntax-highlighting plugin
-	[ -d ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ] || \
-		git clone https://github.com/zsh-users/zsh-syntax-highlighting \
-			~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+# No framework: the shell is plain zsh (runcom/.zshrc). git aliases are vendored
+# in runcom/.zsh/vendor/git.plugin.zsh; zsh-autosuggestions and
+# zsh-syntax-highlighting come from Homebrew (see the Brewfile).
 
 git:
 	brew install git git-extras
@@ -83,7 +76,7 @@ link: sudo
 		mv -v $(HOME)/$$FILE{,.bak}; fi; done
 	mkdir -p $(XDG_CONFIG_HOME)
 	# Create an untracked zsh config file (for machine-specific setups)
-	touch ./runcom/.oh-my-zsh/custom/local.untracked.zsh
+	touch ./runcom/.zsh/local.untracked.zsh
 	# Seed the untracked git config from its template — never clobber an existing one
 	[ -f ./config/git/config.untracked ] || \
 		cp ./config/git/config.untracked.example ./config/git/config.untracked

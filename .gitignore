@@ -3,6 +3,6 @@
 .idea
 .vscode
 *.lock.json
-runcom/.oh-my-zsh/custom/*.untracked.zsh
+runcom/.zsh/*.untracked.zsh
 config/git/config.untracked
 .claude/settings.local.json
