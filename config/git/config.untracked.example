@@ -1,0 +1,13 @@
+# Machine-specific git config — work email, private hosts, per-machine tweaks.
+#
+# `make link` copies this template to `config/git/config.untracked` on a fresh
+# machine, and ONLY if that file doesn't exist yet (an existing one is never
+# overwritten). That copy is git-ignored, so anything you put in it — including
+# secrets — is NEVER committed. Edit the copy, not this template.
+#
+# The copy is pulled in by the [include] at the end of ./config and loaded
+# AFTER it, so any value set here overrides the tracked config. Uncomment and
+# adjust what you need:
+
+# [user]
+# 	email = me@work-company.com

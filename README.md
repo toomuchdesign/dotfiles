@@ -129,12 +129,14 @@ Configure search engines (`Manage search engines`):
 
 ## Local overrides
 
-Machine-specific settings (work email, private hosts, secrets, per-machine tweaks) must **never** be committed. Two untracked files exist for that purpose. Both are [git-ignored](./.gitignore) and created empty by `make link`, so they are safe to edit freely:
+Machine-specific settings (work email, private hosts, secrets, per-machine tweaks) must **never** be committed. Two untracked files exist for that purpose. Both are [git-ignored](./.gitignore), so they are safe to edit freely:
 
-| File                                           | Overrides                         |
-| ---------------------------------------------- | --------------------------------- |
-| `config/git/config.untracked`                  | [git config](./config/git/config) |
-| `runcom/.oh-my-zsh/custom/local.untracked.zsh` | zsh setup                         |
+| File                                           | Overrides                         | Created by `make link`                                                                                       |
+| ---------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `config/git/config.untracked`                  | [git config](./config/git/config) | Copied from [`config.untracked.example`](./config/git/config.untracked.example) if absent (never overwritten) |
+| `runcom/.oh-my-zsh/custom/local.untracked.zsh` | zsh setup                         | Created empty                                                                                                 |
+
+The git template is committed (with commented placeholders only — no real values), so a fresh machine gets a documented starting point without any secret ever being tracked. `make link` seeds the copy only when it's missing, so re-running never clobbers your machine's populated file.
 
 Both are read **after** their tracked counterpart, so any value they define wins. For git this is guaranteed by the position of the `[include]`; for zsh it follows from oh-my-zsh sourcing `custom/*.zsh` alphabetically (`local.*` sorts after `alias*`/`functions*`).
 

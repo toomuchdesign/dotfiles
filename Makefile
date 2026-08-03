@@ -84,8 +84,9 @@ link: sudo
 	mkdir -p $(XDG_CONFIG_HOME)
 	# Create an untracked zsh config file (for machine-specific setups)
 	touch ./runcom/.oh-my-zsh/custom/local.untracked.zsh
-	# Create an untracked git config file (for machine-specific setups)
-	touch ./config/git/config.untracked
+	# Seed the untracked git config from its template — never clobber an existing one
+	[ -f ./config/git/config.untracked ] || \
+		cp ./config/git/config.untracked.example ./config/git/config.untracked
 	stow -t $(HOME) runcom
 	stow -t $(XDG_CONFIG_HOME) config
 
