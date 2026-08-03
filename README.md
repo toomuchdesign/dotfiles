@@ -189,6 +189,14 @@ Configure search engines (`Manage search engines`):
 | Word Reference   | http://www.wordreference.com/iten/%s                            | `wr`        |
 | YouTube          | https://www.youtube.com/results?search_query=%s                 | `yt`        |
 
+### Keyboard layouts
+
+Add the **U.S.** and **U.S. International – PC** input sources:
+
+`Settings` > `Keyboard` > `Text Input` > `Input Sources` > `Edit…` > `+` > `English` > pick `U.S.` and `U.S. International – PC` > `Add`
+
+Switch between them with `Ctrl-Space` (or whatever `Input Sources` shortcut is set under `Keyboard Shortcuts`).
+
 ### VSC
 
 - Open `VSC` settings `cmd + ,`
