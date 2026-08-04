@@ -1,9 +1,8 @@
 DOTFILES_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 export XDG_CONFIG_HOME = $(HOME)/.config
 
-install: install-minimal install-extra
-install-minimal: sudo core packages docker-compose link quartz-filters plannotator claude-skills
-install-extra: brew-packages-extra cask-apps-extra
+install: sudo core packages docker-compose link quartz-filters plannotator claude-skills
+install-extra: install brew-packages-extra cask-apps-extra
 
 sudo:
 	sudo -v
