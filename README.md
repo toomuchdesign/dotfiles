@@ -37,10 +37,10 @@ Use the [Makefile](./Makefile) to install everything [listed above](#package-ove
 cd ~/.dotfiles
 make
 # or:
-make install-minimal
+make install
 ```
 
-`make install-minimal` installs a few less applications.
+`make install-extra` installs more applications.
 
 Most symlinked apps read their config without ever touching the file, but a few _write back_ to it — [cmux](https://github.com/manaflow-ai/cmux) rewrites [config/cmux/cmux.json](./config/cmux/cmux.json) (linked to `~/.config/cmux/cmux.json`) whenever you change a shortcut or layout option in its UI. As with iTerm2, that just shows up as a diff in this repo — commit it like any other change. cmux's session state lives separately under `~/Library/Application Support/cmux/` and is intentionally not tracked.
 
@@ -56,32 +56,32 @@ every shortcut; the tables below cover the main ones.
 
 Installed via the [Brewfile](./install/Brewfile) / oh-my-zsh plugins and activated on shell start:
 
-| Tool                      | Invoke                        | What it does                                                      |
-| ------------------------- | ----------------------------- | ----------------------------------------------------------------- |
-| `starship`                | the prompt itself             | Prompt showing dir, git branch/status, Node version, cmd duration, exit status ([`starship.toml`](./config/starship.toml)) |
-| `fzf`                     | `Ctrl-R` / `Ctrl-T` / `Alt-C` | Fuzzy search history / insert a file path / `cd` into a subdir    |
-| `zoxide`                  | `z <frag>` / `zi <frag>`      | Jump to a frecent dir / pick one interactively (fzf)              |
-| `fd`                      | `fd <name>`                   | Find files **by name** (fast, respects `.gitignore`)              |
-| `rg` (ripgrep)            | `rg <pattern>`                | Search file **contents** (fast, respects `.gitignore`)            |
-| `bat`                     | `bat <file>`                  | `cat` with syntax highlighting, line numbers and a git gutter     |
-| `delta`                   | any `git diff` / `git show`   | Side-by-side, syntax-highlighted diffs (`n`/`N` to move by file)  |
+| Tool                      | Invoke                        | What it does                                                                                                                |
+| ------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `starship`                | the prompt itself             | Prompt showing dir, git branch/status, Node version, cmd duration, exit status ([`starship.toml`](./config/starship.toml))  |
+| `fzf`                     | `Ctrl-R` / `Ctrl-T` / `Alt-C` | Fuzzy search history / insert a file path / `cd` into a subdir                                                              |
+| `zoxide`                  | `z <frag>` / `zi <frag>`      | Jump to a recent dir / pick one interactively (fzf)                                                                         |
+| `fd`                      | `fd <name>`                   | Find files **by name** (fast, respects `.gitignore`)                                                                        |
+| `rg` (ripgrep)            | `rg <pattern>`                | Search file **contents** (fast, respects `.gitignore`)                                                                      |
+| `bat`                     | `bat <file>`                  | `cat` with syntax highlighting, line numbers and a git gutter                                                               |
+| `delta`                   | any `git diff` / `git show`   | Side-by-side, syntax-highlighted diffs (`n`/`N` to move by file)                                                            |
 | `git-trim`                | `git trim` (or `git-cleanup`) | Delete merged/stale branches; understands squash & rebase merges and the repo's default branch (previews and prompts first) |
-| `jq` / `yq`               | `… \| jq '.'`                 | Query JSON (`jq`)                                                 |
-| `thefuck`                 | `fuck`                        | Correct and rerun the previous command                            |
-| `fnm`                     | automatic on `cd`             | Switch Node version per `.nvmrc` / `.node-version`                |
-| `zsh-autosuggestions`     | `→` / `End` to accept         | History-based inline suggestions as you type                      |
-| `zsh-syntax-highlighting` | automatic                     | Colours commands green/red for validity as you type               |
+| `jq` / `yq`               | `… \| jq '.'`                 | Query JSON (`jq`)                                                                                                           |
+| `thefuck`                 | `fuck`                        | Correct and rerun the previous command                                                                                      |
+| `fnm`                     | automatic on `cd`             | Switch Node version per `.nvmrc` / `.node-version`                                                                          |
+| `zsh-autosuggestions`     | `→` / `End` to accept         | History-based inline suggestions as you type                                                                                |
+| `zsh-syntax-highlighting` | automatic                     | Colours commands green/red for validity as you type                                                                         |
 
 ### Functions
 
 Defined in [`functions.zsh`](./runcom/.oh-my-zsh/custom/functions.zsh):
 
-| Function             | Usage                | Description                                                                     |
-| -------------------- | -------------------- | ------------------------------------------------------------------------------- |
-| `mk <dir>`           | `mk src/new-feature` | `mkdir -p` the path and `cd` into it                                            |
-| `ff <name-fragment>` | `ff auth.controller` | Find files by name below the cwd (uses `fd`, falls back to `find`)              |
-| `srv [port]`         | `srv 3000`           | Serve the current dir over HTTP (default `:8000`) and open the browser          |
-| `killport <port>`    | `killport 3000`      | Kill whatever process is listening on a TCP port                                |
+| Function             | Usage                | Description                                                            |
+| -------------------- | -------------------- | ---------------------------------------------------------------------- |
+| `mk <dir>`           | `mk src/new-feature` | `mkdir -p` the path and `cd` into it                                   |
+| `ff <name-fragment>` | `ff auth.controller` | Find files by name below the cwd (uses `fd`, falls back to `find`)     |
+| `srv [port]`         | `srv 3000`           | Serve the current dir over HTTP (default `:8000`) and open the browser |
+| `killport <port>`    | `killport 3000`      | Kill whatever process is listening on a TCP port                       |
 
 `git-cleanup` is a thin alias for [`git trim`](#interactive-tools) — see the interactive tools table above.
 
@@ -97,19 +97,20 @@ Defined in [`aliases.zsh`](./runcom/.oh-my-zsh/custom/aliases.zsh) and, for macO
 | pnpm       | `pn` · `pns` start · `pnd` dev · `pnr` run · `pni` install · `pnx` exec · `pui` update interactive                        |
 | yarn       | `yui` upgrade-interactive                                                                                                 |
 | Docker     | `d` · `dps` ps · `dils` images · `dvls` volumes · `dcu`/`dcs`/`dcr` compose up/stop/restart                               |
-| Network    | `ip` public IP · `ipl` local IP · `pubkey` copy SSH public key                                                            |
+| Network    | `ip` public IP · `ipl` local IP                                                                                           |
 | macOS      | `showdotfiles`/`hidedotfiles` · `desktopshow`/`desktophide` · `emptytrash`                                                |
 
 ### Git aliases
 
 Defined in [`config/git/config`](./config/git/config) — invoke as `git <alias>`:
 
-| Alias               | Description                                                |
-| ------------------- | ---------------------------------------------------------- |
-| `git lg`            | Graph log, one line per commit, relative dates             |
-| `git stbr`          | Local branches sorted by last commit date                  |
-| `git pending`       | Local branches not yet merged into `origin/master`         |
-| `git pruneasorigin` | Delete local branches whose remote tracking branch is gone |
+| Alias         | Description                                        |
+| ------------- | -------------------------------------------------- |
+| `git lg`      | Graph log, one line per commit, relative dates     |
+| `git stbr`    | Local branches sorted by last commit date          |
+| `git pending` | Local branches not yet merged into `origin/master` |
+| `git type`    | Show an object's type (`cat-file -t`)              |
+| `git dump`    | Pretty-print an object's contents (`cat-file -p`)  |
 
 ## App configurations
 
@@ -209,8 +210,8 @@ Switch between them with `Ctrl-Space` (or whatever `Input Sources` shortcut is s
 
 Machine-specific settings (work email, private hosts, secrets, per-machine tweaks) must **never** be committed. Two untracked files exist for that purpose. Both are [git-ignored](./.gitignore), so they are safe to edit freely:
 
-| File                                           | Overrides                         | Created by `make link`                                                                                       |
-| ---------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| File                                           | Overrides                         | Created by `make link`                                                                                        |
+| ---------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `config/git/config.untracked`                  | [git config](./config/git/config) | Copied from [`config.untracked.example`](./config/git/config.untracked.example) if absent (never overwritten) |
 | `runcom/.oh-my-zsh/custom/local.untracked.zsh` | zsh setup                         | Created empty                                                                                                 |
 
@@ -236,7 +237,3 @@ Note that `git config --global <key>` won't show included values unless `--inclu
 ## Credits
 
 Many thanks to [webpro](https://github.com/webpro/dotfiles), which provided the initial foundation.
-
-## Todos
-
-- Auto configure local `dotfiles` git config with personal user info
