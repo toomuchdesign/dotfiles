@@ -1,6 +1,6 @@
 # Create a new directory and enter it
 mk() {
-  mkdir -p "$@" && cd "$@"
+  mkdir -p "$@" && cd "$1"
 }
 
 # Find files by name anywhere below the current directory.
@@ -14,7 +14,7 @@ ff() {
   fi
 }
 
-# Start an HTTP server from a directory, optionally specifying the port
+# Start an HTTP server from the current directory, optionally specifying the port
 srv() {
     # Get port (if specified)
     local port="${1:-8000}"
@@ -22,14 +22,11 @@ srv() {
     # Open in the browser
     open "http://localhost:${port}/"
 
-    # Redefining the default content-type to text/plain instead of the default
-    # application/octet-stream allows "unknown" files to be viewable in-browser
-    # as text instead of being downloaded.
-    #
-    # Unfortunately, "python -m SimpleHTTPServer" doesn't allow you to redefine
-    # the default content-type, but the SimpleHTTPServer module can be executed
-    # manually with just a few lines of code.
-    python -c $'import SimpleHTTPServer;\nSimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map[""] = "text/plain";\nSimpleHTTPServer.test();' "$port"
+    # Map unknown file types to text/plain instead of the default
+    # application/octet-stream, so "unknown" files are viewable in-browser
+    # as text rather than being downloaded. Python 3's http.server lets us
+    # override the handler's extensions_map before serving.
+    python3 -c "import http.server as h, socketserver as s; h.SimpleHTTPRequestHandler.extensions_map[''] = 'text/plain'; s.TCPServer(('', ${port}), h.SimpleHTTPRequestHandler).serve_forever()"
 }
 
 # Clean up merged/stale Git branches with git-trim (brew install git-trim).
@@ -50,5 +47,7 @@ killport() {
     echo "no process listening on port $1" >&2
     return 1
   fi
-  command kill -9 $pids
+  # lsof returns one PID per line; ${(f)pids} splits on newlines so each PID
+  # is passed as a separate argument (zsh doesn't word-split unquoted $pids).
+  command kill -9 ${(f)pids}
 }
