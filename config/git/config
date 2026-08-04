@@ -1,18 +1,19 @@
 [user]
-name = Andrea Carraro
-email = me@andreacarraro.it
+	name = Andrea Carraro
+	email = me@andreacarraro.it
 
 [github]
-user = toomuchdesign
+	user = toomuchdesign
 
 [core]
-ignorecase = false
+	ignorecase = false
 	pager = delta
 
 # Syntax-highlighted, line-numbered diffs via delta (brew "git-delta").
 # `navigate = true` lets n/N jump between files in the pager.
 [interactive]
 	diffFilter = delta --color-only
+
 [delta]
 	navigate = true
 	line-numbers = true
@@ -35,52 +36,43 @@ ignorecase = false
 	path = themes.gitconfig
 
 [merge]
-conflictstyle = diff3
+	conflictstyle = diff3
 	tool = vscode
 
 [push]
-autoSetupRemote = true
+	autoSetupRemote = true
 
 [pull]
-ff = only
+	ff = only
 
 [alias]
+	### Aliases from: http://githowto.com/aliases
+	type = cat-file -t
+	dump = cat-file -p
 
-### Aliases from: http://githowto.com/aliases
-    type = cat-file -t
-    dump = cat-file -p
+	### Silvio GIT alias
 
-### Silvio GIT alias
+	# Show the revision log graph using ASCII art
+	lg = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
 
-    # Show the revision log graph using ASCII art
-    lg = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
-
-    # List all local feature branches sorted according to the latest change
-    # date to give an overview which branches are under active development.
-    stbr = "for-each-ref --sort=-committerdate --format='%1B[32m%(committerdate:iso8601) %1B[34m%(committerdate:relative) %1B[0;m%(refname:short)' refs/heads/"
-
-    # List all local feature branches which have not yet been merged to the
-    # master repository (assuming "origin" is the remote for the master repo).
-    pending = branch --no-merged origin/master
-
-    # Do a flake8 run on about-to-be-committed files (only works from repo root).
-    flake8 = ./bin/flake8  --config etc/flake8.ini `git diff --cached --name-only
-
-### More aliases
-
-    # align local branches to origin
-    pruneasorigin = git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d
+	# List all local feature branches sorted according to the latest change
+	# date to give an overview which branches are under active development.
+	stbr = "for-each-ref --sort=-committerdate --format='%1B[32m%(committerdate:iso8601) %1B[34m%(committerdate:relative) %1B[0;m%(refname:short)' refs/heads/"
 
 # Machine-specific config (untracked, not version controlled).
 # Kept last so its values override the ones above.
 # Missing files are silently ignored by git.
 [include]
 	path = config.untracked
+
 [diff]
 	tool = vscode
+
 [difftool "vscode"]
 	cmd = code --wait --diff \"$LOCAL\" \"$REMOTE\"
+
 [difftool]
 	prompt = false
+
 [mergetool "vscode"]
 	cmd = code --wait \"$MERGED\"
