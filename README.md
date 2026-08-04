@@ -65,6 +65,7 @@ Installed via the [Brewfile](./install/Brewfile) / oh-my-zsh plugins and activat
 | `rg` (ripgrep)            | `rg <pattern>`                | Search file **contents** (fast, respects `.gitignore`)            |
 | `bat`                     | `bat <file>`                  | `cat` with syntax highlighting, line numbers and a git gutter     |
 | `delta`                   | any `git diff` / `git show`   | Side-by-side, syntax-highlighted diffs (`n`/`N` to move by file)  |
+| `git-trim`                | `git trim` (or `git-cleanup`) | Delete merged/stale branches; understands squash & rebase merges and the repo's default branch (previews and prompts first) |
 | `jq` / `yq`               | `… \| jq '.'`                 | Query JSON (`jq`)                                                 |
 | `thefuck`                 | `fuck`                        | Correct and rerun the previous command                            |
 | `fnm`                     | automatic on `cd`             | Switch Node version per `.nvmrc` / `.node-version`                |
@@ -81,7 +82,8 @@ Defined in [`functions.zsh`](./runcom/.oh-my-zsh/custom/functions.zsh):
 | `ff <name-fragment>` | `ff auth.controller` | Find files by name below the cwd (uses `fd`, falls back to `find`)              |
 | `srv [port]`         | `srv 3000`           | Serve the current dir over HTTP (default `:8000`) and open the browser          |
 | `killport <port>`    | `killport 3000`      | Kill whatever process is listening on a TCP port                                |
-| `git-cleanup`        | `git-cleanup`        | Delete branches merged into `origin/master`, locally and (opt-in) on the remote |
+
+`git-cleanup` is a thin alias for [`git trim`](#interactive-tools) — see the interactive tools table above.
 
 ### Aliases
 
