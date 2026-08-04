@@ -15,18 +15,19 @@ sudo:
 core: brew zsh git fnm node
 
 brew:
-	brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
+	command -v brew >/dev/null || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
 
 zsh: sudo
 	brew install zsh
-# List Homebrew zsh as a possible shell
-	echo "\n/opt/homebrew/bin/zsh" | sudo tee -a /etc/shells
-# Make zsh default shell
-	chsh -s /opt/homebrew/bin/zsh
+# List Homebrew zsh as a possible shell (append only if missing)
+	grep -qxF /opt/homebrew/bin/zsh /etc/shells || echo /opt/homebrew/bin/zsh | sudo tee -a /etc/shells
+# Make zsh default shell (skip if already set)
+	[ "$$SHELL" = /opt/homebrew/bin/zsh ] || chsh -s /opt/homebrew/bin/zsh
 # Create zsh config file if necessary
 	touch ~/.zshrc
-	rm -rf ~/.oh-my-zsh
-	brew || curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
+# Install oh-my-zsh if not already present (--unattended: don't chsh or launch zsh)
+	[ -d ~/.oh-my-zsh ] || \
+		curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash -s -- --unattended
 # Install zsh-autosuggestions plugin
 	[ -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ] || \
 		git clone https://github.com/zsh-users/zsh-autosuggestions \
