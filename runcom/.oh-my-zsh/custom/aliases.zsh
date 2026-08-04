@@ -4,11 +4,8 @@ alias ...="cd ../.."
 alias -- -="cd -"                  # Go to previous dir with -
 
 # Network
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias ipl="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
-
-# Copy my public key to the pasteboard
-alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | printf '=> Public key copied to pasteboard.\n'"
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"                                                          # Public (WAN) IP via OpenDNS
+alias ipl="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"  # Local (LAN) IPs, excluding loopback
 
 # GIT shortcuts
 alias gca='git commit --amend'
