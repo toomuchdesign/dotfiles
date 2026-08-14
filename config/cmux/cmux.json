@@ -46,8 +46,8 @@
         "first" : {
           "command" : true,
           "control" : false,
-          "key" : "]",
-          "keyCode" : 30,
+          "key" : "",
+          "keyCode" : 125,
           "option" : true,
           "shift" : false
         }
@@ -66,8 +66,8 @@
         "first" : {
           "command" : true,
           "control" : false,
-          "key" : "[",
-          "keyCode" : 33,
+          "key" : "",
+          "keyCode" : 126,
           "option" : true,
           "shift" : false
         }
