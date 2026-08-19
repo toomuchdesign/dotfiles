@@ -172,6 +172,13 @@ Import configuration from [install/raycast/raycast-configuration.rayconfig](./in
 
 Then register the script commands: `Settings` > `Extensions` > `Script Commands` > `Add Directories` > select `~/.dotfiles/install/raycast/scripts`.
 
+### Handy
+
+[Handy](https://handy.computer/) (offline speech-to-text) is installed via the [`handy` cask](./install/Caskfile), but its settings live in an app-managed store (`~/Library/Application Support/com.pais.handy/settings_store.json`) that also holds machine-specific data (recordings, history), so it's intentionally not tracked here. Configure it once per machine:
+
+- **Dictation hotkey:** `Ctrl-Space`.
+- **Transcription model:** download **Parakeet v3** from Handy's UI (it can't be scripted reliably — no stable CLI, and the download layout changes between releases). It lands in `~/Library/Application Support/com.pais.handy/models/parakeet-tdt-0.6b-v3-int8/`.
+
 ### Chrome
 
 Install the following extensions:
@@ -197,8 +204,6 @@ Configure search engines (`Manage search engines`):
 Add the **U.S.** and **U.S. International – PC** input sources:
 
 `Settings` > `Keyboard` > `Text Input` > `Input Sources` > `Edit…` > `+` > `English` > pick `U.S.` and `U.S. International – PC` > `Add`
-
-Switch between them with `Ctrl-Space` (or whatever `Input Sources` shortcut is set under `Keyboard Shortcuts`).
 
 ### VSC
 
