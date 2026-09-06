@@ -1,16 +1,6 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Homebrew shellenv — also in .zprofile, repeated here so non-login
-# interactive shells (IDE/agent subshells) pick up /opt/homebrew/bin.
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# User-local binaries. Most curl|sh installers and Python/Rust user installs
-# (pipx, uv, cargo-binstall…) drop executables in ~/.local/bin. Linux distros
-# add it to PATH by default, macOS does not. `typeset -U` keeps entries unique
-# so re-sourcing this file doesn't grow PATH.
-typeset -U path PATH
-path=("$HOME/.local/bin" $path)
+# PATH / environment (Homebrew + ~/.local/bin) lives in .zshenv so
+# non-interactive shells (scripts, cron, git hooks) get it too.
+# See runcom/.zshenv.
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
