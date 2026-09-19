@@ -20,8 +20,9 @@ sentence, apply its patterns inline: plain words over AI vocabulary, no
 "not just X but Y", no forced rule-of-three, no filler. Then self-audit —
 "what makes this obviously AI-generated?" — and fix what's left.
 
-When a code change adds or edits comments, also apply `deslop` to strip AI
-code slop (needless comments, defensive noise, `any` casts).
+`unslop` is for prose. For the code in a change, apply its counterpart
+`deslop` — it strips AI *code* slop (needless comments, defensive noise,
+`any` casts) rather than writing tells.
 
 Skip verbatim content: direct quotes, code identifiers, and anything the
 user asks to leave unchanged.

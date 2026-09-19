@@ -119,13 +119,15 @@ anything empty, boilerplate, or already obvious — a tiny PR can be just a
 
 ## Explain the hard parts plainly
 
-For any step or concept that's hard to grasp from the diff, drop a short
-callout right where it's needed:
+The body keeps the professional voice throughout (see **Voice**). The one
+exception: for a single step or concept that's genuinely hard to grasp from
+the diff, drop a short inline callout right where it's needed:
 
 > **In plain words:** <one or two jargon-free sentences>
 
-Write these the way the `bro` skill does — one human explaining to another,
-no jargon. Use them sparingly, only where a reviewer would otherwise get
+Write just the callout the way the `bro` skill does — one human explaining
+to another, no jargon. Never apply this casual register to the whole
+description; use it sparingly, only where a reviewer would otherwise get
 lost.
 
 ## Voice
