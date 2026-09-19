@@ -123,6 +123,7 @@ plannotator:
 # Grouped after `packages` so the `claude` CLI (claude-code cask) and node exist.
 CLAUDE_DIR := $(if $(CLAUDE_CONFIG_DIR),$(CLAUDE_CONFIG_DIR),$(HOME)/.claude)
 CLAUDE_SKILLS_DIR := $(CLAUDE_DIR)/skills
+CLAUDE_HOOKS_DIR := $(CLAUDE_DIR)/hooks
 
 claude-skills: superpowers mcollina-skills playwright-skills mattpocock-skills pstack claude-skills-local
 
@@ -139,9 +140,18 @@ claude-skills-local:
 # user-level ~/.claude/CLAUDE.md, which Claude loads for every project. Symlink
 # (not copy) so repo edits apply live and the file stays a single source of
 # truth. Enforces always-unslop + minimal output on generated text.
+#
+# Hooks (install/claude/hooks/*) are symlinked the same way. The PreToolUse
+# entry in ~/.claude/settings.json wires block-destructive-default-branch.py,
+# which hard-blocks force-pushes and remote deletes of master/main. settings.json
+# itself is machine-local (not tracked here), so on a fresh install re-add that
+# hook block by hand.
 claude-config:
-	mkdir -p "$(CLAUDE_DIR)"
+	mkdir -p "$(CLAUDE_DIR)" "$(CLAUDE_HOOKS_DIR)"
 	ln -sfn "$(DOTFILES_DIR)/install/claude/CLAUDE.md" "$(CLAUDE_DIR)/CLAUDE.md"
+	for hook in $(DOTFILES_DIR)/install/claude/hooks/*; do \
+		ln -sfn "$$hook" "$(CLAUDE_HOOKS_DIR)/$$(basename $$hook)"; \
+	done
 
 # obra/superpowers is a real Claude Code plugin (hooks, /brainstorm, SessionStart
 # injection), so it goes through the plugin CLI rather than being copied as loose

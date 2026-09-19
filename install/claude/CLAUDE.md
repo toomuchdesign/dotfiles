@@ -3,6 +3,21 @@
 Applies to every project on this machine. Managed in dotfiles
 (`install/claude/CLAUDE.md`), symlinked to `~/.claude/CLAUDE.md`.
 
+## Never push to master/main on your own
+
+Two hard rules for the default branch (`master` or `main`):
+
+1. **Never force-push to it.** No `--force`, `-f`, or `--force-with-lease`
+   targeting `master`/`main`, ever — no exception, no matter what you think
+   the history needs.
+2. **Never plain-push to it unless the prompter told you to in this
+   conversation.** A general "keep things moving" is not permission. If the
+   work is on the default branch, branch first and push the branch.
+
+When you believe a push to the default branch is warranted, stop and ask.
+If the human wants it done, they run it themselves (`! git push …`) — you do
+not run it for them. Pushing to a feature branch is fine.
+
 ## Always unslop written output
 
 Before returning any prose you generated, apply the `unslop` skill
