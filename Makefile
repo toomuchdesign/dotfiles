@@ -1,7 +1,7 @@
 DOTFILES_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 export XDG_CONFIG_HOME = $(HOME)/.config
 
-install: sudo core packages docker-compose link quartz-filters plannotator claude-skills
+install: sudo core packages docker-compose link quartz-filters plannotator claude-skills claude-config
 install-extra: install brew-packages-extra cask-apps-extra
 
 sudo:
@@ -121,9 +121,18 @@ plannotator:
 # (like plannotator's skills), so we (re)install them from source instead of
 # vendoring them. Everything lands under ~/.claude (or $CLAUDE_CONFIG_DIR).
 # Grouped after `packages` so the `claude` CLI (claude-code cask) and node exist.
-CLAUDE_SKILLS_DIR := $(if $(CLAUDE_CONFIG_DIR),$(CLAUDE_CONFIG_DIR),$(HOME)/.claude)/skills
+CLAUDE_DIR := $(if $(CLAUDE_CONFIG_DIR),$(CLAUDE_CONFIG_DIR),$(HOME)/.claude)
+CLAUDE_SKILLS_DIR := $(CLAUDE_DIR)/skills
 
 claude-skills: superpowers mcollina-skills playwright-skills mattpocock-skills pstack
+
+# Machine-wide Claude Code instructions: symlink the repo's CLAUDE.md to the
+# user-level ~/.claude/CLAUDE.md, which Claude loads for every project. Symlink
+# (not copy) so repo edits apply live and the file stays a single source of
+# truth. Enforces always-unslop + minimal output on generated text.
+claude-config:
+	mkdir -p "$(CLAUDE_DIR)"
+	ln -sfn "$(DOTFILES_DIR)/install/claude/CLAUDE.md" "$(CLAUDE_DIR)/CLAUDE.md"
 
 # obra/superpowers is a real Claude Code plugin (hooks, /brainstorm, SessionStart
 # injection), so it goes through the plugin CLI rather than being copied as loose
