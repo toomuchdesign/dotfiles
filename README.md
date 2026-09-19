@@ -10,7 +10,8 @@ Initially forked from https://github.com/webpro/dotfiles. It targets only macOS 
 - [homebrew-cask](https://caskroom.github.io) (packages: [Caskfile](./install/Caskfile))
 - [Node.js + npm LTS](https://nodejs.org/en/download/)
 - [Plannotator](https://plannotator.ai) (not on Homebrew — installed via its official script by `make`; see [below](#plannotator))
-- Claude Code agent skills & plugins ([superpowers](https://github.com/obra/superpowers), [mcollina/skills](https://github.com/mcollina/skills), [@playwright/cli](https://playwright.dev/docs/getting-started-cli); see [below](#claude-code-skills--plugins))
+- Claude Code agent skills & plugins ([superpowers](https://github.com/obra/superpowers), [mcollina/skills](https://github.com/mcollina/skills), [Matt Pocock's skills](https://github.com/mattpocock/skills), [pstack](https://github.com/michael-denyer/pstack-claude), [@playwright/cli](https://playwright.dev/docs/getting-started-cli), plus skills authored in this repo; see [below](#claude-code-skills--plugins))
+- Global Claude Code instructions & hooks ([`install/claude/`](./install/claude/), symlinked into `~/.claude`; see [below](#global-instructions--hooks))
 - Latest Git, ZSH, GNU coreutils, curl
 - Modern CLI tooling — [Starship](https://starship.rs) prompt, `fzf`, `zoxide`, `fd`, `ripgrep`, `bat`, `delta` (see [Shell](#shell))
 
@@ -136,17 +137,33 @@ Both the binary and the skills are generated artifacts (like a `git` checkout), 
 
 ## Claude Code skills & plugins
 
-`make` installs a few [Claude Code](https://claude.com/claude-code) agent add-ons under `~/.claude` (or `$CLAUDE_CONFIG_DIR`) via the [`claude-skills` Makefile target](./Makefile). Like plannotator's skills, these are generated artifacts installed from source, so nothing is tracked in this repo:
+`make` installs a few [Claude Code](https://claude.com/claude-code) agent add-ons under `~/.claude` (or `$CLAUDE_CONFIG_DIR`) via the [`claude-skills` Makefile target](./Makefile). The upstream ones (superpowers, mcollina/skills, Matt Pocock's, pstack, @playwright/cli) are generated artifacts installed from source, so they aren't tracked here — like plannotator's skills. Skills authored in this repo (last row) live under [`install/claude/`](./install/claude/) and are symlinked in, so they _are_ tracked:
 
-| Add-on                                                             | Kind                                                                 | How it's installed                                                                 |
-| ------------------------------------------------------------------ | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| [superpowers](https://github.com/obra/superpowers)                 | Claude Code **plugin** (hooks, `/brainstorm`, session-start context) | `claude plugin marketplace add` + `claude plugin install @superpowers-marketplace` |
-| [mcollina/skills](https://github.com/mcollina/skills)              | Plain skills (no plugin manifest)                                    | shallow `git clone`, copied into `~/.claude/skills/`                               |
-| [@playwright/cli](https://playwright.dev/docs/getting-started-cli) | npm CLI + its own skill                                              | `npm i -g @playwright/cli@latest` + `playwright-cli install --skills`              |
+| Add-on                                                             | Kind                                                                 | How it's installed                                                                     |
+| ------------------------------------------------------------------ | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| [superpowers](https://github.com/obra/superpowers)                 | Claude Code **plugin** (hooks, `/brainstorm`, session-start context) | `claude plugin marketplace add` + `claude plugin install @superpowers-marketplace`     |
+| [mcollina/skills](https://github.com/mcollina/skills)              | Plain skills (no plugin manifest)                                    | shallow `git clone`, copied into `~/.claude/skills/`                                   |
+| [Matt Pocock's skills](https://github.com/mattpocock/skills)       | Claude Code **plugin** (marketplace, aliased `mattpocock:*`)         | `claude plugin marketplace add` + `claude plugin install mattpocock-skills@mattpocock` |
+| [pstack](https://github.com/michael-denyer/pstack-claude)          | Claude Code **plugin** (poteto's skill stack, Claude port)           | `claude plugin marketplace add` + `claude plugin install pstack@pstack-claude`         |
+| [@playwright/cli](https://playwright.dev/docs/getting-started-cli) | npm CLI + its own skill                                              | `npm i -g @playwright/cli@latest` + `playwright-cli install --skills`                  |
+| [`install/claude/skills/`](./install/claude/skills/)               | Skills authored in this repo (e.g. `toomuchdesign-pr-description`)   | symlinked into `~/.claude/skills/` — repo edits apply live                             |
 
-Runs after `packages` so the `claude` CLI and Node are available. The superpowers step may prompt once to trust its marketplace — answer it interactively. Re-running the target refreshes each add-on to its latest version.
+Runs after `packages` so the `claude` CLI and Node are available. The plugin steps may prompt once to trust each marketplace — answer them interactively. Re-running the target refreshes each add-on to its latest version.
 
-An alternative to the imperative `superpowers` target would be to declare the marketplace + plugin in a global `~/.claude/settings.json` (`extraKnownMarketplaces` + `enabledPlugins`) and let Claude Code auto-install on startup — but this repo doesn't manage `~/.claude`, so the Makefile route is used instead.
+pstack pins [michael-denyer's Claude port](https://github.com/michael-denyer/pstack-claude) of poteto's Cursor stack; the port scene is young, so on a refresh re-check that repo (and search GitHub for "pstack claude") and swap the pin in the [`pstack` Makefile target](./Makefile) if a better-maintained one has appeared.
+
+An alternative to the imperative plugin targets would be to declare each marketplace + plugin in a global `~/.claude/settings.json` (`extraKnownMarketplaces` + `enabledPlugins`) and let Claude Code auto-install on startup — but this repo doesn't manage `~/.claude`, so the Makefile route is used instead.
+
+### Global instructions & hooks
+
+The [`claude-config` Makefile target](./Makefile) symlinks the repo's Claude Code config into `~/.claude` (or `$CLAUDE_CONFIG_DIR`) so edits here apply live and stay the single source of truth:
+
+| Asset                                                    | Symlinked to          | What it does                                                                                                                        |
+| -------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| [`install/claude/CLAUDE.md`](./install/claude/CLAUDE.md) | `~/.claude/CLAUDE.md` | Machine-wide instructions Claude loads for every project (push guardrails, always-unslop/deslop, minimal output)                    |
+| [`install/claude/hooks/`](./install/claude/hooks/)       | `~/.claude/hooks/`    | Agent hooks — currently `block-destructive-default-branch.py`, which hard-blocks force-pushes and remote deletes of `master`/`main` |
+
+The hook only fires once it's wired in `~/.claude/settings.json` (a `PreToolUse` entry). `settings.json` is machine-local and **not tracked here**, so on a fresh install re-add that hook block by hand.
 
 ## Post-install
 
