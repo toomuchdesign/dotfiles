@@ -107,7 +107,7 @@ quartz-filters:
 # official script (same curl-pipe-bash pattern as `brew`/oh-my-zsh above). The
 # standard install also checks out its Claude Code skills into ~/.claude/skills
 # and wires the plan hook, so no separate skills step is needed. Binary lands in
-# ~/.local/bin (already on PATH via runcom/.zshrc). --non-interactive skips the
+# ~/.local/bin (already on PATH via runcom/.zshenv). --non-interactive skips the
 # extras/model-invocable prompts for a reproducible install; re-run
 # `plannotator --reconfigure` by hand to change those. Runs after `packages` so
 # the claude-code cask exists for the installer's agent integration.
