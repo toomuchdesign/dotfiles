@@ -124,7 +124,16 @@ plannotator:
 CLAUDE_DIR := $(if $(CLAUDE_CONFIG_DIR),$(CLAUDE_CONFIG_DIR),$(HOME)/.claude)
 CLAUDE_SKILLS_DIR := $(CLAUDE_DIR)/skills
 
-claude-skills: superpowers mcollina-skills playwright-skills mattpocock-skills pstack
+claude-skills: superpowers mcollina-skills playwright-skills mattpocock-skills pstack claude-skills-local
+
+# Personal skills authored in this repo (install/claude/skills/*): symlink each
+# into ~/.claude/skills so they're portable and survive plugin updates. Symlink
+# (not copy) so repo edits apply live.
+claude-skills-local:
+	mkdir -p "$(CLAUDE_SKILLS_DIR)"
+	for skill in $(DOTFILES_DIR)/install/claude/skills/*/; do \
+		ln -sfn "$${skill%/}" "$(CLAUDE_SKILLS_DIR)/$$(basename $$skill)"; \
+	done
 
 # Machine-wide Claude Code instructions: symlink the repo's CLAUDE.md to the
 # user-level ~/.claude/CLAUDE.md, which Claude loads for every project. Symlink
