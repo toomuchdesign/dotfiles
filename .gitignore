@@ -6,3 +6,5 @@ runcom/.oh-my-zsh/custom/*.untracked.zsh
 config/git/config.untracked
 .claude/settings.local.json
 .claude/skills/
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
