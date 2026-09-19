@@ -20,12 +20,15 @@ sentence, apply its patterns inline: plain words over AI vocabulary, no
 "not just X but Y", no forced rule-of-three, no filler. Then self-audit —
 "what makes this obviously AI-generated?" — and fix what's left.
 
-`unslop` is for prose. For the code in a change, apply its counterpart
-`deslop` — it strips AI *code* slop (needless comments, defensive noise,
-`any` casts) rather than writing tells.
-
 Skip verbatim content: direct quotes, code identifiers, and anything the
 user asks to leave unchanged.
+
+## Always deslop code output
+
+`deslop` is the code counterpart to `unslop` (prose). Before finalizing any
+code you wrote or edited, apply the `deslop` skill (`pstack:deslop`) — strip
+needless comments, defensive noise, `any` casts, and other AI code slop.
+Match the surrounding file's style.
 
 ## Keep it minimal
 
