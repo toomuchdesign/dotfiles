@@ -123,7 +123,7 @@ plannotator:
 # Grouped after `packages` so the `claude` CLI (claude-code cask) and node exist.
 CLAUDE_SKILLS_DIR := $(if $(CLAUDE_CONFIG_DIR),$(CLAUDE_CONFIG_DIR),$(HOME)/.claude)/skills
 
-claude-skills: superpowers mcollina-skills playwright-skills
+claude-skills: superpowers mcollina-skills playwright-skills mattpocock-skills
 
 # obra/superpowers is a real Claude Code plugin (hooks, /brainstorm, SessionStart
 # injection), so it goes through the plugin CLI rather than being copied as loose
@@ -142,6 +142,14 @@ mcollina-skills:
 		git clone --depth 1 https://github.com/mcollina/skills "$$tmp" && \
 		cp -R "$$tmp"/skills/. "$(CLAUDE_SKILLS_DIR)/" && \
 		rm -rf "$$tmp"
+
+# mattpocock/skills ("Skills for Real Engineers") ships a .claude-plugin
+# marketplace, so it installs as a real plugin (aliased as mattpocock:* to avoid
+# clashing with built-ins). `marketplace add` is idempotent; the first install
+# may prompt once to trust the marketplace — answer it interactively.
+mattpocock-skills:
+	claude plugin marketplace add mattpocock/skills || true
+	claude plugin install mattpocock-skills@mattpocock --scope user
 
 # @playwright/cli installs its own Claude Code skill via `install --skills`
 # (lands in ~/.claude/skills/playwright-cli).
