@@ -123,7 +123,7 @@ plannotator:
 # Grouped after `packages` so the `claude` CLI (claude-code cask) and node exist.
 CLAUDE_SKILLS_DIR := $(if $(CLAUDE_CONFIG_DIR),$(CLAUDE_CONFIG_DIR),$(HOME)/.claude)/skills
 
-claude-skills: superpowers mcollina-skills playwright-skills mattpocock-skills
+claude-skills: superpowers mcollina-skills playwright-skills mattpocock-skills pstack
 
 # obra/superpowers is a real Claude Code plugin (hooks, /brainstorm, SessionStart
 # injection), so it goes through the plugin CLI rather than being copied as loose
@@ -150,6 +150,20 @@ mcollina-skills:
 mattpocock-skills:
 	claude plugin marketplace add mattpocock/skills || true
 	claude plugin install mattpocock-skills@mattpocock --scope user
+
+# pstack is poteto's (Lauren Tan) Cursor skill stack; cursor/plugins ships it
+# Cursor-only, so we use michael-denyer's faithful Claude Code port (a real
+# plugin marketplace). This supersedes the poteto-mode/how/why/architect/swarm/
+# principle-* skills that were previously hand-copied loose into ~/.claude/skills
+# — drop those loose dirs so the plugin is the single source of truth.
+#
+# NOTE: the pinned port can be abandoned/archived or overtaken by a better one —
+# the Claude pstack-port scene is young. On repo refresh, re-check
+# https://github.com/michael-denyer/pstack-claude (and search GitHub for "pstack
+# claude") and swap the pin below if a fresher/better-maintained port has won.
+pstack:
+	claude plugin marketplace add michael-denyer/pstack-claude || true
+	claude plugin install pstack@pstack-claude --scope user
 
 # @playwright/cli installs its own Claude Code skill via `install --skills`
 # (lands in ~/.claude/skills/playwright-cli).
