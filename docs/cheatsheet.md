@@ -75,7 +75,7 @@ symlinked into `~/.claude/skills/`, so edits apply live:
 | Skill                            | When                                                             |
 | -------------------------------- | --------------------------------------------------------------- |
 | `/toomuchdesign-pr-description`  | Write a PR description / markdown summary of a branch diff       |
-| `/toomuchdesign-absorb`          | Fold uncommitted edits into the commits that introduced them     |
+| `/toomuchdesign-commit-absorb`   | Fold uncommitted edits into the commits that introduced them     |
 | `/toomuchdesign-relink`          | Use a local sibling package as if published (npm/yarn/pnpm)      |
 
 ## Pick one — the overlaps
