@@ -152,6 +152,8 @@ Runs after `packages` so the `claude` CLI and Node are available. The plugin ste
 
 pstack pins [michael-denyer's Claude port](https://github.com/michael-denyer/pstack-claude) of poteto's Cursor stack; the port scene is young, so on a refresh re-check that repo (and search GitHub for "pstack claude") and swap the pin in the [`pstack` Makefile target](./Makefile) if a better-maintained one has appeared.
 
+The table above lists the families, not the individual skills — between them there are hundreds, most I'll never use. [`docs/cheatsheet.md`](./docs/cheatsheet.md) is the curated shortlist: which skill to reach for in a given situation, which overlaps to ignore, and which installed ones are just noise. It also covers the shell commands I keep forgetting (finding files by name vs. content, scoped to a folder).
+
 An alternative to the imperative plugin targets would be to declare each marketplace + plugin in a global `~/.claude/settings.json` (`extraKnownMarketplaces` + `enabledPlugins`) and let Claude Code auto-install on startup — but this repo doesn't manage `~/.claude`, so the Makefile route is used instead.
 
 ### Global instructions & hooks
