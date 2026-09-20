@@ -28,6 +28,21 @@ friendly, example-driven. Not a changelog or a commit dump.
 
 3. Understand the *why* before writing.
 
+4. Note the branch's issue/story id if there is one — many repos want it in the
+   title or as a `Closes #123` line. Get a hint from the branch name instead of
+   asking outright, then confirm rather than trusting it:
+
+   ```sh
+   git rev-parse --abbrev-ref HEAD | grep -oE '[0-9]{3,6}' | head -1
+   ```
+
+5. Check whether a PR already exists for this branch — it decides update-vs-create
+   and warns against clobbering an in-progress review:
+
+   ```sh
+   gh pr view --json number,title,url,state,reviewDecision 2>/dev/null || echo "no PR yet"
+   ```
+
 ### Clarify first
 
 Before writing, resolve real uncertainties by asking the user — batch a few
@@ -52,8 +67,9 @@ independent, say so and suggest splitting into separate PRs.
 
 Propose a one-line title above the body. Match the repo's convention (check
 `git log --oneline`): if it uses Conventional Commits, use
-`type(scope): summary`; otherwise a short imperative sentence. The title is
-the GitHub PR title — keep it separate from the body.
+`type(scope): summary`; otherwise a short imperative sentence. If the repo
+requires an issue/story id in the title, include the one from Gather step 4.
+The title is the GitHub PR title — keep it separate from the body.
 
 ## Body — always this shape
 
@@ -69,6 +85,12 @@ the GitHub PR title — keep it separate from the body.
 ## Changes
 
 - <notable changes in the reader's domain language — not file-by-file>
+
+## How to review
+
+<the commits in the order a reviewer should read them, one plain line each on
+what to look at. Use when the branch keeps a clean, independently-revertable
+history — it's the fastest path through the PR.>
 
 ## Example / Screenshots
 
@@ -86,7 +108,8 @@ screenshot.>
 
 ## Notes
 
-<risks, follow-ups, anything a reviewer should watch.>
+<risks, follow-ups, anything a reviewer should watch. Say so if the PR is
+intentionally a POC or minimal-by-design.>
 
 ## Open points
 
@@ -102,6 +125,7 @@ anything empty, boilerplate, or already obvious — a tiny PR can be just a
 - **Summary** — always; every reviewer reads it.
 - **Motivation & context** — when the *why* isn't obvious, or an issue links.
 - **Changes** — when several notable changes are worth listing.
+- **How to review** — when the branch has a clean multi-commit history worth walking in order.
 - **Example / Screenshots** — when behaviour or UI changes.
 - **Testing** — when there's something to verify.
 - **Breaking changes** — when something actually breaks.
@@ -155,9 +179,12 @@ Do both — show it and stage it for pasting:
 4. Print the proposed title separately so they can paste it into the title
    field.
 
-If the user works with `gh`, offer to open or update the PR directly:
-`gh pr create --title "<title>" --body-file "$TMPDIR/pr-body.md"` (or
-`gh pr edit --body-file …`). No "here's the description" preamble.
+If the user works with `gh`, offer to open or update the PR directly. When
+Gather found an existing PR, prefer `gh pr edit --body-file "$TMPDIR/pr-body.md"`
+and keep that PR — don't recreate it, and if it's already under review don't
+rewrite history as part of this, just update the body. Otherwise
+`gh pr create --title "<title>" --body-file "$TMPDIR/pr-body.md"`. No "here's
+the description" preamble.
 
 ## Iterate
 
