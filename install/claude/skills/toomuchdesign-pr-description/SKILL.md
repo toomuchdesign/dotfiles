@@ -170,14 +170,26 @@ underline: "I chose X over Y because…". Reserve it for those moments.
 
 ## Deliver it
 
-Do both — show it and stage it for pasting:
-
 1. **Show** the full body in the reply so the user can read and critique it.
-2. Write the body to a scratch file (e.g. `"$TMPDIR/pr-body.md"`).
-3. **Copy** it to the clipboard — `pbcopy < "$TMPDIR/pr-body.md"` (macOS) —
-   and confirm it's ready to paste into GitHub.
-4. Print the proposed title separately so they can paste it into the title
+2. Write the body to a file and print its **absolute path** on its own line so
+   the user can open it — resolve the path, don't leave a `$TMPDIR` token:
+
+   ```sh
+   out="$TMPDIR/pr-body.md" ; printf '%s\n' "$out"
+   ```
+
+3. Print the proposed title separately so they can paste it into the title
    field.
+4. Offer to open the draft in Plannotator for markup — it hands the reviewer's
+   inline annotations back on stdout:
+
+   ```sh
+   plannotator annotate "$out"
+   ```
+
+   It blocks until they submit or close the tab; read its stdout and fold the
+   feedback into the next draft. Add `--gate --json` when they want an explicit
+   approve/reject gate on the description rather than plain feedback.
 
 If the user works with `gh`, offer to open or update the PR directly. When
 Gather found an existing PR, prefer `gh pr edit --body-file "$TMPDIR/pr-body.md"`
@@ -189,6 +201,7 @@ the description" preamble.
 ## Iterate
 
 The first output is a draft. After delivering, invite feedback and expect
-changes. When the user asks for edits, apply them and re-run **Deliver it**
-(show + clipboard + title) so the clipboard always holds the latest version.
-Repeat until they're happy.
+changes. When the user asks for edits — typed here or returned from a
+Plannotator session — apply them and re-run **Deliver it** (show + path +
+title) so the file on disk always holds the latest version. Repeat until
+they're happy.
