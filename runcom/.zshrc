@@ -121,7 +121,10 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # fzf shell integration — key bindings + completion (fzf >= 0.48).
-#   Ctrl-R  fuzzy history search   Ctrl-T  fuzzy file picker   Alt-C  fuzzy cd
+#   Ctrl-R  history search   Ctrl-T  fuzzy file picker   Alt-C  fuzzy cd
+# --exact makes Ctrl-R match each typed term as a contiguous substring instead
+# of scattering the letters across the line (fzf's default fuzzy behaviour).
+export FZF_CTRL_R_OPTS="--exact"
 command -v fzf >/dev/null && source <(fzf --zsh)
 
 # zoxide setup — smarter `cd` that learns your most-used dirs.
