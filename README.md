@@ -220,9 +220,15 @@ Configure search engines (`Manage search engines`):
 
 ### Keyboard layouts
 
-Add the **U.S.** and **U.S. International – PC** input sources:
+Add the **U.S.** input source:
 
-`Settings` > `Keyboard` > `Text Input` > `Input Sources` > `Edit…` > `+` > `English` > pick `U.S.` and `U.S. International – PC` > `Add`
+`Settings` > `Keyboard` > `Text Input` > `Input Sources` > `Edit…` > `+` > `English` > pick `U.S.` > `Add`
+
+Avoid **U.S. International – PC**: there `"` `'` `` ` `` `~` `^` are dead keys —
+pressing one shows it highlighted while macOS waits to combine it with the next
+character (e.g. `"` + `a` → `ä`), so a lone or doubled quote can't be edited
+normally, which breaks shell quoting. Press-and-hold accents still work on plain
+U.S., so you lose nothing.
 
 ### VSC
 
