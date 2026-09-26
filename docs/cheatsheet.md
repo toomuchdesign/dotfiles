@@ -67,6 +67,23 @@ Grouped by the moment I'd want them.
 `unslop` (prose) and `deslop` (code) run automatically on every output — they're
 wired into my global [CLAUDE.md](../install/claude/CLAUDE.md), no need to invoke.
 
+## GitHub code reviews — give & receive
+
+Only the **built-in** (unprefixed) skills post to GitHub; the plugin ones are
+either local reviewers (text output) or receive-side. Needs `gh auth login` done.
+
+| I want to…                                         | Reach for                                      |
+| -------------------------------------------------- | ---------------------------------------------- |
+| **Give** a review on someone's PR (by URL)         | `/review <pr-url>` — posts a summary comment    |
+| **Give** inline comments on my checked-out branch  | `/code-review --comment`                        |
+| Deep local review first (no posting)               | `/pstack:interrogate`                           |
+| **Receive** — pull the PR feedback into a to-do list | `/pstack:get-pr-comments`                     |
+| **Receive** — work through feedback with judgment  | `/superpowers:receiving-code-review`            |
+| **Receive** — hands-off: fix CI + comments → mergeable | `/pstack:babysit`                          |
+
+Gap: no skill posts `interrogate`-grade findings *inline* on an arbitrary PR —
+built-ins use their own engine. Build a thin glue skill if that itch returns.
+
 ## My own skills
 
 Authored in this repo under [`install/claude/skills/`](../install/claude/skills/),
