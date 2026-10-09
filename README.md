@@ -171,7 +171,7 @@ The hook only fires once it's wired in `~/.claude/settings.json` (a `PreToolUse`
 
 ### iTerm2
 
-Point iTerm2 at [install/iterm2/](./install/iterm2/) so it loads its preferences from this repo:
+Point iTerm2 at [`~/.dotfiles/install/iterm2`](./install/iterm2/) so it loads its preferences from this repo:
 
 `Settings` > `General` > `Preferences` > check `Load preferences from a custom folder or URL` > select `~/.dotfiles/install/iterm2` > set `Save changes` to `Automatically`
 
@@ -187,7 +187,7 @@ Login and sync DropBox.
 
 ### Raycast
 
-Import configuration from [install/raycast/raycast-configuration.rayconfig](./install/raycast/raycast-configuration.rayconfig).
+Import configuration from [`~/.dotfiles/install/raycast/raycast-configuration.rayconfig`](./install/raycast/raycast-configuration.rayconfig).
 
 Then register the script commands: `Settings` > `Extensions` > `Script Commands` > `Add Directories` > select `~/.dotfiles/install/raycast/scripts`.
 
