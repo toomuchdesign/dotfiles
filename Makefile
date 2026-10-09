@@ -42,8 +42,12 @@ git:
 fnm:
 	brew install fnm
 
+# Install the latest LTS and point fnm's `default` alias at it, so `fnm env`
+# activates a node without an interactive shell or a project .node-version.
+# Recipes that need node (e.g. playwright-skills) rely on this default existing.
 node:
 	fnm install --lts
+	fnm default lts-latest
 
 #
 # PACKAGES
@@ -193,11 +197,21 @@ pstack:
 	claude plugin marketplace add michael-denyer/pstack-claude || true
 	claude plugin install pstack@pstack-claude --scope user
 
+# Shared node activation for any recipe needing node/npm. make runs recipes in
+# /bin/sh, which never sources .zshrc — the only place `fnm env` is eval'd — so
+# fnm's shims aren't on PATH otherwise. Prefix such a recipe with
+# `$(ACTIVATE_NODE);`. The `command -v fnm` guard is a migration tripwire: if we
+# ever move off fnm (volta, mise, brew node…), every node recipe fails fast with
+# a pointed message instead of a cryptic "npm: command not found". grep
+# ACTIVATE_NODE for all dependents; update this line plus the node/fnm targets.
+ACTIVATE_NODE := command -v fnm >/dev/null 2>&1 || { echo '>>> ACTIVATE_NODE: fnm not found. Node tooling moved off fnm? Update the Makefile (ACTIVATE_NODE + node/fnm targets).' >&2; exit 1; }; eval "$$(fnm env --shell bash)"
+
 # @playwright/cli installs its own Claude Code skill via `install --skills`
 # (lands in ~/.claude/skills/playwright-cli).
 playwright-skills:
-	npm install -g @playwright/cli@latest
-	playwright-cli install --skills
+	$(ACTIVATE_NODE); \
+		npm install -g @playwright/cli@latest && \
+		playwright-cli install --skills
 
 # Stow test commands:
 # stow --adopt -nvSt ~ runcom
