@@ -172,11 +172,15 @@ underline: "I chose X over Y because…". Reserve it for those moments.
 
 1. **Show** the full body in the reply so the user can read and critique it.
 2. Write the body to a file and print its **absolute path** on its own line so
-   the user can open it — resolve the path, don't leave a `$TMPDIR` token:
+   the user can open it. Create it in a fresh `mktemp -d` dir so concurrent
+   runs never share or overwrite a file:
 
    ```sh
-   out="$TMPDIR/pr-body.md" ; printf '%s\n' "$out"
+   out="$(mktemp -d "${TMPDIR:-/tmp}/pr-body.XXXXXX")/pr-body.md" ; printf '%s\n' "$out"
    ```
+
+   Shell state doesn't persist between calls: use the printed literal path
+   from here on, and reuse it on every iteration instead of creating a new one.
 
 3. Print the proposed title separately so they can paste it into the title
    field.
@@ -192,16 +196,16 @@ underline: "I chose X over Y because…". Reserve it for those moments.
    approve/reject gate on the description rather than plain feedback.
 
 If the user works with `gh`, offer to open or update the PR directly. When
-Gather found an existing PR, prefer `gh pr edit --body-file "$TMPDIR/pr-body.md"`
+Gather found an existing PR, prefer `gh pr edit --body-file "$out"`
 and keep that PR — don't recreate it, and if it's already under review don't
 rewrite history as part of this, just update the body. Otherwise
-`gh pr create --title "<title>" --body-file "$TMPDIR/pr-body.md"`. No "here's
+`gh pr create --title "<title>" --body-file "$out"`. No "here's
 the description" preamble.
 
 ## Iterate
 
 The first output is a draft. After delivering, invite feedback and expect
 changes. When the user asks for edits — typed here or returned from a
-Plannotator session — apply them and re-run **Deliver it** (show + path +
-title) so the file on disk always holds the latest version. Repeat until
-they're happy.
+Plannotator session — apply them, overwrite the same file, and re-run
+**Deliver it** (show + path + title) so it always holds the latest version.
+Repeat until they're happy.
