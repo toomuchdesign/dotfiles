@@ -146,7 +146,7 @@ Both the binary and the skills are generated artifacts (like a `git` checkout), 
 | [Matt Pocock's skills](https://github.com/mattpocock/skills)       | Claude Code **plugin** (marketplace, aliased `mattpocock:*`)         | `claude plugin marketplace add` + `claude plugin install mattpocock-skills@mattpocock` |
 | [pstack](https://github.com/michael-denyer/pstack-claude)          | Claude Code **plugin** (poteto's skill stack, Claude port)           | `claude plugin marketplace add` + `claude plugin install pstack@pstack-claude`         |
 | [@playwright/cli](https://playwright.dev/docs/getting-started-cli) | npm CLI + its own skill                                              | `npm i -g @playwright/cli@latest` + `playwright-cli install --skills`                  |
-| [`install/claude/skills/`](./install/claude/skills/)               | Skills authored in this repo (e.g. `toomuchdesign-pr-description`)   | symlinked into `~/.claude/skills/` — repo edits apply live                             |
+| [`install/claude/skills/`](./install/claude/skills/)               | Skills authored in this repo (e.g. `tmd-pr-description`)             | symlinked into `~/.claude/skills/` — repo edits apply live                             |
 
 Runs after `packages` so the `claude` CLI and Node are available. The plugin steps may prompt once to trust each marketplace — answer them interactively. Re-running the target refreshes each add-on to its latest version.
 

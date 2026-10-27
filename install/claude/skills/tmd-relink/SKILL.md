@@ -1,5 +1,5 @@
 ---
-name: toomuchdesign-relink
+name: tmd-relink
 description: Use when consuming a locally-built sibling package (e.g. a local @scope/* clone) inside another project as if it were published — links by pack+install, not symlink, so shared singletons (react, redux, a shared core package) stay deduped. Works with npm, yarn, and pnpm. Also handles unlinking (restore).
 ---
 

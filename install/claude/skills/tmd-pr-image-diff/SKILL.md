@@ -1,5 +1,5 @@
 ---
-name: toomuchdesign-pr-image-diff
+name: tmd-pr-image-diff
 description: Use when asked to review, inspect, compare, or visualize the image changes in a GitHub pull request, such as VRT baseline or snapshot PNG updates. Triggers on "show the visual diffs of this PR", "what changed in these screenshots", "image diff for PR <url>", or a PR URL whose changed files are mostly images. Starts a local browser viewer that lists every changed image with split, slider, and pixel-diff views, and each changed region numbered with before/after crops.
 ---
 
@@ -12,7 +12,7 @@ A local viewer for the images a PR changes. `serve.mjs` uses `gh` to download ea
 Start it in the background (Bash `run_in_background: true`). It keeps serving until the user clicks **Close** in the page or the process is stopped:
 
 ```bash
-node ~/.claude/skills/toomuchdesign-pr-image-diff/serve.mjs <pr-url> [--no-open]
+node ~/.claude/skills/tmd-pr-image-diff/serve.mjs <pr-url> [--no-open]
 ```
 
 - Works with github.com and GitHub Enterprise hosts. `gh` must be logged in to the PR's host (`gh auth status --hostname <host>`).

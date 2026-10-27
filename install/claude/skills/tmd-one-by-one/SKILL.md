@@ -1,6 +1,6 @@
 ---
-name: toomuchdesign-one-by-one
-description: Use for "/toomuchdesign-one-by-one", "go through them one by one", "one at a time", "point by point", or "walk me through each" over a set of findings, review comments, problems, research points, evidence, or open questions the user needs to decide on. Works mid-task on items already in the conversation.
+name: tmd-one-by-one
+description: Use for "/tmd-one-by-one", "go through them one by one", "one at a time", "point by point", or "walk me through each" over a set of findings, review comments, problems, research points, evidence, or open questions the user needs to decide on. Works mid-task on items already in the conversation.
 ---
 
 # One by one
@@ -90,6 +90,6 @@ The user can type at any point: `back`, `list` (index with decisions so far), `s
 
 Show the decision table from the log. In `decide-first`, propose an implementation order and wait for a go-ahead before changing code.
 
-Landing follows the log and needs the user's go-ahead like any commit: commit each new one on its own first, so absorb can't fold it into history, then run `toomuchdesign-commit-absorb` on the remaining absorb fixes.
+Landing follows the log and needs the user's go-ahead like any commit: commit each new one on its own first, so absorb can't fold it into history, then run `tmd-commit-absorb` on the remaining absorb fixes.
 
 If this was started in the middle of another task, say what that task was and pick it up again with the decisions applied.
