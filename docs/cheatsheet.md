@@ -94,6 +94,7 @@ symlinked into `~/.claude/skills/`, so edits apply live:
 | `/toomuchdesign-pr-description`  | Write a PR description / markdown summary of a branch diff       |
 | `/toomuchdesign-commit-absorb`   | Fold uncommitted edits into the commits that introduced them     |
 | `/toomuchdesign-relink`          | Use a local sibling package as if published (npm/yarn/pnpm)      |
+| `/toomuchdesign-one-by-one`      | Decide on findings one at a time, any time (`loop` to fix as you go) |
 
 ## Pick one — the overlaps
 
