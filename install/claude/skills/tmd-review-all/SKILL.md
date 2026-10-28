@@ -87,11 +87,11 @@ Hand the chosen findings to the `tmd-one-by-one` skill, keeping their numbers an
 
 **PR mode:** pass this contract.
 
-- Each item shows the draft comment in a quote block, written to the author: the problem, why it matters, a concrete fix. Use a GitHub ```` ```suggestion ```` block when the fix is a few lines inside the diff.
-- Options: ★ post inline as drafted · post as a question or nit · summary only · `skip`. `custom` rewrites the text.
+- Each item shows the draft comment in a quote block, following the "PR comments drafted by an agent" rule in `~/.claude/CLAUDE.md`: the problem, why it matters, a concrete fix. Use a GitHub ```` ```suggestion ```` block when the fix is a few lines inside the diff.
+- Options: ★ `👍` agree · `🤔` not sure · `FYI` · summary only · `skip`. The choice sets the `🤖 AI-flagged` label line. Text typed after the choice (`👍 we hit this in prod`) becomes the `**Me:**` line; never prompt for it. `custom <text>` makes the comment the user's own, without a label; `custom 🤖 <text>` keeps it.
 - A location outside the diff hunks can't take an inline comment: offer summary only in place of inline.
 - `loop` queues the comment; nothing is posted before Finish.
-- Finish: show every queued comment and the summary body together, ask for the event (`COMMENT` or `REQUEST_CHANGES`), and post only after the user approves:
+- Finish: show every queued comment and the summary body together, ask for the event (`COMMENT`, or `REQUEST_CHANGES` only when a blocking 👍 comment is queued), and post only after the user approves:
 
   ```sh
   gh api repos/{owner}/{repo}/pulls/<n>/reviews --input review.json

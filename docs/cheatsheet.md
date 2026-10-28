@@ -83,6 +83,8 @@ either local reviewers (text output) or receive-side. Needs `gh auth login` done
 
 `/tmd-review-all <pr-url>` runs interrogate, requesting-code-review and the
 built-in `/code-review` together and posts the findings you pick as one inline review.
+Each comment is labelled `🤖 AI-flagged` with your stance (`👍` / `🤔` / `FYI`);
+type a note after the choice to add your own `**Me:**` line.
 
 ## My own skills
 
