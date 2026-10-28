@@ -17,21 +17,21 @@ stick.
 `fd` searches by **name**, `rg` searches by **content**. Both respect
 `.gitignore` and both take an optional path to scope the search.
 
-| I want to…                            | Command                       |
-| ------------------------------------- | ----------------------------- |
-| Find a file by name, anywhere below cwd | `fd auth.controller`          |
-| …only inside a folder                 | `fd auth.controller src`      |
-| …including git-ignored files          | `fd -H -I auth.controller`    |
-| …by extension                         | `fd -e ts` / `fd -e ts src`   |
-| Search file contents, anywhere below cwd | `rg "createServer"`           |
-| …only inside a folder                 | `rg "createServer" src`       |
-| …in one file type                     | `rg -t ts "createServer"`     |
-| …show only matching file names        | `rg -l "createServer"`        |
-| …case-insensitive                     | `rg -i "todo"`                |
-| …including git-ignored files          | `rg -uu "createServer"`       |
-| Fuzzy-pick a file path into the command line | `Ctrl-T`                |
-| Fuzzy-search shell history            | `Ctrl-R`                      |
-| Jump to a recent directory            | `z <fragment>` / `zi`         |
+| I want to…                                   | Command                     |
+| -------------------------------------------- | --------------------------- |
+| Find a file by name, anywhere below cwd      | `fd auth.controller`        |
+| …only inside a folder                        | `fd auth.controller src`    |
+| …including git-ignored files                 | `fd -H -I auth.controller`  |
+| …by extension                                | `fd -e ts` / `fd -e ts src` |
+| Search file contents, anywhere below cwd     | `rg "createServer"`         |
+| …only inside a folder                        | `rg "createServer" src`     |
+| …in one file type                            | `rg -t ts "createServer"`   |
+| …show only matching file names               | `rg -l "createServer"`      |
+| …case-insensitive                            | `rg -i "todo"`              |
+| …including git-ignored files                 | `rg -uu "createServer"`     |
+| Fuzzy-pick a file path into the command line | `Ctrl-T`                    |
+| Fuzzy-search shell history                   | `Ctrl-R`                    |
+| Jump to a recent directory                   | `z <fragment>` / `zi`       |
 
 Rule of thumb: **name → `fd`, content → `rg`, folder → append the path**.
 
@@ -47,22 +47,22 @@ automatically. Skip everything not listed here — see
 
 Grouped by the moment I'd want them.
 
-| When I'm about to…                    | Reach for                                 |
-| ------------------------------------- | ----------------------------------------- |
-| Build a feature (explore intent first) | `/superpowers:brainstorming`             |
-| Design types/module shape before code | `/pstack:architect`                       |
-| Write a plan for multi-step work      | `/superpowers:writing-plans`              |
-| Debug a bug whose cause I don't know  | `/superpowers:systematic-debugging`       |
-| Run two+ approaches and compare       | `/pstack:arena`                           |
-| Get an adversarial multi-model review | `/pstack:interrogate`                     |
-| Review my own diff before merge       | `/code-review` (built-in)                 |
-| Fix failing CI on a PR                | `/pstack:fix-ci`                          |
-| Drive an open PR to mergeable         | `/pstack:babysit`                         |
-| Work on a Fastify server/route        | `/fastify`                                |
-| Node.js + native-TS (strip types) work | `/node`                                  |
-| Wrangle a hard generic / kill an `any` | `/typescript-magician`                   |
-| Set up ESLint 9 flat config / neostandard | `/linting-neostandard-eslint9`        |
-| Add or reorganize docs (Diátaxis)     | `/documentation`                          |
+| When I'm about to…                        | Reach for                           |
+| ----------------------------------------- | ----------------------------------- |
+| Build a feature (explore intent first)    | `/superpowers:brainstorming`        |
+| Design types/module shape before code     | `/pstack:architect`                 |
+| Write a plan for multi-step work          | `/superpowers:writing-plans`        |
+| Debug a bug whose cause I don't know      | `/superpowers:systematic-debugging` |
+| Run two+ approaches and compare           | `/pstack:arena`                     |
+| Get an adversarial multi-model review     | `/pstack:interrogate`               |
+| Review my own diff before merge           | `/code-review` (built-in)           |
+| Fix failing CI on a PR                    | `/pstack:fix-ci`                    |
+| Drive an open PR to mergeable             | `/pstack:babysit`                   |
+| Work on a Fastify server/route            | `/fastify`                          |
+| Node.js + native-TS (strip types) work    | `/node`                             |
+| Wrangle a hard generic / kill an `any`    | `/typescript-magician`              |
+| Set up ESLint 9 flat config / neostandard | `/linting-neostandard-eslint9`      |
+| Add or reorganize docs (Diátaxis)         | `/documentation`                    |
 
 `unslop` (prose) and `deslop` (code) run automatically on every output — they're
 wired into my global [CLAUDE.md](../install/claude/CLAUDE.md), no need to invoke.
@@ -72,14 +72,14 @@ wired into my global [CLAUDE.md](../install/claude/CLAUDE.md), no need to invoke
 Only the **built-in** (unprefixed) skills post to GitHub; the plugin ones are
 either local reviewers (text output) or receive-side. Needs `gh auth login` done.
 
-| I want to…                                         | Reach for                                      |
-| -------------------------------------------------- | ---------------------------------------------- |
-| **Give** a review on someone's PR (by URL)         | `/review <pr-url>` — posts a summary comment    |
-| **Give** inline comments on my checked-out branch  | `/code-review --comment`                        |
-| Deep local review first (no posting)               | `/pstack:interrogate`                           |
-| **Receive** — pull the PR feedback into a to-do list | `/pstack:get-pr-comments`                     |
-| **Receive** — work through feedback with judgment  | `/superpowers:receiving-code-review`            |
-| **Receive** — hands-off: fix CI + comments → mergeable | `/pstack:babysit`                          |
+| I want to…                                             | Reach for                                    |
+| ------------------------------------------------------ | -------------------------------------------- |
+| **Give** a review on someone's PR (by URL)             | `/review <pr-url>` — posts a summary comment |
+| **Give** inline comments on my checked-out branch      | `/code-review --comment`                     |
+| Deep local review first (no posting)                   | `/pstack:interrogate`                        |
+| **Receive** — pull the PR feedback into a to-do list   | `/pstack:get-pr-comments`                    |
+| **Receive** — work through feedback with judgment      | `/superpowers:receiving-code-review`         |
+| **Receive** — hands-off: fix CI + comments → mergeable | `/pstack:babysit`                            |
 
 `/tmd-review-all <pr-url>` runs interrogate, requesting-code-review and the
 built-in `/code-review` together and posts the findings you pick as one inline review.
@@ -89,25 +89,25 @@ built-in `/code-review` together and posts the findings you pick as one inline r
 Authored in this repo under [`install/claude/skills/`](../install/claude/skills/),
 symlinked into `~/.claude/skills/`, so edits apply live:
 
-| Skill                            | When                                                             |
-| -------------------------------- | --------------------------------------------------------------- |
-| `/tmd-pr-description`            | Write a PR description / markdown summary of a branch diff       |
-| `/tmd-commit-absorb`             | Fold uncommitted edits into the commits that introduced them     |
-| `/tmd-relink`                    | Use a local sibling package as if published (npm/yarn/pnpm)      |
-| `/tmd-one-by-one`                | Decide on all findings, then fixes land in the background (`loop` to fix as you go) |
-| `/tmd-review-all [pr]`           | Run every reviewer, reconcile, then fix (branch) or comment (PR) one by one |
+| Skill                  | When                                                                                |
+| ---------------------- | ----------------------------------------------------------------------------------- |
+| `/tmd-pr-description`  | Write a PR description / markdown summary of a branch diff                          |
+| `/tmd-commit-absorb`   | Fold uncommitted edits into the commits that introduced them                        |
+| `/tmd-relink`          | Use a local sibling package as if published (npm/yarn/pnpm)                         |
+| `/tmd-one-by-one`      | Decide on all findings, then fixes land in the background (`loop` to fix as you go) |
+| `/tmd-review-all [pr]` | Run every reviewer, reconcile, then fix (branch) or comment (PR) one by one         |
 
 ## Pick one — the overlaps
 
 Several families ship the same job. Redundant triggers are why nothing sticks.
 My default per job:
 
-| Job            | Use                                | Also installed (ignore)                          |
-| -------------- | ---------------------------------- | ------------------------------------------------ |
-| TDD            | `/superpowers:test-driven-development` | `pstack:tdd`, `mattpocock-skills:tdd`        |
-| Debugging      | `/superpowers:systematic-debugging` | `mattpocock-skills:diagnosing-bugs`, `pstack:principle-fix-root-causes` |
-| Code review    | `/tmd-review-all`                  | its seats, run alone for a quick pass: `/code-review`, `/pstack:interrogate` |
-| Research       | `/deep-research`                   | `mattpocock-skills:research`                      |
+| Job         | Use                                    | Also installed (ignore)                                                      |
+| ----------- | -------------------------------------- | ---------------------------------------------------------------------------- |
+| TDD         | `/superpowers:test-driven-development` | `pstack:tdd`, `mattpocock-skills:tdd`                                        |
+| Debugging   | `/superpowers:systematic-debugging`    | `mattpocock-skills:diagnosing-bugs`, `pstack:principle-fix-root-causes`      |
+| Code review | `/tmd-review-all`                      | its seats, run alone for a quick pass: `/code-review`, `/pstack:interrogate` |
+| Research    | `/deep-research`                       | `mattpocock-skills:research`                                                 |
 
 ## pstack principles are automatic
 
