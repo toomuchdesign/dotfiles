@@ -20,6 +20,7 @@ Take a set of items and put each one to the user as its own decision, with enoug
    ```
 
 6. **Mode:** `decide-first` (default) or `loop` if the user asked for it.
+7. **Caller contract:** when another skill hands over the items and defines what a decision is, follow it: its options replace the fix options, its finish step replaces **Finish**, and in `loop` its action replaces implementing. `absorb` / `new` apply only to code changes on the current branch.
 
 Open with one message: the numbered index (one line per item, with its meter), the total, the mode, the log path. Then item 1 in the shape below.
 
