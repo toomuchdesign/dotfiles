@@ -81,8 +81,8 @@ either local reviewers (text output) or receive-side. Needs `gh auth login` done
 | **Receive** — work through feedback with judgment  | `/superpowers:receiving-code-review`            |
 | **Receive** — hands-off: fix CI + comments → mergeable | `/pstack:babysit`                          |
 
-Gap: no skill posts `interrogate`-grade findings *inline* on an arbitrary PR —
-built-ins use their own engine. Build a thin glue skill if that itch returns.
+`/tmd-review-all <pr-url>` runs interrogate, requesting-code-review and the
+built-in `/code-review` together and posts the findings you pick as one inline review.
 
 ## My own skills
 
@@ -95,6 +95,7 @@ symlinked into `~/.claude/skills/`, so edits apply live:
 | `/tmd-commit-absorb`             | Fold uncommitted edits into the commits that introduced them     |
 | `/tmd-relink`                    | Use a local sibling package as if published (npm/yarn/pnpm)      |
 | `/tmd-one-by-one`                | Decide on findings one at a time, any time (`loop` to fix as you go) |
+| `/tmd-review-all [pr]`           | Run every reviewer, reconcile, then fix (branch) or comment (PR) one by one |
 
 ## Pick one — the overlaps
 
@@ -105,7 +106,7 @@ My default per job:
 | -------------- | ---------------------------------- | ------------------------------------------------ |
 | TDD            | `/superpowers:test-driven-development` | `pstack:tdd`, `mattpocock-skills:tdd`        |
 | Debugging      | `/superpowers:systematic-debugging` | `mattpocock-skills:diagnosing-bugs`, `pstack:principle-fix-root-causes` |
-| Code review    | `/code-review` + `/pstack:interrogate` | `superpowers:requesting-code-review`, `mattpocock-skills:code-review` |
+| Code review    | `/tmd-review-all`                  | its seats, run alone for a quick pass: `/code-review`, `/pstack:interrogate` |
 | Research       | `/deep-research`                   | `mattpocock-skills:research`                      |
 
 ## pstack principles are automatic
