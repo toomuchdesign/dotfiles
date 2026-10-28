@@ -56,7 +56,7 @@ One item per message, always these sections in this order:
 **Need from you:** <a fact you can't find that changes the pick>
 
 ---
-**Your call:** `1`–`<n>` · `custom` · `skip` · `later` + `absorb` (<sha>) or `new`
+**Your call:** `1`–`<n>` · `custom` · `skip` · `defer` + `absorb` (<sha>) or `new`
 ````
 
 Give each section all the information that helps the decision; there is no length limit. Use as many `+` / `−` lines per option as the trade-offs need. The ★ option is always listed first.
@@ -80,12 +80,13 @@ Stop after asking. The next item goes in the next message, after the user answer
 
 ## After each answer
 
-- Append `<n>. <name> → <decision> [absorb <sha> | new]` to the log.
+- Append `<n>. <name> → <decision> [absorb <sha> | new] [after #<m>]` to the log. Add `after #<m>` when the decision only holds if item m lands.
+- `defer`: log it as deferred; it goes to `open.md` to be decided once the other fixes have landed.
 - If the answer changes an earlier decision or makes a later item moot, say so.
 - `decide-first`: show the next item.
 - `loop`: implement it, run the narrowest check (type check, the related test), report the result in two lines, then show the next item. A failing check gets fixed or raised before moving on.
 
-The user can type at any point: `back`, `list` (index with decisions so far), `switch to loop` / `switch to decide-first`, `later` (pause and keep the log), `stop`.
+The user can type at any point: `defer` (this item), `back`, `list` (index with decisions so far), `switch to loop` / `switch to decide-first`, `stop`.
 
 ## Finish
 
@@ -93,10 +94,10 @@ Show the decision table from the log. In `decide-first`, propose an implementati
 
 On the go-ahead, hand the log to a background `general-purpose` agent and give control back; say the working tree is in use until it reports. The agent works through the decisions in order without asking anything:
 
-1. Re-read the code. If an earlier fix already resolved the item or made the decision wrong, record it as open with the reason and move on.
+1. Re-read the code. If an earlier fix already resolved the item, record it as resolved by that fix. If the item's `after #<m>` didn't land, or an earlier fix made the decision wrong, record it as open with the reason. Either way, move on.
 2. Implement it and run the narrowest check (type check, the related test). If the check fails and the fix isn't obvious, revert that change and record it as open with the output.
 3. Commit each `new` fix on its own as it lands. After the last item, run `tmd-commit-absorb` on the `absorb` fixes, so absorb can't fold a new fix into history.
 
-Open items go in `open.md` next to the log, each with its location and why it's open. When the agent finishes, report what landed, with the commits and check results, and what's open. If anything is open, run this skill again on `open.md`.
+Open items go in `open.md` next to the log, each with its location and why it's open. When the agent finishes, report what landed, with the commits and check results, what earlier fixes resolved, and what's open. If anything is open, run this skill again on `open.md`.
 
 If this was started in the middle of another task, say what that task was and pick it up again with the decisions applied.
