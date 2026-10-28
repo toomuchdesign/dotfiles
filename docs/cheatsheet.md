@@ -94,7 +94,7 @@ symlinked into `~/.claude/skills/`, so edits apply live:
 | `/tmd-pr-description`            | Write a PR description / markdown summary of a branch diff       |
 | `/tmd-commit-absorb`             | Fold uncommitted edits into the commits that introduced them     |
 | `/tmd-relink`                    | Use a local sibling package as if published (npm/yarn/pnpm)      |
-| `/tmd-one-by-one`                | Decide on findings one at a time, any time (`loop` to fix as you go) |
+| `/tmd-one-by-one`                | Decide on all findings, then fixes land in the background (`loop` to fix as you go) |
 | `/tmd-review-all [pr]`           | Run every reviewer, reconcile, then fix (branch) or comment (PR) one by one |
 
 ## Pick one — the overlaps

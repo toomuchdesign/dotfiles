@@ -83,7 +83,7 @@ Ask which findings to take into the decisions: Act on + Consider (default), a li
 
 Hand the chosen findings to the `tmd-one-by-one` skill, keeping their numbers and meters.
 
-**Local mode:** its default contract. Each decision is a code change.
+**Local mode:** its default contract. You decide every finding first; the fixes then land in a background agent, and any it leaves open come back through `tmd-one-by-one`.
 
 **PR mode:** pass this contract.
 
