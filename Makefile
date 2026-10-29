@@ -146,10 +146,11 @@ claude-skills-local:
 # truth. Enforces always-unslop + minimal output on generated text.
 #
 # Hooks (install/claude/hooks/*) are symlinked the same way. The PreToolUse
-# entry in ~/.claude/settings.json wires block-destructive-default-branch.py,
-# which hard-blocks force-pushes and remote deletes of master/main. settings.json
-# itself is machine-local (not tracked here), so on a fresh install re-add that
-# hook block by hand.
+# entries in ~/.claude/settings.json wire block-destructive-default-branch.py
+# (matcher Bash: hard-blocks force-pushes and remote deletes of master/main) and
+# require-one-by-one-card.py (matcher AskUserQuestion: blocks a tmd-one-by-one
+# picker with no item card). settings.json itself is machine-local (not tracked
+# here), so on a fresh install re-add those hook blocks by hand.
 claude-config:
 	mkdir -p "$(CLAUDE_DIR)" "$(CLAUDE_HOOKS_DIR)"
 	ln -sfn "$(DOTFILES_DIR)/install/claude/CLAUDE.md" "$(CLAUDE_DIR)/CLAUDE.md"

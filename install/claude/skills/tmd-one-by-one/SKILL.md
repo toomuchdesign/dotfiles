@@ -26,7 +26,7 @@ Open with one message: the numbered index (one line per item, with its meter), t
 
 ## Each item
 
-One item per message, always these sections in this order:
+One item per message, always these sections in this order. The card is visible output text, never only reasoning: drafting it while thinking doesn't show it to the user.
 
 ````markdown
 ### <n>/<total> · <short name> · <meter, if any>
@@ -69,7 +69,7 @@ Include **Need from you** only when the choice depends on a fact you can't find.
 
 ### Ask with a picker
 
-When the `AskUserQuestion` tool is available and the item has 2–4 options, ask through it right after the message and leave out the `---` / **Your call** lines:
+When the `AskUserQuestion` tool is available and the item has 2–4 options, write the full card as text first, then ask through it in the same message, leaving out the `---` / **Your call** lines. A picker with no card above it is a failed item. The `require-one-by-one-card.py` hook blocks it; when it does, end the reply with the card and the **Your call** line instead of asking again.
 
 - Question 1, header `<n>/<total>`: the question text stands on its own, since the picker can hide the message above it: what the code does, what goes wrong, who feels it, then "Which fix?". One option per item option, in list order. Label `<option name> (Recommended)` for ★, `<option name>` for the rest; description is its main gain and cost.
 - Question 2, header `Lands as`, only when absorb applies: `Absorb into <sha> (Recommended)` / `New commit`, recommended one first.
