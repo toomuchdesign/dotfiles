@@ -106,7 +106,7 @@ Seats: <seats> · Proven: <yes, how | no>
 
 Number across Act on and Consider. Meters follow `too-1-by-1`: critical `▮▮▮`, warning `▮▮▯`, nit `▮▯▯`.
 
-Then show the recap and stop:
+Then show the recap and stop, even when the user asked to go straight into deciding:
 
 - a seats table: seat, model, finding count, or why it was skipped
 - the four buckets with each finding's number, meter, location, seats and proof
@@ -117,4 +117,4 @@ Then show the recap and stop:
 
 - Running `/pstack:interrogate` whole: its own judge filters before the other seats are seen, so cross-seat consensus is lost. Use its prompt files as seats.
 - Adding `simplify`, `pstack:no-comments` or `code-review --fix`: seats must not edit code.
-- Starting `too-1-by-1` from here: stop at the recap so the user can read and edit `findings.md` first.
+- Starting `too-1-by-1` from here: stop at the recap so the user can read and edit `findings.md` first. If they asked to go straight on, say so, and that a reply of `go` starts `/too-1-by-1 <path>`.

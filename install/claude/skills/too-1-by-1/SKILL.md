@@ -22,7 +22,7 @@ Take a set of items and put each one to the user as its own decision, with enoug
 6. **Mode:** `decide-first` (default) or `loop` if the user asked for it.
 7. **Contract:** when the source's header names a `contract:` file, or a skill hands over the items and defines what a decision is, read and follow it: its options replace the fix options, its finish step replaces **Finish**, and in `loop` its action replaces implementing. Without one, the default below applies. `absorb` / `new` apply only to code changes on the current branch.
 
-Open with one message: the numbered index (one line per item, with its meter), the total, the mode, the log path. Then item 1 in the shape below.
+End the Collect turn with the numbered index (one line per item, with its meter), the total, the mode, the log path, and "Reply `go` to start." as its last text, with no tool call after it. Item 1 opens the next turn.
 
 ## Each item
 
@@ -69,7 +69,13 @@ Include **Need from you** only when the choice depends on a fact you can't find.
 
 ### Ask with a picker
 
-End every item with `AskUserQuestion`: write the full card as text first, then call the tool in the same message, leaving out the `---` / **Your call** lines. Never put the choice only as a typed list when the tool is available. A picker with no card above it is a failed item.
+Every item message has this order:
+
+1. The card as text, before any tool call in the turn, leaving out the `---` / **Your call** lines. Text that follows a tool result gets collapsed and never reaches the user.
+2. Any `Bash` calls (the previous item's log append, `loop` work).
+3. `AskUserQuestion`, last.
+
+Never put the choice only as a typed list when the tool is available. A picker with no card above it is a failed item.
 
 - Question 1, header `<n>/<total>`: the question text stands on its own, since the picker can hide the message above it: what the code does, what goes wrong, who feels it, then "Which fix?". Options, in list order: up to 3 item options, then `Rephrase` (description: "Explain this point again in different words"). Label `<option name> (Recommended)` for ★, `<option name>` for the rest; description is its main gain and cost. With more than 3 item options, the picker carries the first 3 and the card says the rest are picked by typing their number.
 - Question 2, header `Lands as`, only when absorb applies: `Absorb into <sha> (Recommended)` / `New commit`, recommended one first.
@@ -81,17 +87,17 @@ Stop after asking. The next item goes in the next message, after the user answer
 ## After each answer
 
 - `Rephrase`: rewrite the whole card for the same item from scratch, with new wording, a different angle or example, and a simpler **In plain words**. Keep the facts, the number, and the options with their numbering. A hint (`rephrase focus on who's affected`) steers it. Ask again; nothing is logged.
-- Append `<n>. <name> → <decision> [absorb <sha> | new] [after #<m>]` to the log. Add `after #<m>` when the decision only holds if item m lands. Don't spend a round trip on it: write the next card right away and make the append a `Bash` call in the same message, next to its `AskUserQuestion`. After the last item, append on its own before **Finish**.
+- Append `<n>. <name> → <option name> [absorb <sha> | new] [after #<m>]` to the log. Add `after #<m>` when the decision only holds if item m lands. Don't spend a round trip on it: the append is a `Bash` call in the next item's message, after its card. After the last item, append on its own before **Finish**.
 - `defer`: log it as deferred; it goes to `open.md` to be decided once the other fixes have landed.
 - If the answer changes an earlier decision or makes a later item moot, say so.
 - `decide-first`: show the next item.
-- `loop`: implement it, run the narrowest check (type check, the related test), report the result in two lines, then show the next item. A failing check gets fixed or raised before moving on.
+- `loop`: write the next card, then implement this decision and run the narrowest check (type check, the related test), then ask. The picker question opens with the check result in one line. If the check fails and the fix isn't obvious, end the turn with its output instead of asking; the next item waits.
 
 The user can type at any point: `defer` (this item), `back`, `list` (index with decisions so far), `switch to loop` / `switch to decide-first`, `stop`.
 
 ## Finish
 
-Show the decision table from the log. In `decide-first`, propose an implementation order and ask for one go-ahead that covers implementing and landing everything in the log.
+Show the decision table from the log. In `loop` the fixes are already in the tree: ask one go-ahead to commit them as step 3 below does. In `decide-first`, propose an implementation order and ask for one go-ahead that covers implementing and landing everything in the log.
 
 On the go-ahead, hand the log to a background `general-purpose` agent and give control back; say the working tree is in use until it reports. The agent works through the decisions in order without asking anything:
 
