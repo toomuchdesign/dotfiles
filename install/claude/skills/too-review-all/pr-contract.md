@@ -8,8 +8,8 @@ If `worktree` is gone, recreate it as `too-review-all` step 1 does. If `git -C "
 
 ## Each item
 
-- The card shows the draft comment in a quote block, following the "PR comments drafted by an agent" rule in `~/.claude/CLAUDE.md`: the problem, why it matters, a concrete fix. Use a GitHub ```` ```suggestion ```` block when the fix is a few lines inside the diff.
-- Picker options: ★ `👍 Agree` · `🤔 Not sure` · `FYI` · `Rephrase`. The choice sets the `🤖 AI-flagged` label line.
+- The card shows the draft comment in a quote block under **Draft comment**, between **In plain words** and **Options**, following the "PR comments drafted by an agent" rule in `~/.claude/CLAUDE.md`: the problem, why it matters, a concrete fix. Use a GitHub ```` ```suggestion ```` block when the fix is a few lines inside the diff.
+- Picker options: ★ `👍 Agree` · `🤔 Not sure` · `FYI` · `Rephrase`. The choice sets the `🤖 AI-flagged` label line. The question ends with "Which stance for this comment?".
 - Typed in the free-text field: `summary only` (goes in the review body, not inline), `skip`, `custom <text>` (the comment becomes the user's own, no label), `custom 🤖 <text>` (keeps the label). Text typed after a stance (`👍 we hit this in prod`) becomes the `**Me:**` line; never prompt for it.
 - A location outside the diff hunks can't take an inline comment: say so on the card; the comment goes in the summary body.
 - `loop` queues the comment instead of implementing.

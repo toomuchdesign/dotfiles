@@ -77,7 +77,7 @@ Every item message has this order:
 
 Never put the choice only as a typed list when the tool is available. A picker with no card above it is a failed item.
 
-- Question 1, header `<n>/<total>`: the question text stands on its own, since the picker can hide the message above it: what the code does, what goes wrong, who feels it, then "Which fix?". Options, in list order: up to 3 item options, then `Rephrase` (description: "Explain this point again in different words"). Label `<option name> (Recommended)` for ★, `<option name>` for the rest; description is its main gain and cost. With more than 3 item options, the picker carries the first 3 and the card says the rest are picked by typing their number.
+- Question 1, header `<n>/<total>`: the question text stands on its own, since the picker can hide the message above it: what the code does, what goes wrong, who feels it, then "Which fix?" or the question the contract sets. Options, in list order: up to 3 item options, then `Rephrase` (description: "Explain this point again in different words"). Label `<option name> (Recommended)` for ★, `<option name>` for the rest; description is its main gain and cost. With more than 3 item options, the picker carries the first 3 and the card says the rest are picked by typing their number.
 - Question 2, header `Lands as`, only when absorb applies: `Absorb into <sha> (Recommended)` / `New commit`, recommended one first.
 
 The picker's free-text field takes an option number, `custom <text>`, `rephrase <hint>` and the commands below. Only without the tool, end with the **Your call** line instead.
