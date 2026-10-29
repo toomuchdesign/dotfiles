@@ -160,12 +160,12 @@ An alternative to the imperative plugin targets would be to declare each marketp
 
 The [`claude-config` Makefile target](./Makefile) symlinks the repo's Claude Code config into `~/.claude` (or `$CLAUDE_CONFIG_DIR`) so edits here apply live and stay the single source of truth:
 
-| Asset                                                    | Symlinked to          | What it does                                                                                                                                                                                        |
-| -------------------------------------------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`install/claude/CLAUDE.md`](./install/claude/CLAUDE.md) | `~/.claude/CLAUDE.md` | Machine-wide instructions Claude loads for every project (push guardrails, always-unslop/deslop, minimal output, 🤖 labels on AI-raised PR comments)                                                |
-| [`install/claude/hooks/`](./install/claude/hooks/)       | `~/.claude/hooks/`    | Agent hooks: `block-destructive-default-branch.py` hard-blocks force-pushes and remote deletes of `master`/`main`; `require-1-by-1-card.py` blocks a `too-1-by-1` picker with no item card above it |
+| Asset                                                    | Symlinked to          | What it does                                                                                                                                         |
+| -------------------------------------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`install/claude/CLAUDE.md`](./install/claude/CLAUDE.md) | `~/.claude/CLAUDE.md` | Machine-wide instructions Claude loads for every project (push guardrails, always-unslop/deslop, minimal output, 🤖 labels on AI-raised PR comments) |
+| [`install/claude/hooks/`](./install/claude/hooks/)       | `~/.claude/hooks/`    | Agent hooks: `block-destructive-default-branch.py` hard-blocks force-pushes and remote deletes of `master`/`main`                                    |
 
-A hook only fires once it's wired in `~/.claude/settings.json` (a `PreToolUse` entry: matcher `Bash` for the push guard, `AskUserQuestion` for the card check). `settings.json` is machine-local and **not tracked here**, so on a fresh install re-add those hook blocks by hand.
+A hook only fires once it's wired in `~/.claude/settings.json` (a `PreToolUse` entry with matcher `Bash` for the push guard). `settings.json` is machine-local and **not tracked here**, so on a fresh install re-add that hook block by hand.
 
 ## Post-install
 

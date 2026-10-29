@@ -69,7 +69,7 @@ Include **Need from you** only when the choice depends on a fact you can't find.
 
 ### Ask with a picker
 
-End every item with `AskUserQuestion`: write the full card as text first, then call the tool in the same message, leaving out the `---` / **Your call** lines. Never put the choice only as a typed list when the tool is available. A picker with no card above it is a failed item; the `require-1-by-1-card.py` hook blocks it.
+End every item with `AskUserQuestion`: write the full card as text first, then call the tool in the same message, leaving out the `---` / **Your call** lines. Never put the choice only as a typed list when the tool is available. A picker with no card above it is a failed item.
 
 - Question 1, header `<n>/<total>`: the question text stands on its own, since the picker can hide the message above it: what the code does, what goes wrong, who feels it, then "Which fix?". Options, in list order: up to 3 item options, then `Rephrase` (description: "Explain this point again in different words"). Label `<option name> (Recommended)` for ★, `<option name>` for the rest; description is its main gain and cost. With more than 3 item options, the picker carries the first 3 and the card says the rest are picked by typing their number.
 - Question 2, header `Lands as`, only when absorb applies: `Absorb into <sha> (Recommended)` / `New commit`, recommended one first.
