@@ -5,7 +5,7 @@ description: Use for "/too-review-all", "run all the reviews", "full review", or
 
 # Review all
 
-Run several independent reviewers on one diff, reconcile their findings once, then decide on each with `too-one-by-one`. On the local branch the decisions are code changes; on a PR they are review comments.
+Run several independent reviewers on one diff, reconcile their findings once, then decide on each with `too-1-by-1`. On the local branch the decisions are code changes; on a PR they are review comments.
 
 ## 1. Target
 
@@ -74,16 +74,16 @@ Act as the lead reviewer in interrogate's `lead-judgment.md`, over all seats at 
 Recap, then stop:
 
 - a seats table: seat, model, finding count, or why it was skipped
-- the four buckets, numbered across Act on and Consider; each finding gets a `too-one-by-one` meter (critical `▮▮▮`, warning `▮▮▯`, nit `▮▯▯`), its location, its seats, and whether a seat proved it by running code
+- the four buckets, numbered across Act on and Consider; each finding gets a `too-1-by-1` meter (critical `▮▮▮`, warning `▮▮▯`, nit `▮▯▯`), its location, its seats, and whether a seat proved it by running code
 - a short agreement map
 
 Ask which findings to take into the decisions: Act on + Consider (default), a list of numbers, or none.
 
-## 5. Decide with too-one-by-one
+## 5. Decide with too-1-by-1
 
-Hand the chosen findings to the `too-one-by-one` skill, keeping their numbers and meters.
+Hand the chosen findings to the `too-1-by-1` skill, keeping their numbers and meters.
 
-**Local mode:** its default contract. You decide every finding first; the fixes then land in a background agent, and any it leaves open come back through `too-one-by-one`.
+**Local mode:** its default contract. You decide every finding first; the fixes then land in a background agent, and any it leaves open come back through `too-1-by-1`.
 
 **PR mode:** pass this contract.
 

@@ -1,6 +1,6 @@
 ---
-name: too-one-by-one
-description: Use for "/too-one-by-one", "go through them one by one", "one at a time", "point by point", or "walk me through each" over a set of findings, review comments, problems, research points, evidence, or open questions the user needs to decide on. Works mid-task on items already in the conversation.
+name: too-1-by-1
+description: Use for "/too-1-by-1", "go through them one by one", "one at a time", "point by point", or "walk me through each" over a set of findings, review comments, problems, research points, evidence, or open questions the user needs to decide on. Works mid-task on items already in the conversation.
 ---
 
 # One by one
@@ -16,7 +16,7 @@ Take a set of items and put each one to the user as its own decision, with enoug
 5. **Log:** create it once and print the path:
 
    ```sh
-   log="$(mktemp -d "${TMPDIR:-/tmp}/one-by-one.XXXXXX")/decisions.md" ; printf '%s\n' "$log"
+   log="$(mktemp -d "${TMPDIR:-/tmp}/1-by-1.XXXXXX")/decisions.md" ; printf '%s\n' "$log"
    ```
 
 6. **Mode:** `decide-first` (default) or `loop` if the user asked for it.
@@ -69,7 +69,7 @@ Include **Need from you** only when the choice depends on a fact you can't find.
 
 ### Ask with a picker
 
-When the `AskUserQuestion` tool is available and the item has 2–4 options, write the full card as text first, then ask through it in the same message, leaving out the `---` / **Your call** lines. A picker with no card above it is a failed item. The `require-one-by-one-card.py` hook blocks it; when it does, end the reply with the card and the **Your call** line instead of asking again.
+When the `AskUserQuestion` tool is available and the item has 2–4 options, write the full card as text first, then ask through it in the same message, leaving out the `---` / **Your call** lines. A picker with no card above it is a failed item. The `require-1-by-1-card.py` hook blocks it; when it does, end the reply with the card and the **Your call** line instead of asking again.
 
 - Question 1, header `<n>/<total>`: the question text stands on its own, since the picker can hide the message above it: what the code does, what goes wrong, who feels it, then "Which fix?". One option per item option, in list order. Label `<option name> (Recommended)` for ★, `<option name>` for the rest; description is its main gain and cost.
 - Question 2, header `Lands as`, only when absorb applies: `Absorb into <sha> (Recommended)` / `New commit`, recommended one first.

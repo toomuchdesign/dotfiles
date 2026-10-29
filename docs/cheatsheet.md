@@ -96,7 +96,7 @@ symlinked into `~/.claude/skills/`, so edits apply live:
 | `/too-pr-description`  | Write a PR description / markdown summary of a branch diff                          |
 | `/too-commit-absorb`   | Fold uncommitted edits into the commits that introduced them                        |
 | `/too-relink`          | Use a local sibling package as if published (npm/yarn/pnpm)                         |
-| `/too-one-by-one`      | Decide on all findings, then fixes land in the background (`loop` to fix as you go) |
+| `/too-1-by-1`          | Decide on all findings, then fixes land in the background (`loop` to fix as you go) |
 | `/too-review-all [pr]` | Run every reviewer, reconcile, then fix (branch) or comment (PR) one by one         |
 
 ## Pick one — the overlaps

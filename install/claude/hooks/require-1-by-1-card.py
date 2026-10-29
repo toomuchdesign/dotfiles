@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""PreToolUse gate: block a too-one-by-one picker that has no item card above it.
+"""PreToolUse gate: block a too-1-by-1 picker that has no item card above it.
 
-too-one-by-one asks each item through AskUserQuestion with header `<n>/<total>`.
+too-1-by-1 asks each item through AskUserQuestion with header `<n>/<total>`.
 The card (`### <n>/<total> · …`) must be visible text earlier in the same turn;
 otherwise the user only sees the picker. The turn starts after the previous
 AskUserQuestion call or the last user prompt.
