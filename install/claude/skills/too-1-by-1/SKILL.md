@@ -56,7 +56,7 @@ One item per message, always these sections in this order. The card is visible o
 **Need from you:** <a fact you can't find that changes the pick>
 
 ---
-**Your call:** `1`–`<n>` · `custom` · `skip` · `defer` + `absorb` (<sha>) or `new`
+**Your call:** `1`–`<n>` · `custom` · `rephrase` · `skip` · `defer` + `absorb` (<sha>) or `new`
 ````
 
 Give each section all the information that helps the decision; there is no length limit. Use as many `+` / `−` lines per option as the trade-offs need. The ★ option is always listed first.
@@ -69,18 +69,19 @@ Include **Need from you** only when the choice depends on a fact you can't find.
 
 ### Ask with a picker
 
-When the `AskUserQuestion` tool is available and the item has 2–4 options, write the full card as text first, then ask through it in the same message, leaving out the `---` / **Your call** lines. A picker with no card above it is a failed item. The `require-1-by-1-card.py` hook blocks it; when it does, end the reply with the card and the **Your call** line instead of asking again.
+End every item with `AskUserQuestion`: write the full card as text first, then call the tool in the same message, leaving out the `---` / **Your call** lines. Never put the choice only as a typed list when the tool is available. A picker with no card above it is a failed item; the `require-1-by-1-card.py` hook blocks it.
 
-- Question 1, header `<n>/<total>`: the question text stands on its own, since the picker can hide the message above it: what the code does, what goes wrong, who feels it, then "Which fix?". One option per item option, in list order. Label `<option name> (Recommended)` for ★, `<option name>` for the rest; description is its main gain and cost.
+- Question 1, header `<n>/<total>`: the question text stands on its own, since the picker can hide the message above it: what the code does, what goes wrong, who feels it, then "Which fix?". Options, in list order: up to 3 item options, then `Rephrase` (description: "Explain this point again in different words"). Label `<option name> (Recommended)` for ★, `<option name>` for the rest; description is its main gain and cost. With more than 3 item options, the picker carries the first 3 and the card says the rest are picked by typing their number.
 - Question 2, header `Lands as`, only when absorb applies: `Absorb into <sha> (Recommended)` / `New commit`, recommended one first.
 
-The picker's free-text field takes `custom` answers and the commands below. With more than 4 options, or without the tool, end with the **Your call** line instead.
+The picker's free-text field takes an option number, `custom <text>`, `rephrase <hint>` and the commands below. Only without the tool, end with the **Your call** line instead.
 
 Stop after asking. The next item goes in the next message, after the user answers.
 
 ## After each answer
 
-- Append `<n>. <name> → <decision> [absorb <sha> | new] [after #<m>]` to the log. Add `after #<m>` when the decision only holds if item m lands.
+- `Rephrase`: rewrite the whole card for the same item from scratch, with new wording, a different angle or example, and a simpler **In plain words**. Keep the facts, the number, and the options with their numbering. A hint (`rephrase focus on who's affected`) steers it. Ask again; nothing is logged.
+- Append `<n>. <name> → <decision> [absorb <sha> | new] [after #<m>]` to the log. Add `after #<m>` when the decision only holds if item m lands. Don't spend a round trip on it: write the next card right away and make the append a `Bash` call in the same message, next to its `AskUserQuestion`. After the last item, append on its own before **Finish**.
 - `defer`: log it as deferred; it goes to `open.md` to be decided once the other fixes have landed.
 - If the answer changes an earlier decision or makes a later item moot, say so.
 - `decide-first`: show the next item.
