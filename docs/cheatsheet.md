@@ -85,7 +85,7 @@ either local reviewers (text output) or receive-side. Needs `gh auth login` done
 built-in `/code-review` together and writes the reconciled findings to `findings.md`.
 `/too-1-by-1 <findings.md> [1,3,5]` then walks them and posts your picks as one inline review.
 Each comment is labelled `🤖 AI-flagged` with your stance (`👍` / `🤔` / `FYI`);
-type a note after the choice to add your own `**Me:**` line.
+pick Other and type the stance plus a note (`👍 we hit this in prod`) to open the comment with your own line.
 
 ## My own skills
 

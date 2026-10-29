@@ -97,11 +97,12 @@ prompts.
 Any review comment or thread reply an agent drafts for me to post must show
 who raised the point, so the author knows when I'm relaying an AI review.
 
-- An AI-raised comment opens with a label line carrying my stance:
+- The AI part of a comment opens with a label line carrying my stance:
   `🤖 AI-flagged · 👍 I agree`, `🤖 AI-flagged · 🤔 not sure, what do you
   think?` or `🤖 AI-flagged · FYI`. Comments fully mine get no label.
 - Write the AI part neutrally ("Possible leak when…"), never in first
-  person. My own words go last, set apart as `**Me:** …`.
+  person. My own words, if any, go first, above the label line, with no
+  prefix: the label marks where the AI part starts.
 - Open with a question where it fits, then the concrete fix. 🤔 is never
   blocking; FYI reads as a nit.
 - The review summary says: "🤖 marks points raised by the AI review. Push
