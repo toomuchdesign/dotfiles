@@ -148,7 +148,7 @@ claude-skills-local:
 # Hooks (install/claude/hooks/*) are symlinked the same way. The PreToolUse
 # entries in ~/.claude/settings.json wire block-destructive-default-branch.py
 # (matcher Bash: hard-blocks force-pushes and remote deletes of master/main) and
-# require-one-by-one-card.py (matcher AskUserQuestion: blocks a tmd-one-by-one
+# require-one-by-one-card.py (matcher AskUserQuestion: blocks a too-one-by-one
 # picker with no item card). settings.json itself is machine-local (not tracked
 # here), so on a fresh install re-add those hook blocks by hand.
 claude-config:

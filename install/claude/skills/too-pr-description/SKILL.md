@@ -1,5 +1,5 @@
 ---
-name: tmd-pr-description
+name: too-pr-description
 description: Use when asked to write or generate a PR description, PR body, or human-friendly markdown summary of a branch diff (usually the current branch) to paste into GitHub. Triggers include "PR description for this branch", "describe this diff", "write the PR body".
 ---
 

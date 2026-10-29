@@ -1,6 +1,6 @@
 ---
-name: tmd-commit-absorb
-description: Use for "/tmd-commit-absorb", "reconcile these changes", "fold this into the right commits", or after addressing review feedback — reconciles uncommitted edits into the commits that introduced those lines, leaves genuinely-new work for its own commit, so branch history reads as a clean logical sequence. Wraps the deterministic git-absorb tool; the caller supplies the judgment.
+name: too-commit-absorb
+description: Use for "/too-commit-absorb", "reconcile these changes", "fold this into the right commits", or after addressing review feedback — reconciles uncommitted edits into the commits that introduced those lines, leaves genuinely-new work for its own commit, so branch history reads as a clean logical sequence. Wraps the deterministic git-absorb tool; the caller supplies the judgment.
 ---
 
 # absorb
@@ -16,7 +16,7 @@ message, keeping the order logical — is yours.
 ## When to use
 
 - After a `plannotator` (or any) review pass: implement the feedback **without
-  committing**, then `/tmd-commit-absorb` to fold the fixes back into the commits under review.
+  committing**, then `/too-commit-absorb` to fold the fixes back into the commits under review.
 - Any time follow-up tweaks/refactors should land in the commits that introduced the
   code, not pile up as "address review" commits at the tip.
 - Runs safely and idempotently in a tight review→fix→absorb→review loop.

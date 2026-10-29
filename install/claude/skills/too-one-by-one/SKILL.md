@@ -1,6 +1,6 @@
 ---
-name: tmd-one-by-one
-description: Use for "/tmd-one-by-one", "go through them one by one", "one at a time", "point by point", or "walk me through each" over a set of findings, review comments, problems, research points, evidence, or open questions the user needs to decide on. Works mid-task on items already in the conversation.
+name: too-one-by-one
+description: Use for "/too-one-by-one", "go through them one by one", "one at a time", "point by point", or "walk me through each" over a set of findings, review comments, problems, research points, evidence, or open questions the user needs to decide on. Works mid-task on items already in the conversation.
 ---
 
 # One by one
@@ -96,7 +96,7 @@ On the go-ahead, hand the log to a background `general-purpose` agent and give c
 
 1. Re-read the code. If an earlier fix already resolved the item, record it as resolved by that fix. If the item's `after #<m>` didn't land, or an earlier fix made the decision wrong, record it as open with the reason. Either way, move on.
 2. Implement it and run the narrowest check (type check, the related test). If the check fails and the fix isn't obvious, revert that change and record it as open with the output.
-3. Commit each `new` fix on its own as it lands. After the last item, run `tmd-commit-absorb` on the `absorb` fixes, so absorb can't fold a new fix into history.
+3. Commit each `new` fix on its own as it lands. After the last item, run `too-commit-absorb` on the `absorb` fixes, so absorb can't fold a new fix into history.
 
 Open items go in `open.md` next to the log, each with its location and why it's open. When the agent finishes, report what landed, with the commits and check results, what earlier fixes resolved, and what's open. If anything is open, run this skill again on `open.md`.
 

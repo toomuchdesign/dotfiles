@@ -146,7 +146,7 @@ Both the binary and the skills are generated artifacts (like a `git` checkout), 
 | [Matt Pocock's skills](https://github.com/mattpocock/skills)       | Claude Code **plugin** (marketplace, aliased `mattpocock:*`)         | `claude plugin marketplace add` + `claude plugin install mattpocock-skills@mattpocock` |
 | [pstack](https://github.com/michael-denyer/pstack-claude)          | Claude Code **plugin** (poteto's skill stack, Claude port)           | `claude plugin marketplace add` + `claude plugin install pstack@pstack-claude`         |
 | [@playwright/cli](https://playwright.dev/docs/getting-started-cli) | npm CLI + its own skill                                              | `npm i -g @playwright/cli@latest` + `playwright-cli install --skills`                  |
-| [`install/claude/skills/`](./install/claude/skills/)               | Skills authored in this repo (e.g. `tmd-pr-description`)             | symlinked into `~/.claude/skills/` — repo edits apply live                             |
+| [`install/claude/skills/`](./install/claude/skills/)               | Skills authored in this repo (e.g. `too-pr-description`)             | symlinked into `~/.claude/skills/` — repo edits apply live                             |
 
 Runs after `packages` so the `claude` CLI and Node are available. The plugin steps may prompt once to trust each marketplace — answer them interactively. Re-running the target refreshes each add-on to its latest version.
 
@@ -163,7 +163,7 @@ The [`claude-config` Makefile target](./Makefile) symlinks the repo's Claude Cod
 | Asset                                                    | Symlinked to          | What it does                                                                                                                                                                                                |
 | -------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`install/claude/CLAUDE.md`](./install/claude/CLAUDE.md) | `~/.claude/CLAUDE.md` | Machine-wide instructions Claude loads for every project (push guardrails, always-unslop/deslop, minimal output, 🤖 labels on AI-raised PR comments)                                                        |
-| [`install/claude/hooks/`](./install/claude/hooks/)       | `~/.claude/hooks/`    | Agent hooks: `block-destructive-default-branch.py` hard-blocks force-pushes and remote deletes of `master`/`main`; `require-one-by-one-card.py` blocks a `tmd-one-by-one` picker with no item card above it |
+| [`install/claude/hooks/`](./install/claude/hooks/)       | `~/.claude/hooks/`    | Agent hooks: `block-destructive-default-branch.py` hard-blocks force-pushes and remote deletes of `master`/`main`; `require-one-by-one-card.py` blocks a `too-one-by-one` picker with no item card above it |
 
 A hook only fires once it's wired in `~/.claude/settings.json` (a `PreToolUse` entry: matcher `Bash` for the push guard, `AskUserQuestion` for the card check). `settings.json` is machine-local and **not tracked here**, so on a fresh install re-add those hook blocks by hand.
 

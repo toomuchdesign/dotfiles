@@ -81,7 +81,7 @@ either local reviewers (text output) or receive-side. Needs `gh auth login` done
 | **Receive** — work through feedback with judgment      | `/superpowers:receiving-code-review`         |
 | **Receive** — hands-off: fix CI + comments → mergeable | `/pstack:babysit`                            |
 
-`/tmd-review-all <pr-url>` runs interrogate, requesting-code-review and the
+`/too-review-all <pr-url>` runs interrogate, requesting-code-review and the
 built-in `/code-review` together and posts the findings you pick as one inline review.
 Each comment is labelled `🤖 AI-flagged` with your stance (`👍` / `🤔` / `FYI`);
 type a note after the choice to add your own `**Me:**` line.
@@ -93,11 +93,11 @@ symlinked into `~/.claude/skills/`, so edits apply live:
 
 | Skill                  | When                                                                                |
 | ---------------------- | ----------------------------------------------------------------------------------- |
-| `/tmd-pr-description`  | Write a PR description / markdown summary of a branch diff                          |
-| `/tmd-commit-absorb`   | Fold uncommitted edits into the commits that introduced them                        |
-| `/tmd-relink`          | Use a local sibling package as if published (npm/yarn/pnpm)                         |
-| `/tmd-one-by-one`      | Decide on all findings, then fixes land in the background (`loop` to fix as you go) |
-| `/tmd-review-all [pr]` | Run every reviewer, reconcile, then fix (branch) or comment (PR) one by one         |
+| `/too-pr-description`  | Write a PR description / markdown summary of a branch diff                          |
+| `/too-commit-absorb`   | Fold uncommitted edits into the commits that introduced them                        |
+| `/too-relink`          | Use a local sibling package as if published (npm/yarn/pnpm)                         |
+| `/too-one-by-one`      | Decide on all findings, then fixes land in the background (`loop` to fix as you go) |
+| `/too-review-all [pr]` | Run every reviewer, reconcile, then fix (branch) or comment (PR) one by one         |
 
 ## Pick one — the overlaps
 
@@ -108,7 +108,7 @@ My default per job:
 | ----------- | -------------------------------------- | ---------------------------------------------------------------------------- |
 | TDD         | `/superpowers:test-driven-development` | `pstack:tdd`, `mattpocock-skills:tdd`                                        |
 | Debugging   | `/superpowers:systematic-debugging`    | `mattpocock-skills:diagnosing-bugs`, `pstack:principle-fix-root-causes`      |
-| Code review | `/tmd-review-all`                      | its seats, run alone for a quick pass: `/code-review`, `/pstack:interrogate` |
+| Code review | `/too-review-all`                      | its seats, run alone for a quick pass: `/code-review`, `/pstack:interrogate` |
 | Research    | `/deep-research`                       | `mattpocock-skills:research`                                                 |
 
 ## pstack principles are automatic

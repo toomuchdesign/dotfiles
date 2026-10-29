@@ -1,15 +1,15 @@
 ---
-name: tmd-review-all
-description: Use for "/tmd-review-all", "run all the reviews", "full review", or when the user wants several code reviewers run on the same change and their findings reconciled into one list. Works on the local branch or on a GitHub PR given by number or URL.
+name: too-review-all
+description: Use for "/too-review-all", "run all the reviews", "full review", or when the user wants several code reviewers run on the same change and their findings reconciled into one list. Works on the local branch or on a GitHub PR given by number or URL.
 ---
 
 # Review all
 
-Run several independent reviewers on one diff, reconcile their findings once, then decide on each with `tmd-one-by-one`. On the local branch the decisions are code changes; on a PR they are review comments.
+Run several independent reviewers on one diff, reconcile their findings once, then decide on each with `too-one-by-one`. On the local branch the decisions are code changes; on a PR they are review comments.
 
 ## 1. Target
 
-**Local mode** (no argument, or a branch name): detect the base the way `tmd-pr-description` does, then `git diff <base>...HEAD`.
+**Local mode** (no argument, or a branch name): detect the base the way `too-pr-description` does, then `git diff <base>...HEAD`.
 
 **PR mode** (number or URL). The working directory must be a clone of the PR's repo; otherwise stop and say so.
 
@@ -74,16 +74,16 @@ Act as the lead reviewer in interrogate's `lead-judgment.md`, over all seats at 
 Recap, then stop:
 
 - a seats table: seat, model, finding count, or why it was skipped
-- the four buckets, numbered across Act on and Consider; each finding gets a `tmd-one-by-one` meter (critical `▮▮▮`, warning `▮▮▯`, nit `▮▯▯`), its location, its seats, and whether a seat proved it by running code
+- the four buckets, numbered across Act on and Consider; each finding gets a `too-one-by-one` meter (critical `▮▮▮`, warning `▮▮▯`, nit `▮▯▯`), its location, its seats, and whether a seat proved it by running code
 - a short agreement map
 
 Ask which findings to take into the decisions: Act on + Consider (default), a list of numbers, or none.
 
-## 5. Decide with tmd-one-by-one
+## 5. Decide with too-one-by-one
 
-Hand the chosen findings to the `tmd-one-by-one` skill, keeping their numbers and meters.
+Hand the chosen findings to the `too-one-by-one` skill, keeping their numbers and meters.
 
-**Local mode:** its default contract. You decide every finding first; the fixes then land in a background agent, and any it leaves open come back through `tmd-one-by-one`.
+**Local mode:** its default contract. You decide every finding first; the fixes then land in a background agent, and any it leaves open come back through `too-one-by-one`.
 
 **PR mode:** pass this contract.
 
