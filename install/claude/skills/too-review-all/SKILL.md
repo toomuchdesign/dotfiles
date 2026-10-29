@@ -5,7 +5,7 @@ description: Use for "/too-review-all", "run all the reviews", "full review", or
 
 # Review all
 
-Run several independent reviewers on one diff, reconcile their findings once, then decide on each with `too-1-by-1`. On the local branch the decisions are code changes; on a PR they are review comments.
+Run several independent reviewers on one diff, reconcile their findings once, and write them to `findings.md`. Deciding on them is `too-1-by-1`'s job: on the local branch the decisions are code changes; on a PR they are review comments, posted by [pr-contract.md](pr-contract.md).
 
 ## 1. Target
 
@@ -18,7 +18,7 @@ gh pr view <pr> --json number,url,title,body,author,baseRefName,headRefOid
 gh api user --jq .login
 ```
 
-If the PR author is the current user, suggest local mode from the checked-out branch instead: GitHub won't take `REQUEST_CHANGES` on your own PR, and you'd fix rather than comment. Otherwise check the head out into a temporary worktree, tell the user its path, and remove it at the end:
+If the PR author is the current user, suggest local mode from the checked-out branch instead: GitHub won't take `REQUEST_CHANGES` on your own PR, and you'd fix rather than comment. Otherwise check the head out into a temporary worktree, tell the user its path; `too-1-by-1` removes it after posting:
 
 ```sh
 git fetch origin <baseRefName> "pull/<n>/head"
@@ -28,7 +28,7 @@ git -C "$wt" diff origin/<baseRefName>...HEAD
 
 Put the worktree in the session's scratchpad directory when there is one. Fetch existing feedback so it isn't repeated: `gh api repos/{owner}/{repo}/pulls/<n>/comments --paginate` and `gh pr view <n> --comments`.
 
-If `gh` isn't authenticated, read the PR from the public API instead (`curl -s https://api.github.com/repos/{owner}/{repo}/pulls/<n>` and its `/comments`); Finish then stops at the preview.
+If `gh` isn't authenticated, read the PR from the public API instead (`curl -s https://api.github.com/repos/{owner}/{repo}/pulls/<n>` and its `/comments`); posting then stops at the preview.
 
 Stop on an empty diff. Then state the intent in one paragraph from the PR body, commits, linked issue or plan; ask if it's unclear.
 
@@ -71,36 +71,50 @@ Act as the lead reviewer in interrogate's `lead-judgment.md`, over all seats at 
 3. PR mode: drop findings an existing comment already raises, naming who raised them.
 4. Bucket into Act on, Consider, Noted, Dismissed.
 
-Recap, then stop:
+## 5. Recap and hand off
+
+Write `findings.md` in a directory of its own, so concurrent runs never share a path, and print it. Create the file only through this; never write to a fixed `findings.md` path:
+
+```sh
+f="$(mktemp -d "${SCRATCH:-${TMPDIR:-/tmp}}/review-all.XXXXXX")/findings.md" ; printf '%s\n' "$f"
+```
+
+`SCRATCH` is the session's scratchpad directory when there is one. The file looks like:
+
+````markdown
+---
+source: too-review-all
+target: <PR URL, or the branch>
+base: <base ref>
+head: <headRefOid, or HEAD's SHA>
+worktree: <$wt, PR mode only>
+contract: <absolute path of this skill's pr-contract.md, PR mode only>
+default: <numbers of Act on + Consider>
+---
+
+## Act on
+
+### 1 · ▮▮▮ <title>
+Location: /absolute/path/file.ts:42
+Seats: <seats> · Proven: <yes, how | no>
+<finding, evidence, suggestion>
+
+## Consider
+## Noted
+## Dismissed
+````
+
+Number across Act on and Consider. Meters follow `too-1-by-1`: critical `▮▮▮`, warning `▮▮▯`, nit `▮▯▯`.
+
+Then show the recap and stop:
 
 - a seats table: seat, model, finding count, or why it was skipped
-- the four buckets, numbered across Act on and Consider; each finding gets a `too-1-by-1` meter (critical `▮▮▮`, warning `▮▮▯`, nit `▮▯▯`), its location, its seats, and whether a seat proved it by running code
+- the four buckets with each finding's number, meter, location, seats and proof
 - a short agreement map
-
-Ask which findings to take into the decisions: Act on + Consider (default), a list of numbers, or none.
-
-## 5. Decide with too-1-by-1
-
-Hand the chosen findings to the `too-1-by-1` skill, keeping their numbers and meters.
-
-**Local mode:** its default contract. You decide every finding first; the fixes then land in a background agent, and any it leaves open come back through `too-1-by-1`.
-
-**PR mode:** pass this contract.
-
-- Each item shows the draft comment in a quote block, following the "PR comments drafted by an agent" rule in `~/.claude/CLAUDE.md`: the problem, why it matters, a concrete fix. Use a GitHub ```` ```suggestion ```` block when the fix is a few lines inside the diff.
-- Options: ★ `👍` agree · `🤔` not sure · `FYI` · summary only · `skip`. The choice sets the `🤖 AI-flagged` label line. Text typed after the choice (`👍 we hit this in prod`) becomes the `**Me:**` line; never prompt for it. `custom <text>` makes the comment the user's own, without a label; `custom 🤖 <text>` keeps it.
-- A location outside the diff hunks can't take an inline comment: offer summary only in place of inline.
-- `loop` queues the comment; nothing is posted before Finish.
-- Finish: show every queued comment and the summary body together, ask for the event (`COMMENT`, or `REQUEST_CHANGES` only when a blocking 👍 comment is queued), and post only after the user approves:
-
-  ```sh
-  gh api repos/{owner}/{repo}/pulls/<n>/reviews --input review.json
-  ```
-
-  `review.json` holds `commit_id` (headRefOid), `event`, `body`, and `comments: [{path, line, side: "RIGHT", body}]`. Print the review URL from the response, then `git worktree remove "$wt"`.
+- the next step: `/too-1-by-1 <path>` decides Act on + Consider; add numbers (`/too-1-by-1 <path> 1,3,5`) to pick others. It can run in a fresh session. In PR mode the worktree stays until that run posts the review.
 
 ## Common mistakes
 
 - Running `/pstack:interrogate` whole: its own judge filters before the other seats are seen, so cross-seat consensus is lost. Use its prompt files as seats.
 - Adding `simplify`, `pstack:no-comments` or `code-review --fix`: seats must not edit code.
-- Posting comments one at a time: one review, one notification.
+- Starting `too-1-by-1` from here: stop at the recap so the user can read and edit `findings.md` first.

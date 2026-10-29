@@ -82,7 +82,8 @@ either local reviewers (text output) or receive-side. Needs `gh auth login` done
 | **Receive** — hands-off: fix CI + comments → mergeable | `/pstack:babysit`                            |
 
 `/too-review-all <pr-url>` runs interrogate, requesting-code-review and the
-built-in `/code-review` together and posts the findings you pick as one inline review.
+built-in `/code-review` together and writes the reconciled findings to `findings.md`.
+`/too-1-by-1 <findings.md> [1,3,5]` then walks them and posts your picks as one inline review.
 Each comment is labelled `🤖 AI-flagged` with your stance (`👍` / `🤔` / `FYI`);
 type a note after the choice to add your own `**Me:**` line.
 
@@ -91,13 +92,13 @@ type a note after the choice to add your own `**Me:**` line.
 Authored in this repo under [`install/claude/skills/`](../install/claude/skills/),
 symlinked into `~/.claude/skills/`, so edits apply live:
 
-| Skill                  | When                                                                                |
-| ---------------------- | ----------------------------------------------------------------------------------- |
-| `/too-pr-description`  | Write a PR description / markdown summary of a branch diff                          |
-| `/too-commit-absorb`   | Fold uncommitted edits into the commits that introduced them                        |
-| `/too-relink`          | Use a local sibling package as if published (npm/yarn/pnpm)                         |
-| `/too-1-by-1`          | Decide on all findings, then fixes land in the background (`loop` to fix as you go) |
-| `/too-review-all [pr]` | Run every reviewer, reconcile, then fix (branch) or comment (PR) one by one         |
+| Skill                  | When                                                                                        |
+| ---------------------- | ------------------------------------------------------------------------------------------- |
+| `/too-pr-description`  | Write a PR description / markdown summary of a branch diff                                  |
+| `/too-commit-absorb`   | Fold uncommitted edits into the commits that introduced them                                |
+| `/too-relink`          | Use a local sibling package as if published (npm/yarn/pnpm)                                 |
+| `/too-1-by-1 [source]` | Decide on findings in a picker, then fixes land in the background (`loop` to fix as you go) |
+| `/too-review-all [pr]` | Run every reviewer, reconcile into `findings.md`; feed it to `/too-1-by-1`                  |
 
 ## Pick one — the overlaps
 

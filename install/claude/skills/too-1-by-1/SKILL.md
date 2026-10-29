@@ -9,8 +9,8 @@ Take a set of items and put each one to the user as its own decision, with enoug
 
 ## Collect
 
-1. **Source:** the argument if given (file, URL, command output). Otherwise the most recent list of findings or questions in this conversation. If neither is clear, ask which.
-2. **Check each item** against its source: read the referenced code or document. Drop items that don't hold up and say which ones.
+1. **Source:** the argument if given: a file (such as `findings.md` from `too-review-all`), a URL, command output, or a reference to earlier output ("the review above"). Otherwise the most recent list of findings, review comments or questions in this conversation, whatever produced it. If neither is clear, ask which. Numbers after the source (`1,3,5`) pick items and keep the source's numbering; without them take the source's `default:` list if it has one, else everything.
+2. **Check each item** against its source: read the referenced code or document, and everything its card will quote, so later items don't wait on reads. Drop items that don't hold up and say which ones.
 3. **Importance:** if the source rates items (severity, priority, P1/P2, blocker/nit), map each to a meter: `▮▮▮ high`, `▮▮▯ medium`, `▮▯▯ low`. If it doesn't, show no meter.
 4. **Order** by what unblocks others first, then by importance.
 5. **Log:** create it once and print the path:
@@ -20,7 +20,7 @@ Take a set of items and put each one to the user as its own decision, with enoug
    ```
 
 6. **Mode:** `decide-first` (default) or `loop` if the user asked for it.
-7. **Caller contract:** when another skill hands over the items and defines what a decision is, follow it: its options replace the fix options, its finish step replaces **Finish**, and in `loop` its action replaces implementing. `absorb` / `new` apply only to code changes on the current branch.
+7. **Contract:** when the source's header names a `contract:` file, or a skill hands over the items and defines what a decision is, read and follow it: its options replace the fix options, its finish step replaces **Finish**, and in `loop` its action replaces implementing. Without one, the default below applies. `absorb` / `new` apply only to code changes on the current branch.
 
 Open with one message: the numbered index (one line per item, with its meter), the total, the mode, the log path. Then item 1 in the shape below.
 
