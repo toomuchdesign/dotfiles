@@ -13,7 +13,7 @@ Take a set of items and put each one to the user as its own decision, with enoug
 2. **Check each item** against its source: read the referenced code or document, and everything its card will quote, so later items don't wait on reads. Drop items that don't hold up and say which ones.
 3. **Importance:** if the source rates items (severity, priority, P1/P2, blocker/nit), map each to a meter: `▮▮▮ high`, `▮▮▯ medium`, `▮▯▯ low`. If it doesn't, show no meter.
 4. **Order** by what unblocks others first, then by importance.
-5. **Log:** create it once and print the path:
+5. **Log:** create it once and print the path. When the source is a file, the log's first line is `source: <its absolute path>`, so a later session can find it:
 
    ```sh
    log="$(mktemp -d "${TMPDIR:-/tmp}/1-by-1.XXXXXX")/decisions.md" ; printf '%s\n' "$log"
@@ -88,7 +88,7 @@ Stop after asking. The next item goes in the next message, after the user answer
 
 - `Rephrase`: rewrite the whole card for the same item from scratch, with new wording, a different angle or example, and a simpler **In plain words**. Keep the facts, the number, and the options with their numbering. A hint (`rephrase focus on who's affected`) steers it. Ask again; nothing is logged.
 - Append `<n>. <name> → <option name> [absorb <sha> | new] [after #<m>]` to the log. Add `after #<m>` when the decision only holds if item m lands. Don't spend a round trip on it: the append is a `Bash` call in the next item's message, after its card. After the last item, append on its own before **Finish**.
-- `defer`: log it as deferred; it goes to `open.md` to be decided once the other fixes have landed.
+- `defer`: log it as deferred; it goes to `open.md` to be decided once the other fixes have landed. When an item is decided again, the later log line replaces the earlier one.
 - If the answer changes an earlier decision or makes a later item moot, say so.
 - `decide-first`: show the next item.
 - `loop`: write the next card, then implement this decision and run the narrowest check (type check, the related test), then ask. The picker question opens with the check result in one line. If the check fails and the fix isn't obvious, end the turn with its output instead of asking; the next item waits.
