@@ -26,6 +26,7 @@ Before returning any prose you generated, apply the `unslop` skill
 - code comments and inline comments
 - documentation and READMEs
 - commit messages and PR descriptions
+- PR review comments, thread replies and review summaries
 - issue and ticket text
 - any prose deliverable you're asked to produce (e.g. "give me a PR
   description for this")
@@ -103,11 +104,40 @@ who raised the point, so the author knows when I'm relaying an AI review.
 - Write the AI part neutrally ("Possible leak when…"), never in first
   person. My own words, if any, go first, above the label line, with no
   prefix: the label marks where the AI part starts.
-- Open with a question where it fits, then the concrete fix. 🤔 is never
-  blocking; FYI reads as a nit.
+- The first line after the label carries the point, as a question where it
+  fits: notifications and collapsed threads show only the opening. Then the
+  concrete fix. 🤔 is never blocking; FYI reads as a nit.
+- Lay it out for a quick read on GitHub: short paragraphs with a blank line
+  between them, one idea each; a list for steps or several cases. Inline
+  code, paths and values go in backticks; multi-line code in a fenced block
+  with a language tag.
+- Don't tell the author what their code does. Code elsewhere gets a
+  permalink at the reviewed commit, not "see foo.ts line 42".
 - The review summary says: "🤖 marks points raised by the AI review. Push
   back freely, and ping me if you want more context on any of them." Praise
   only there, and only when earned.
+
+Not this:
+
+> Great catch! This function fetches the user from the database and returns
+> it. However, it doesn't handle the case where the user is not found, which
+> could potentially lead to issues. Consider adding a check for robustness.
+
+This:
+
+````markdown
+🤖 AI-flagged · 👍 I agree
+
+What happens when `id` matches no row? `getUser` returns `undefined`, and
+`renderProfile` reads `.name` on it
+([profile.ts#L42](https://github.com/acme/app/blob/3f2c1ab/src/profile.ts#L42)).
+
+Throw here instead:
+
+```ts
+if (!user) throw new NotFoundError(id)
+```
+````
 
 ## Long-running & background work
 

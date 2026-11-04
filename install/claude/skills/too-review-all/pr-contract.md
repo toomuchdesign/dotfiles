@@ -8,7 +8,7 @@ If `worktree` is gone, recreate it as `too-review-all` step 1 does. If `git -C "
 
 ## Each item
 
-- The card shows the draft comment in a quote block under **Draft comment**, between **In plain words** and **Options**, following the "PR comments drafted by an agent" rule in `~/.claude/CLAUDE.md`: the problem, why it matters, a concrete fix. Use a GitHub ```` ```suggestion ```` block when the fix is a few lines inside the diff.
+- The card shows the draft comment in a ````` ````markdown ````` block (four backticks, so fences inside survive) under **Draft comment**, between **In plain words** and **Options**, following the "PR comments drafted by an agent" rule in `~/.claude/CLAUDE.md`: the problem, why it matters, a concrete fix. Use a GitHub ```` ```suggestion ```` block when the fix is a few lines inside the diff. Run every draft and every `Rephrase` through the `pstack:unslop` skill before showing it, so the card shows the text that will post.
 - Options: the stances `👍 Agree`, `🤔 Not sure` and `FYI`, with the ★ one first on both the card and the picker, then `Rephrase`. The choice sets the `🤖 AI-flagged` label line. The question ends with "Which stance for this comment? To add your own line, type the stance and your text in Other, e.g. `👍 we hit this in prod`."
 - Typed in the free-text field: `summary only` (goes in the review body, not inline), `skip`, `custom <text>` (the comment becomes the user's own, no label), `custom 🤖 <text>` (keeps the label). A stance can be typed as its emoji or its word, in any case (`👍`, `agree`, `🤔`, `not sure`, `fyi`); the text after it, minus leading punctuation, becomes the user's opening line, above the label. Never prompt for it.
 - The log line carries the note: `<n>. <name> → <stance> · Note: <text>`.
