@@ -23,7 +23,7 @@ Take a set of items and put each one to the user as its own decision, with enoug
 7. **Contract:** when the source's header names a `contract:` file, or a skill hands over the items and defines what a decision is, read and follow it: its options replace the fix options, its finish step replaces **Finish**, and in `loop` its action replaces implementing. Without one, the default below applies. `absorb` / `new` apply only to code changes on the current branch.
 8. **History:** without a contract, when at least one item fixes lines a commit on this branch introduced, those fixes land as `amend` (folded into their commits at Finish, needs a force-push) or `fixup` (stacked on top as `fixup!` commits, nothing rewritten). Recommend `fixup` when the branch's PR has reviews (`gh pr view --json number,reviews`), else `amend`. If `gh` can't tell, recommend `fixup` when the branch is pushed and say why.
 
-End the Collect turn with the numbered index (one line per item, with its meter), the total, the mode and the log path. When **History** applies, ask it last with `AskUserQuestion`, header `History`: the question says why one is recommended ("PR #12 has 2 reviews", "branch not pushed"), options `Fixup commits` and `Amend`, recommended first. The answer starts item 1, and item 1's `Bash` call appends `history: <fixup|amend>` to the log. Otherwise end with "Reply `go` to start." as the last text, with no tool call after it. Item 1 opens the next turn.
+End the Collect turn with the numbered index (one line per item, with its meter), the total, the mode, the log path, and "Reply `go` to start." as its last text, with no tool call after it. Item 1 opens the next turn. When **History** applies, the last line instead names the recommended one and why, and the other: "Reply `go` to start with fixup commits (PR #12 has 2 reviews), or `go amend`." Item 1's `Bash` call appends `history: <fixup|amend>` to the log.
 
 ## Each item
 
@@ -64,7 +64,7 @@ Give each section all the information that helps the decision; there is no lengt
 
 Every file you mention, in any message, is a plain absolute path with `:line` on its own line or after a `·`, never a markdown link and never relative, so the user can click it open in their IDE.
 
-Include the `absorb` / `new` part (in the summary line and the answer line) only when the lines to change were introduced by a commit on the current branch (`git log <base>..HEAD -L<start>,<end>:<file>` or `git blame`); otherwise the fix is a new commit and it's left out. Classify it yourself: absorb when the fix corrects that commit's own change, new when it's a separate concern. With `history: fixup`, show absorb as `fixup <sha>`; the log says `absorb <sha>` either way. The user overrides by typing `absorb` or `new` with the answer; don't ask.
+Include the `absorb` / `new` part (in the summary line and the answer line) only when the lines to change were introduced by a commit on the current branch (`git log <base>..HEAD -L<start>,<end>:<file>` or `git blame`); otherwise the fix is a new commit and it's left out. Classify it yourself: absorb when the fix corrects that commit's own change, new when it's a separate concern. With `history: fixup`, show absorb as `fixup <sha>`; the log says `absorb <sha>` either way. The user overrides by typing `absorb` or `new` with the answer; don't ask. `absorb` on lines no branch commit introduced stays `new`; say so.
 
 Include **Need from you** only when the choice depends on a fact you can't find.
 
@@ -87,7 +87,8 @@ Stop after asking. The next item goes in the next message, after the user answer
 ## After each answer
 
 - `Rephrase`: rewrite the whole card for the same item from scratch, with new wording, a different angle or example, and a simpler **In plain words**. Keep the facts, the number, and the options with their numbering. A hint (`rephrase focus on who's affected`) steers it. Ask again; nothing is logged.
-- Append `<n>. <name> → <option name> [absorb <sha> | new] [after #<m>]` to the log. Add `after #<m>` when the decision only holds if item m lands. Don't spend a round trip on it: the append is a `Bash` call in the next item's message, after its card. After the last item, append on its own before **Finish**.
+- Append `<n>. <name> → <option name> [absorb <sha> | new] [after #<m>]` to the log. Add `after #<m>` when the decision only holds if item m lands. Don't spend a round trip on it: the append is a `Bash` call in the next item's message, after its card. The last item's append goes in the **Finish** message, after the decision table.
+- An answer that picks no option and no command: show the same item again, card and picker, with one line saying what's needed. Don't guess, and log nothing.
 - `defer`: log it as deferred; it goes to `open.md` to be decided once the other fixes have landed. When an item is decided again, the later log line replaces the earlier one.
 - If the answer changes an earlier decision or makes a later item moot, say so.
 - `decide-first`: show the next item.
@@ -97,7 +98,7 @@ The user can type at any point: `defer` (this item), `back`, `list` (index with 
 
 ## Finish
 
-Show the decision table from the log. In `loop` the fixes are already in the tree: ask one go-ahead to commit them as step 3 below does. In `decide-first`, propose an implementation order and ask for one go-ahead that covers implementing and landing everything in the log.
+Show the decision table: the log plus the last answer. In `loop` the fixes are already in the tree: ask one go-ahead to commit them as step 3 below does. In `decide-first`, propose an implementation order and ask for one go-ahead that covers implementing and landing everything in the log. The message keeps the item order: the table and proposal as text, the log append, then `AskUserQuestion` with `Go (Recommended)` / `Stop here`.
 
 On the go-ahead, hand the log to a background `general-purpose` agent and give control back; say the working tree is in use until it reports. The agent works through the decisions in order without asking anything:
 
