@@ -39,6 +39,11 @@ Run `absorb.sh` from anywhere in the repo.
    place it → handle manually. Then:
 4. **`absorb.sh finish`** — folds the fixups in and verifies.
 
+**`absorb.sh fold`** folds `fixup!` commits already on the branch, such as the ones
+`too-1-by-1` stacks on a reviewed PR. No uncommitted changes allowed. Its base is the
+fork point from the default branch, so pushed fixups fold too and the push needs
+`--force-with-lease`. On a conflict it aborts the rebase and leaves the branch as it was.
+
 `--base REF` overrides the base (defaults to this branch's fork point from upstream/main).
 Only commits **after** base are touched — shared history below the fork point is never rewritten.
 
