@@ -21,8 +21,9 @@ Take a set of items and put each one to the user as its own decision, with enoug
 
 6. **Mode:** `decide-first` (default) or `loop` if the user asked for it.
 7. **Contract:** when the source's header names a `contract:` file, or a skill hands over the items and defines what a decision is, read and follow it: its options replace the fix options, its finish step replaces **Finish**, and in `loop` its action replaces implementing. Without one, the default below applies. `absorb` / `new` apply only to code changes on the current branch.
+8. **History:** without a contract, when at least one item fixes lines a commit on this branch introduced, those fixes land as `amend` (folded into their commits at Finish, needs a force-push) or `fixup` (stacked on top as `fixup!` commits, nothing rewritten). Recommend `fixup` when the branch's PR has reviews (`gh pr view --json number,reviews`), else `amend`. If `gh` can't tell, recommend `fixup` when the branch is pushed and say why.
 
-End the Collect turn with the numbered index (one line per item, with its meter), the total, the mode, the log path, and "Reply `go` to start." as its last text, with no tool call after it. Item 1 opens the next turn.
+End the Collect turn with the numbered index (one line per item, with its meter), the total, the mode and the log path. When **History** applies, ask it last with `AskUserQuestion`, header `History`: the question says why one is recommended ("PR #12 has 2 reviews", "branch not pushed"), options `Fixup commits` and `Amend`, recommended first. The answer starts item 1, and item 1's `Bash` call appends `history: <fixup|amend>` to the log. Otherwise end with "Reply `go` to start." as the last text, with no tool call after it. Item 1 opens the next turn.
 
 ## Each item
 
@@ -63,7 +64,7 @@ Give each section all the information that helps the decision; there is no lengt
 
 Every file you mention, in any message, is a plain absolute path with `:line` on its own line or after a `·`, never a markdown link and never relative, so the user can click it open in their IDE.
 
-Include the `absorb` / `new` part (in the summary line and the answer line) only when the lines to change were introduced by a commit on the current branch (`git log <base>..HEAD -L<start>,<end>:<file>` or `git blame`); otherwise the fix is a new commit and it's left out. Pick absorb when the fix corrects that commit's own change, new when it's a separate concern.
+Include the `absorb` / `new` part (in the summary line and the answer line) only when the lines to change were introduced by a commit on the current branch (`git log <base>..HEAD -L<start>,<end>:<file>` or `git blame`); otherwise the fix is a new commit and it's left out. Classify it yourself: absorb when the fix corrects that commit's own change, new when it's a separate concern. With `history: fixup`, show absorb as `fixup <sha>`; the log says `absorb <sha>` either way. The user overrides by typing `absorb` or `new` with the answer; don't ask.
 
 Include **Need from you** only when the choice depends on a fact you can't find.
 
@@ -77,10 +78,9 @@ Every item message has this order:
 
 Never put the choice only as a typed list when the tool is available. A picker with no card above it is a failed item.
 
-- Question 1, header `<n>/<total>`: the question text stands on its own, since the picker can hide the message above it: what the code does, what goes wrong, who feels it, then "Which fix?" or the question the contract sets. Options, in list order: up to 3 item options, then `Rephrase` (description: "Explain this point again in different words"). Label `<option name> (Recommended)` for ★, `<option name>` for the rest; description is its main gain and cost. With more than 3 item options, the picker carries the first 3 and the card says the rest are picked by typing their number.
-- Question 2, header `Lands as`, only when absorb applies: `Absorb into <sha> (Recommended)` / `New commit`, recommended one first.
+- One question, header `<n>/<total>`. Its text stands on its own, since the picker can hide the message above it: what the code does, what goes wrong, who feels it, then "Which fix?" or the question the contract sets. Options, in list order: up to 3 item options, then `Rephrase` (description: "Explain this point again in different words"). Label `<option name> (Recommended)` for ★, `<option name>` for the rest; description is its main gain and cost. With more than 3 item options, the picker carries the first 3 and the card says the rest are picked by typing their number.
 
-The picker's free-text field takes an option number, `custom <text>`, `rephrase <hint>` and the commands below. Only without the tool, end with the **Your call** line instead.
+The picker's free-text field takes an option number (with `absorb` or `new` to override the classification), `custom <text>`, `rephrase <hint>` and the commands below. Only without the tool, end with the **Your call** line instead.
 
 Stop after asking. The next item goes in the next message, after the user answers.
 
@@ -93,7 +93,7 @@ Stop after asking. The next item goes in the next message, after the user answer
 - `decide-first`: show the next item.
 - `loop`: write the next card, then implement this decision and run the narrowest check (type check, the related test), then ask. The picker question opens with the check result in one line. If the check fails and the fix isn't obvious, end the turn with its output instead of asking; the next item waits.
 
-The user can type at any point: `defer` (this item), `back`, `list` (index with decisions so far), `switch to loop` / `switch to decide-first`, `stop`.
+The user can type at any point: `defer` (this item), `back`, `list` (index with decisions so far), `switch to loop` / `switch to decide-first`, `switch to fixup` / `switch to amend` (logged as a new `history:` line), `stop`.
 
 ## Finish
 
@@ -103,8 +103,10 @@ On the go-ahead, hand the log to a background `general-purpose` agent and give c
 
 1. Re-read the code. If an earlier fix already resolved the item, record it as resolved by that fix. If the item's `after #<m>` didn't land, or an earlier fix made the decision wrong, record it as open with the reason. Either way, move on.
 2. Implement it and run the narrowest check (type check, the related test). If the check fails and the fix isn't obvious, revert that change and record it as open with the output.
-3. Commit each `new` fix on its own as it lands. After the last item, run `too-commit-absorb` on the `absorb` fixes, so absorb can't fold a new fix into history.
+3. Commit each `new` fix on its own as it lands. With `history: fixup`, commit each `absorb` fix as it lands with `git commit --fixup=<sha>`. With `history: amend`, run `too-commit-absorb` on the `absorb` fixes after the last item, so absorb can't fold a new fix into history.
 
 Open items go in `open.md` next to the log, each with its location and why it's open. When the agent finishes, report what landed, with the commits and check results, what earlier fixes resolved, and what's open. If anything is open, run this skill again on `open.md`.
+
+With `history: fixup`, list the fixups with their targets, then ask with `AskUserQuestion`: `Keep fixups (Recommended)` / `Fold now`. `Fold now` runs `~/.claude/skills/too-commit-absorb/absorb.sh fold --base $(git merge-base HEAD origin/<PR base branch>)` and shows its output; the push is the user's (`git push --force-with-lease`). Kept fixups can be folded any time later the same way.
 
 If this was started in the middle of another task, say what that task was and pick it up again with the decisions applied.
