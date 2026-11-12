@@ -46,7 +46,7 @@ fnm:
 # activates a node without an interactive shell or a project .node-version.
 # Recipes that need node (e.g. playwright-skills) rely on this default existing.
 node:
-	fnm install --lts
+	fnm install --lts --corepack-enabled
 	fnm default lts-latest
 
 #

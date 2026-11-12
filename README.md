@@ -69,7 +69,7 @@ Installed via the [Brewfile](./install/Brewfile) / oh-my-zsh plugins and activat
 | `git-trim`                | `git trim` (or `git-cleanup`) | Delete merged/stale branches; understands squash & rebase merges and the repo's default branch (previews and prompts first) |
 | `jq` / `yq`               | `… \| jq '.'`                 | Query JSON (`jq`)                                                                                                           |
 | `thefuck`                 | `fuck`                        | Correct and rerun the previous command                                                                                      |
-| `fnm`                     | automatic on `cd`             | Switch Node version per `.nvmrc` / `.node-version`                                                                          |
+| `fnm`                     | automatic on `cd`             | Switch Node version per `.nvmrc` / `.node-version`; new installs get corepack `pnpm`/`yarn` shims                           |
 | `zsh-autosuggestions`     | `→` / `End` to accept         | History-based inline suggestions as you type                                                                                |
 | `zsh-syntax-highlighting` | automatic                     | Colours commands green/red for validity as you type                                                                         |
 

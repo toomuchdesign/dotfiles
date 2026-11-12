@@ -139,7 +139,8 @@ fuck() {
   fuck "$@"
 }
 
-# fnm setup
+# fnm setup; FNM_COREPACK_ENABLED runs `corepack enable` on each new install
+export FNM_COREPACK_ENABLED=true
 eval "$(fnm env --use-on-cd --shell zsh)"
 
 # Starship prompt — must init after oh-my-zsh (ZSH_THEME is left empty above).
