@@ -92,15 +92,16 @@ pick Other and type the stance plus a note (`👍 we hit this in prod`) to open 
 Authored in this repo under [`install/claude/skills/`](../install/claude/skills/),
 symlinked into `~/.claude/skills/`, so edits apply live:
 
-| Skill                  | When                                                                                        |
-| ---------------------- | ------------------------------------------------------------------------------------------- |
-| `/too-pr-description`  | Write a PR description / markdown summary of a branch diff                                  |
-| `/too-commit-absorb`   | Fold uncommitted edits into the commits that introduced them                                |
-| `/too-relink`          | Use a local sibling package as if published (npm/yarn/pnpm)                                 |
-| `/too-1-by-1 [source]` | Decide on findings in a picker, then fixes land in the background (`loop` to fix as you go) |
-| `/too-review-all [pr]` | Run every reviewer, reconcile into `findings.md`; feed it to `/too-1-by-1`                  |
-| `/too-write-task`      | Write a bug, feature or refactor task from the conversation, with permalinks                |
-| `/too-voice`           | Polish or write English that reads as mine, learned from my GitHub comments and Slack       |
+| Skill                              | When                                                                                                        |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `/too-pr-description`              | Write a PR description / markdown summary of a branch diff                                                  |
+| `/too-commit-absorb`               | Fold uncommitted edits into the commits that introduced them                                                |
+| `/too-relink`                      | Use a local sibling package as if published (npm/yarn/pnpm)                                                 |
+| `/too-1-by-1 [source]`             | Decide on findings in a picker, then fixes land in the background (`loop` to fix as you go)                 |
+| `/too-review-all [pr]`             | Run every reviewer, reconcile into `findings.md`; feed it to `/too-1-by-1`                                  |
+| `/too-write-task`                  | Write a bug, feature or refactor task from the conversation, with permalinks                                |
+| `/too-voice`                       | Polish or write English that reads as mine, learned from my GitHub comments and Slack                       |
+| `/too-sync-master [rebase\|merge]` | Catch the branch up with its base (master/main/PR base), fix conflicts and lockfiles, lint, typecheck, push |
 
 ## Pick one — the overlaps
 
