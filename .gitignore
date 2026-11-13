@@ -4,6 +4,8 @@
 .vscode
 runcom/.oh-my-zsh/custom/*.untracked.zsh
 config/git/config.untracked
+install/claude/skills.untracked/*
+!install/claude/skills.untracked/.gitignore
 .claude/settings.local.json
 .claude/skills/
 # Playwright CLI output (may contain credentials)

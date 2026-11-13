@@ -147,6 +147,7 @@ Both the binary and the skills are generated artifacts (like a `git` checkout), 
 | [pstack](https://github.com/michael-denyer/pstack-claude)          | Claude Code **plugin** (poteto's skill stack, Claude port)           | `claude plugin marketplace add` + `claude plugin install pstack@pstack-claude`         |
 | [@playwright/cli](https://playwright.dev/docs/getting-started-cli) | npm CLI + its own skill                                              | `npm i -g @playwright/cli@latest` + `playwright-cli install --skills`                  |
 | [`install/claude/skills/`](./install/claude/skills/)               | Skills authored in this repo (e.g. `too-pr-description`)             | symlinked into `~/.claude/skills/` — repo edits apply live                             |
+| `install/claude/skills.untracked/`                                 | Private skills (e.g. client-project-specific), git-ignored           | symlinked into `~/.claude/skills/` — see [Local overrides](#local-overrides)           |
 
 Runs after `packages` so the `claude` CLI and Node are available. The plugin steps may prompt once to trust each marketplace — answer them interactively. Re-running the target refreshes each add-on to its latest version.
 
@@ -238,16 +239,29 @@ U.S., so you lose nothing.
 
 ## Local overrides
 
-Machine-specific settings (work email, private hosts, secrets, per-machine tweaks) must **never** be committed. Two untracked files exist for that purpose. Both are [git-ignored](./.gitignore), so they are safe to edit freely:
+Machine-specific settings (work email, private hosts, secrets, per-machine tweaks, private skills) must **never** be committed. These untracked paths exist for that purpose. All are [git-ignored](./.gitignore), so they are safe to edit freely:
 
-| File                                           | Overrides                         | Created by `make link`                                                                                        |
-| ---------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `config/git/config.untracked`                  | [git config](./config/git/config) | Copied from [`config.untracked.example`](./config/git/config.untracked.example) if absent (never overwritten) |
-| `runcom/.oh-my-zsh/custom/local.untracked.zsh` | zsh setup                         | Created empty                                                                                                 |
+| Path                                           | Overrides                         | Created by                                                                                                                 |
+| ---------------------------------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `config/git/config.untracked`                  | [git config](./config/git/config) | `make link`: copied from [`config.untracked.example`](./config/git/config.untracked.example) if absent (never overwritten) |
+| `runcom/.oh-my-zsh/custom/local.untracked.zsh` | zsh setup                         | `make link`: created empty                                                                                                 |
+| `install/claude/skills.untracked/<skill>/`     | Claude Code skills                | You, by hand; `make claude-skills-local` symlinks each into `~/.claude/skills/`                                            |
+
+### Private skills
+
+Put skills you can't commit (client-specific, internal URLs, project names) in `install/claude/skills.untracked/<skill>/SKILL.md`, then run `make claude-skills-local` to link them. They load in every project, so write a `description` narrow enough to fire only where it applies.
+
+Two ignore rules keep them out of git: the directory's own tracked [`.gitignore`](./install/claude/skills.untracked/.gitignore) (`*`, except itself) and a matching entry in the root [`.gitignore`](./.gitignore). Either one alone is enough. Only `git add -f` gets past them. To check a path:
+
+```sh
+git check-ignore -v install/claude/skills.untracked/my-skill/SKILL.md
+```
+
+### Git and zsh overrides
 
 The git template is committed (with commented placeholders only — no real values), so a fresh machine gets a documented starting point without any secret ever being tracked. `make link` seeds the copy only when it's missing, so re-running never clobbers your machine's populated file.
 
-Both are read **after** their tracked counterpart, so any value they define wins. For git this is guaranteed by the position of the `[include]`; for zsh it follows from oh-my-zsh sourcing `custom/*.zsh` alphabetically (`local.*` sorts after `alias*`/`functions*`).
+The git and zsh files are read **after** their tracked counterparts, so any value they define wins. For git this is guaranteed by the position of the `[include]`; for zsh it follows from oh-my-zsh sourcing `custom/*.zsh` alphabetically (`local.*` sorts after `alias*`/`functions*`).
 
 The git one is pulled in by an `[include]` directive at the end of [config/git/config](./config/git/config) and uses standard git config syntax:
 

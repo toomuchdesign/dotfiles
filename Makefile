@@ -133,10 +133,12 @@ claude-skills: superpowers mcollina-skills playwright-skills mattpocock-skills p
 
 # Personal skills authored in this repo (install/claude/skills/*): symlink each
 # into ~/.claude/skills so they're portable and survive plugin updates. Symlink
-# (not copy) so repo edits apply live.
+# (not copy) so repo edits apply live. install/claude/skills.untracked/* holds
+# git-ignored, machine-local skills and is linked the same way.
 claude-skills-local:
 	mkdir -p "$(CLAUDE_SKILLS_DIR)"
-	for skill in $(DOTFILES_DIR)/install/claude/skills/*/; do \
+	for skill in $(DOTFILES_DIR)/install/claude/skills/*/ $(DOTFILES_DIR)/install/claude/skills.untracked/*/; do \
+		[ -d "$$skill" ] || continue; \
 		ln -sfn "$${skill%/}" "$(CLAUDE_SKILLS_DIR)/$$(basename $$skill)"; \
 	done
 
