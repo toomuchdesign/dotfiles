@@ -99,6 +99,7 @@ symlinked into `~/.claude/skills/`, so edits apply live:
 | `/too-relink`          | Use a local sibling package as if published (npm/yarn/pnpm)                                 |
 | `/too-1-by-1 [source]` | Decide on findings in a picker, then fixes land in the background (`loop` to fix as you go) |
 | `/too-review-all [pr]` | Run every reviewer, reconcile into `findings.md`; feed it to `/too-1-by-1`                  |
+| `/too-voice`           | Polish or write English that reads as mine, learned from my GitHub comments and Slack       |
 
 ## Pick one — the overlaps
 
