@@ -136,6 +136,9 @@ setopt hist_ignore_all_dups
 # --exact makes Ctrl-R match each typed term as a contiguous substring instead
 # of scattering the letters across the line (fzf's default fuzzy behaviour).
 export FZF_CTRL_R_OPTS="--exact"
+# Ctrl-T / Alt-C list via fd: respects .gitignore and includes dotfiles.
+export FZF_CTRL_T_COMMAND='fd --type f --hidden --exclude .git'
+export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git'
 command -v fzf >/dev/null && source <(fzf --zsh)
 
 # zoxide setup — smarter `cd` that learns your most-used dirs.
