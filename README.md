@@ -57,21 +57,21 @@ every shortcut; the tables below cover the main ones.
 
 Installed via the [Brewfile](./install/Brewfile) / oh-my-zsh plugins and activated on shell start:
 
-| Tool                      | Invoke                        | What it does                                                                                                                |
-| ------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `starship`                | the prompt itself             | Prompt showing dir, git branch/status, Node version, cmd duration, exit status ([`starship.toml`](./config/starship.toml))  |
-| `fzf`                     | `Ctrl-R` / `Ctrl-T` / `Alt-C` | Fuzzy search history / insert a file path / `cd` into a subdir                                                              |
-| `zoxide`                  | `z <frag>` / `zi <frag>`      | Jump to a recent dir / pick one interactively (fzf)                                                                         |
-| `fd`                      | `fd <name>`                   | Find files **by name** (fast, respects `.gitignore`)                                                                        |
-| `rg` (ripgrep)            | `rg <pattern>`                | Search file **contents** (fast, respects `.gitignore`)                                                                      |
-| `bat`                     | `bat <file>`                  | `cat` with syntax highlighting, line numbers and a git gutter                                                               |
-| `delta`                   | any `git diff` / `git show`   | Side-by-side, syntax-highlighted diffs (`n`/`N` to move by file)                                                            |
-| `git-trim`                | `git trim` (or `git-cleanup`) | Delete merged/stale branches; understands squash & rebase merges and the repo's default branch (previews and prompts first) |
-| `jq` / `yq`               | `… \| jq '.'`                 | Query JSON (`jq`)                                                                                                           |
-| `thefuck`                 | `fuck`                        | Correct and rerun the previous command                                                                                      |
-| `fnm`                     | automatic on `cd`             | Switch Node version per `.nvmrc` / `.node-version`; new installs get corepack `pnpm`/`yarn` shims                           |
-| `zsh-autosuggestions`     | `→` / `End` to accept         | History-based inline suggestions as you type                                                                                |
-| `zsh-syntax-highlighting` | automatic                     | Colours commands green/red for validity as you type                                                                         |
+| Tool                      | Invoke                        | What it does                                                                                                                                                                    |
+| ------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `starship`                | the prompt itself             | Prompt showing dir, git branch/status, Node version, cmd duration, exit status, and a dim right-side clock set when you press Enter ([`starship.toml`](./config/starship.toml)) |
+| `fzf`                     | `Ctrl-R` / `Ctrl-T` / `Alt-C` | Fuzzy search history / insert a file path / `cd` into a subdir                                                                                                                  |
+| `zoxide`                  | `z <frag>` / `zi <frag>`      | Jump to a recent dir / pick one interactively (fzf)                                                                                                                             |
+| `fd`                      | `fd <name>`                   | Find files **by name** (fast, respects `.gitignore`)                                                                                                                            |
+| `rg` (ripgrep)            | `rg <pattern>`                | Search file **contents** (fast, respects `.gitignore`)                                                                                                                          |
+| `bat`                     | `bat <file>`                  | `cat` with syntax highlighting, line numbers and a git gutter                                                                                                                   |
+| `delta`                   | any `git diff` / `git show`   | Side-by-side, syntax-highlighted diffs (`n`/`N` to move by file)                                                                                                                |
+| `git-trim`                | `git trim` (or `git-cleanup`) | Delete merged/stale branches; understands squash & rebase merges and the repo's default branch (previews and prompts first)                                                     |
+| `jq` / `yq`               | `… \| jq '.'`                 | Query JSON (`jq`)                                                                                                                                                               |
+| `thefuck`                 | `fuck`                        | Correct and rerun the previous command                                                                                                                                          |
+| `fnm`                     | automatic on `cd`             | Switch Node version per `.nvmrc` / `.node-version`; new installs get corepack `pnpm`/`yarn` shims                                                                               |
+| `zsh-autosuggestions`     | `→` / `End` to accept         | History-based inline suggestions as you type                                                                                                                                    |
+| `zsh-syntax-highlighting` | automatic                     | Colours commands green/red for validity as you type                                                                                                                             |
 
 ### Functions
 

@@ -92,6 +92,12 @@ typeset -U fpath FPATH
 # startup hangs. We trust these dirs, so skip the check.
 ZSH_DISABLE_COMPFIX=true
 
+# Redraw the prompt on Enter so Starship's right-side clock records when the
+# command ran, not when the prompt was drawn. Defined before oh-my-zsh so the
+# autosuggestions and syntax-highlighting plugins wrap it.
+_timestamp_accept_line() { zle reset-prompt; zle .accept-line }
+zle -N accept-line _timestamp_accept_line
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration

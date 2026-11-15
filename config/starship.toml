@@ -24,6 +24,10 @@ $cmd_duration\
 $line_break\
 $character"""
 
+# Dim clock on the right of the input line, out of the way. runcom/.zshrc
+# redraws the prompt on Enter, so it shows when each command was run.
+right_format = "$time"
+
 [directory]
 style = "cyan bold"
 truncation_length = 0
@@ -48,6 +52,12 @@ format = "[$symbol($version )]($style)"
 min_time = 500
 style = "yellow"
 format = "took [$duration]($style) "
+
+[time]
+disabled = false
+time_format = "%d-%m-%Y %H:%M:%S"
+style = "dimmed"
+format = "[$time]($style)"
 
 [character]
 success_symbol = "[❯](green bold)"
