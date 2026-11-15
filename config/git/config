@@ -41,6 +41,9 @@
 
 [push]
 	autoSetupRemote = true
+	# With --force-with-lease, also refuse to overwrite remote commits that were
+	# fetched but never integrated locally.
+	useForceIfIncludes = true
 
 [pull]
 	ff = only

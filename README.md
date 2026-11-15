@@ -90,16 +90,16 @@ Defined in [`functions.zsh`](./runcom/.oh-my-zsh/custom/functions.zsh):
 
 Defined in [`aliases.zsh`](./runcom/.oh-my-zsh/custom/aliases.zsh) and, for macOS-specific ones, [`alias.macos.zsh`](./runcom/.oh-my-zsh/custom/alias.macos.zsh):
 
-| Group      | Highlights                                                                                                                |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Navigation | `..` `...` (up 1–2 levels), `-` (previous dir)                                                                            |
-| Git        | `gs` status · `gdd` diff cached · `gca`/`gcaa` amend · `gp`/`gpu` pull/push · `gst`/`gsta` stash · `gls`/`gll` pretty log |
-| npm        | `npms` start · `npmd` run dev · `npmr` run · `nui` upgrade deps                                                           |
-| pnpm       | `pn` · `pns` start · `pnd` dev · `pnr` run · `pni` install · `pnx` exec · `pui` update interactive                        |
-| yarn       | `yui` upgrade-interactive                                                                                                 |
-| Docker     | `d` · `dps` ps · `dils` images · `dvls` volumes · `dcu`/`dcs`/`dcr` compose up/stop/restart                               |
-| Network    | `ip` public IP · `ipl` local IP                                                                                           |
-| macOS      | `showdotfiles`/`hidedotfiles` · `desktopshow`/`desktophide` · `emptytrash`                                                |
+| Group      | Highlights                                                                                                                                                 |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Navigation | `..` `...` (up 1–2 levels), `-` (previous dir)                                                                                                             |
+| Git        | `gs` status · `gdd` diff cached · `gca`/`gcaa` amend · `gp`/`gpu` pull/push · `gpff` push --force-with-lease · `gst`/`gsta` stash · `gls`/`gll` pretty log |
+| npm        | `npms` start · `npmd` run dev · `npmr` run · `nui` upgrade deps                                                                                            |
+| pnpm       | `pn` · `pns` start · `pnd` dev · `pnr` run · `pni` install · `pnx` exec · `pui` update interactive                                                         |
+| yarn       | `yui` upgrade-interactive                                                                                                                                  |
+| Docker     | `d` · `dps` ps · `dils` images · `dvls` volumes · `dcu`/`dcs`/`dcr` compose up/stop/restart                                                                |
+| Network    | `ip` public IP · `ipl` local IP                                                                                                                            |
+| macOS      | `showdotfiles`/`hidedotfiles` · `desktopshow`/`desktophide` · `emptytrash`                                                                                 |
 
 ### Git aliases
 
