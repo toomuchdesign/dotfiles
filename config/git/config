@@ -1,6 +1,8 @@
 [user]
 	name = Andrea Carraro
-	email = me@andreacarraro.it
+	# No global email: config.untracked picks one per repo location, and
+	# commits fail where none matches instead of using the wrong identity.
+	useConfigOnly = true
 
 [github]
 	user = toomuchdesign

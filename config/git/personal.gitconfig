@@ -1,0 +1,3 @@
+# Personal identity, included by the includeIf rules in config.untracked.
+[user]
+	email = me@andreacarraro.it

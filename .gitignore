@@ -2,10 +2,12 @@
 .DS_Store
 .idea
 .vscode
-runcom/.oh-my-zsh/custom/*.untracked.zsh
-config/git/config.untracked
-install/claude/skills.untracked/*
-!install/claude/skills.untracked/.gitignore
+# Machine-specific files, never committed.
+*.untracked
+*.untracked.zsh
+# Re-include this directory so git reads its own .gitignore, which tracks
+# only itself.
+!install/claude/skills.untracked/
 .claude/settings.local.json
 .claude/skills/
 # Playwright CLI output (may contain credentials)

@@ -163,10 +163,10 @@ An alternative to the imperative plugin targets would be to declare each marketp
 
 The [`claude-config` Makefile target](./Makefile) symlinks the repo's Claude Code config into `~/.claude` (or `$CLAUDE_CONFIG_DIR`) so edits here apply live and stay the single source of truth:
 
-| Asset                                                    | Symlinked to          | What it does                                                                                                                                                                   |
-| -------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [`install/claude/CLAUDE.md`](./install/claude/CLAUDE.md) | `~/.claude/CLAUDE.md` | Machine-wide instructions Claude loads for every project (push guardrails, always-unslop/deslop, minimal output, 🤖 labels on AI-raised PR comments, reading other cmux panes) |
-| [`install/claude/hooks/`](./install/claude/hooks/)       | `~/.claude/hooks/`    | Agent hooks: `block-destructive-default-branch.py` hard-blocks force-pushes and remote deletes of `master`/`main`                                                              |
+| Asset                                                    | Symlinked to          | What it does                                                                                                                                                                                                  |
+| -------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`install/claude/CLAUDE.md`](./install/claude/CLAUDE.md) | `~/.claude/CLAUDE.md` | Machine-wide instructions Claude loads for every project (push guardrails, always-unslop/deslop, minimal output, 🤖 labels on AI-raised PR comments, reading other cmux panes, folder-scoped commit identity) |
+| [`install/claude/hooks/`](./install/claude/hooks/)       | `~/.claude/hooks/`    | Agent hooks: `block-destructive-default-branch.py` hard-blocks force-pushes and remote deletes of `master`/`main`                                                                                             |
 
 A hook only fires once it's wired in `~/.claude/settings.json` (a `PreToolUse` entry with matcher `Bash` for the push guard). `settings.json` is machine-local and **not tracked here**, so on a fresh install re-add that hook block by hand, plus `"timeFormat": "%d-%m-%Y %H:%M:%S"` to put the date on Claude Code's per-turn `done` line.
 
@@ -243,11 +243,11 @@ U.S., so you lose nothing.
 
 Machine-specific settings (work email, private hosts, secrets, per-machine tweaks, private skills) must **never** be committed. These untracked paths exist for that purpose. All are [git-ignored](./.gitignore), so they are safe to edit freely:
 
-| Path                                           | Overrides                         | Created by                                                                                                                 |
-| ---------------------------------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `config/git/config.untracked`                  | [git config](./config/git/config) | `make link`: copied from [`config.untracked.example`](./config/git/config.untracked.example) if absent (never overwritten) |
-| `runcom/.oh-my-zsh/custom/local.untracked.zsh` | zsh setup                         | `make link`: created empty                                                                                                 |
-| `install/claude/skills.untracked/<skill>/`     | Claude Code skills                | You, by hand; `make claude-skills-local` symlinks each into `~/.claude/skills/`                                            |
+| Path                                           | Overrides                                                  | Created by                                                                                                                 |
+| ---------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `config/git/config.untracked`                  | [git config](./config/git/config), commit email per folder | `make link`: copied from [`config.untracked.example`](./config/git/config.untracked.example) if absent (never overwritten) |
+| `runcom/.oh-my-zsh/custom/local.untracked.zsh` | zsh setup                                                  | `make link`: created empty                                                                                                 |
+| `install/claude/skills.untracked/<skill>/`     | Claude Code skills                                         | You, by hand; `make claude-skills-local` symlinks each into `~/.claude/skills/`                                            |
 
 ### Private skills
 
@@ -261,16 +261,24 @@ git check-ignore -v install/claude/skills.untracked/my-skill/SKILL.md
 
 ### Git and zsh overrides
 
-The git template is committed (with commented placeholders only — no real values), so a fresh machine gets a documented starting point without any secret ever being tracked. `make link` seeds the copy only when it's missing, so re-running never clobbers your machine's populated file.
+The git template is committed (the personal identity rules plus commented placeholders, no secrets), so a fresh machine gets a documented starting point and no secret is ever tracked. `make link` seeds the copy only when it's missing, so re-running never clobbers your machine's populated file.
 
 The git and zsh files are read **after** their tracked counterparts, so any value they define wins. For git this is guaranteed by the position of the `[include]`; for zsh it follows from oh-my-zsh sourcing `custom/*.zsh` alphabetically (`local.*` sorts after `alias*`/`functions*`).
 
-The git one is pulled in by an `[include]` directive at the end of [config/git/config](./config/git/config) and uses standard git config syntax:
+The git one is pulled in by an `[include]` directive at the end of [config/git/config](./config/git/config) and uses standard git config syntax.
+
+#### Commit identity per folder
+
+The tracked config sets `user.name` but no `user.email`, plus `user.useConfigOnly = true`: in a repo that gets no email from config, `git commit` fails instead of guessing one. The untracked file picks the email by repo location with `includeIf` rules, each pointing at a small file holding a `[user]` block:
 
 ```ini
-[user]
-	email = me@work-company.com
+[includeIf "gitdir:~/development/toomuchdesign/"]
+	path = personal.gitconfig
+[includeIf "gitdir:~/development/<client>/"]
+	path = <client>.gitconfig.untracked
 ```
+
+[`personal.gitconfig`](./config/git/personal.gitconfig) is tracked. Client files go next to it as `<client>.gitconfig.untracked`, which is git-ignored. The template seeds the personal rules for `~/development/toomuchdesign/` and `~/.dotfiles/` and explains how to add a folder.
 
 Verify an override is being picked up with:
 
