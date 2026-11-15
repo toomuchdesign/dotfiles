@@ -36,7 +36,7 @@
 	path = themes.gitconfig
 
 [merge]
-	conflictstyle = diff3
+	conflictstyle = zdiff3
 	tool = vscode
 
 [push]
@@ -44,6 +44,31 @@
 
 [pull]
 	ff = only
+
+[fetch]
+	prune = true
+
+# Record conflict resolutions and replay them when the same conflict recurs.
+[rerere]
+	enabled = true
+	autoupdate = true
+
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+
+[branch]
+	sort = -committerdate
+
+[tag]
+	sort = version:refname
+
+[column]
+	ui = auto
+
+[commit]
+	verbose = true
 
 [alias]
 	### Aliases from: http://githowto.com/aliases
@@ -64,6 +89,7 @@
 
 [diff]
 	tool = vscode
+	algorithm = histogram
 
 [difftool "vscode"]
 	cmd = code --wait --diff \"$LOCAL\" \"$REMOTE\"
