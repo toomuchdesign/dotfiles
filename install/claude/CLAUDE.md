@@ -82,6 +82,13 @@ needs isolation (e.g. parallel agents each on a different approach). In
 those cases go ahead, but say what you created and where, and clean it up
 when done.
 
+My git config has no global email and sets `user.useConfigOnly`, so a commit
+fails with "no email was given" in any repo outside a folder that has an
+identity rule. When that happens, offer to add a folder-scoped identity: ask
+me for the email and the folder, never guess them, then follow the steps in
+`~/.config/git/config.untracked`. Set a repo-local `user.email` only if I ask
+for it.
+
 ## Planning
 
 For non-trivial or legacy changes, present options with pros/cons before

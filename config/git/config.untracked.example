@@ -1,4 +1,4 @@
-# Machine-specific git config — work email, private hosts, per-machine tweaks.
+# Machine-specific git config: commit identities, private hosts, per-machine tweaks.
 #
 # `make link` copies this template to `config/git/config.untracked` on a fresh
 # machine, and ONLY if that file doesn't exist yet (an existing one is never
@@ -6,8 +6,27 @@
 # secrets — is NEVER committed. Edit the copy, not this template.
 #
 # The copy is pulled in by the [include] at the end of ./config and loaded
-# AFTER it, so any value set here overrides the tracked config. Uncomment and
-# adjust what you need:
+# AFTER it, so any value set here overrides the tracked config.
+#
+# Commit email per folder. ./config sets no user.email and has
+# user.useConfigOnly = true, so committing fails in any repo that no rule
+# below matches. A repo's own `git config user.email` still wins.
 
-# [user]
-# 	email = me@work-company.com
+# Personal: personal.gitconfig (tracked) holds the personal email.
+[includeIf "gitdir:~/development/toomuchdesign/"]
+	path = personal.gitconfig
+[includeIf "gitdir:~/.dotfiles/"]
+	path = personal.gitconfig
+
+# Another email for another folder, Nearform as the example:
+#   1. Create the identity file next to this one. Any name ending in
+#      .gitconfig.untracked is git-ignored. git can't take the email inline
+#      in an includeIf, so every rule points at a file:
+#        printf '[user]\n\temail = andrea.carraro@nearform.com\n' > nearform.gitconfig.untracked
+#   2. Uncomment the rule below, or copy it for another folder. `path` is
+#      relative to this file; the trailing slash on gitdir matches every repo
+#      under that folder. Folders that share an email can share the file.
+#   3. Check: git -C <repo> config --show-origin user.email
+#
+# [includeIf "gitdir:~/development/nearform/"]
+# 	path = nearform.gitconfig.untracked
