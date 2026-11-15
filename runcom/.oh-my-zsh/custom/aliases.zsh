@@ -21,10 +21,10 @@ alias gs='git status'
 alias gst='git stash'
 alias gsta='git stash apply'
 alias gconf='git grep "<<<<<<< HEAD"'
-# List commits showing changed files
-alias gls='git log --pretty=format:"%C(yellow)%h %C(green)(%ar) %Creset%s%Cblue [%cn]%Cred%d" --decorate -5'
 # List commits in short form, with colors and branch/tag annotations.
-alias gll='log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat -5'
+alias gls='git log --pretty=format:"%C(yellow)%h %C(green)(%ar) %Creset%s%Cblue [%cn]%Cred%d" --decorate -5'
+# List commits showing changed files
+alias gll='git log --pretty=format:"%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]" --decorate --numstat -5'
 
 # NPM shortcuts
 alias npms='npm start'
