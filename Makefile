@@ -209,10 +209,12 @@ pstack:
 ACTIVATE_NODE := command -v fnm >/dev/null 2>&1 || { echo '>>> ACTIVATE_NODE: fnm not found. Node tooling moved off fnm? Update the Makefile (ACTIVATE_NODE + node/fnm targets).' >&2; exit 1; }; eval "$$(fnm env --shell bash)"
 
 # @playwright/cli installs its own Claude Code skill via `install --skills`
-# (lands in ~/.claude/skills/playwright-cli).
+# (lands in ~/.claude/skills/playwright-cli). --min-release-age=7 skips versions
+# published in the last 7 days, so a hijacked release is likely pulled before we
+# install it. Set on this command only, so project installs are unaffected.
 playwright-skills:
 	$(ACTIVATE_NODE); \
-		npm install -g @playwright/cli@latest && \
+		npm install -g --min-release-age=7 @playwright/cli@latest && \
 		playwright-cli install --skills
 
 # Stow test commands:
