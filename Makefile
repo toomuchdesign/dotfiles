@@ -94,6 +94,12 @@ link: sudo
 	stow -t $(HOME) runcom
 	stow -t $(XDG_CONFIG_HOME) config
 
+# Dry run of the stow step in `link`: prints what it would link and any
+# conflicts, changes nothing.
+link-check:
+	stow -n -v -t $(HOME) runcom
+	stow -n -v -t $(XDG_CONFIG_HOME) config
+
 unlink:
 	stow --delete -t $(HOME) runcom
 	stow --delete -t $(XDG_CONFIG_HOME) config
@@ -216,7 +222,3 @@ playwright-skills:
 	$(ACTIVATE_NODE); \
 		npm install -g --min-release-age=7 @playwright/cli@latest && \
 		playwright-cli install --skills
-
-# Stow test commands:
-# stow --adopt -nvSt ~ runcom
-# stow --adopt -nvSt ~ config
