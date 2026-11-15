@@ -100,6 +100,11 @@ zle -N accept-line _timestamp_accept_line
 
 source $ZSH/oh-my-zsh.sh
 
+# Set after oh-my-zsh, whose lib/history.zsh sets its own (smaller) sizes.
+HISTSIZE=100000
+SAVEHIST=100000
+setopt hist_ignore_all_dups
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
