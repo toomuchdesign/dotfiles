@@ -157,7 +157,7 @@ claude-skills-local:
 # entry in ~/.claude/settings.json wires block-destructive-default-branch.py
 # (matcher Bash: hard-blocks force-pushes and remote deletes of master/main).
 # settings.json itself is machine-local (not tracked here), so on a fresh
-# install re-add that hook block by hand.
+# install paste the settings block from README "Global instructions & hooks".
 claude-config:
 	mkdir -p "$(CLAUDE_DIR)" "$(CLAUDE_HOOKS_DIR)"
 	ln -sfn "$(DOTFILES_DIR)/install/claude/CLAUDE.md" "$(CLAUDE_DIR)/CLAUDE.md"

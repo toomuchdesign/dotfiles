@@ -170,7 +170,42 @@ The [`claude-config` Makefile target](./Makefile) symlinks the repo's Claude Cod
 | [`install/claude/CLAUDE.md`](./install/claude/CLAUDE.md) | `~/.claude/CLAUDE.md` | Machine-wide instructions Claude loads for every project (push guardrails, always-unslop/deslop, minimal output, 🤖 labels on AI-raised PR comments, reading other cmux panes, folder-scoped commit identity) |
 | [`install/claude/hooks/`](./install/claude/hooks/)       | `~/.claude/hooks/`    | Agent hooks: `block-destructive-default-branch.py` hard-blocks force-pushes and remote deletes of `master`/`main`                                                                                             |
 
-A hook only fires once it's wired in `~/.claude/settings.json` (a `PreToolUse` entry with matcher `Bash` for the push guard). `settings.json` is machine-local and **not tracked here**, so on a fresh install re-add that hook block by hand, plus `"timeFormat": "%d-%m-%Y %H:%M:%S"` to put the date on Claude Code's per-turn `done` line.
+A hook only fires once it's wired in `~/.claude/settings.json`. `settings.json` is machine-local and **not tracked here**, so on a fresh install merge this into it by hand:
+
+```json
+{
+  "timeFormat": "%d-%m-%Y %H:%M:%S",
+  "permissions": {
+    "deny": [
+      "Read(~/.ssh/**)",
+      "Edit(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Edit(~/.aws/**)",
+      "Read(~/.npmrc)",
+      "Edit(~/.npmrc)",
+      "Read(~/.config/gh/**)",
+      "Edit(~/.config/gh/**)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$HOME/.claude/hooks/block-destructive-default-branch.py\""
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+- `timeFormat` puts the date on Claude Code's per-turn `done` line.
+- `permissions.deny` stops agents reading or editing SSH keys, AWS credentials and the npm and `gh` tokens.
+- The `PreToolUse` hook wires the push guard.
 
 ## Post-install
 
