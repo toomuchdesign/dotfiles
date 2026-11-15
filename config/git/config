@@ -62,12 +62,6 @@
 	# Local branches not yet merged into origin/master — work still in flight.
 	pending = branch --no-merged origin/master
 
-# Machine-specific config (untracked, not version controlled).
-# Kept last so its values override the ones above.
-# Missing files are silently ignored by git.
-[include]
-	path = config.untracked
-
 [diff]
 	tool = vscode
 
@@ -79,3 +73,9 @@
 
 [mergetool "vscode"]
 	cmd = code --wait \"$MERGED\"
+
+# Machine-specific config (untracked, not version controlled).
+# Kept last so its values override the ones above.
+# Missing files are silently ignored by git.
+[include]
+	path = config.untracked
