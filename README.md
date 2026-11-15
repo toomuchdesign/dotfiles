@@ -113,6 +113,8 @@ Defined in [`config/git/config`](./config/git/config) — invoke as `git <alias>
 | `git type`    | Show an object's type (`cat-file -t`)             |
 | `git dump`    | Pretty-print an object's contents (`cat-file -p`) |
 
+The same file sets a few non-default behaviours: `zdiff3` conflict markers, `histogram` diffs, `fetch.prune`, `rerere` (reuses recorded conflict resolutions and stages them), `rebase.autoSquash`/`autoStash`/`updateRefs`, branches sorted by last commit and tags by version, `column.ui`, and the diff shown in the commit message editor (`commit.verbose`).
+
 ## App configurations
 
 Applications that can't be configured through a dotfile keep their exported settings in `install/<app-name>/`:
