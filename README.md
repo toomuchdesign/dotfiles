@@ -105,13 +105,13 @@ Defined in [`aliases.zsh`](./runcom/.oh-my-zsh/custom/aliases.zsh) and, for macO
 
 Defined in [`config/git/config`](./config/git/config) — invoke as `git <alias>`:
 
-| Alias         | Description                                        |
-| ------------- | -------------------------------------------------- |
-| `git lg`      | Graph log, one line per commit, relative dates     |
-| `git stbr`    | Local branches sorted by last commit date          |
-| `git pending` | Local branches not yet merged into `origin/master` |
-| `git type`    | Show an object's type (`cat-file -t`)              |
-| `git dump`    | Pretty-print an object's contents (`cat-file -p`)  |
+| Alias         | Description                                       |
+| ------------- | ------------------------------------------------- |
+| `git lg`      | Graph log, one line per commit, relative dates    |
+| `git stbr`    | Local branches sorted by last commit date         |
+| `git pending` | Local branches not yet merged into `origin/HEAD`  |
+| `git type`    | Show an object's type (`cat-file -t`)             |
+| `git dump`    | Pretty-print an object's contents (`cat-file -p`) |
 
 ## App configurations
 
