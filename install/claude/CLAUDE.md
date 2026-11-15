@@ -148,3 +148,11 @@ don't sit watching an unbounded tail. On long unattended runs, emit a short
 heartbeat (elapsed + current step) rather than going silent. Never report a
 background job as "fine" or "still going" without actually checking its
 state.
+
+## cmux panes
+
+When running inside cmux (`CMUX_SOCKET_PATH` is set), other panes are
+readable: find them with `cmux tree`, read with
+`cmux read-screen --surface <ref> --scrollback --lines 200`. Match panes by
+tab title when I name one ("the server pane"). Ask before `cmux send`-ing
+anything into a pane that isn't yours.
