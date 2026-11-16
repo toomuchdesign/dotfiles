@@ -10,6 +10,14 @@ macOS dotfiles. See `README.md` for install, per-app config, and local-override 
 - **`install/iterm2/com.googlecode.iterm2.plist` is written by iTerm2 itself.** Don't hand-edit it; changes made in the iTerm2 UI show up here as diffs to commit.
 - **Never commit configuration changes automatically.** Apps that write back to tracked files (iTerm2, cmux, and any other symlinked `config/` app) constantly produce config diffs. Do not stage or commit them — or any config edit — unless the user explicitly asks. Leave drift in the working tree for the user to review.
 
+## Answering local how-to questions
+
+When asked how to do something on this machine (a local command, or a local fix for a workflow need), not a general how-to:
+
+1. Give the command, preferring the aliases, functions and tools this repo sets up (see `README.md` › Shell).
+2. Explain each flag that matters in one line.
+3. Close with what to learn about this setup: the related alias, function or tool, and the file that defines it. If nothing applies, say so.
+
 ## Keep docs in sync
 
 `README.md` is the hand-maintained record of what this repo installs and how to use it — it never regenerates itself. Whenever you add, change, or remove something a `make` target installs, update the matching part of `README.md` in the same change so it stays a usable reference:
