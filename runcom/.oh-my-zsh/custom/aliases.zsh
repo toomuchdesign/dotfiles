@@ -17,6 +17,8 @@ alias gpu='git push'
 alias gpff='git push --force-with-lease'
 alias grsh='git reset HEAD'
 alias grshh='git reset --hard'
+# Discard all changes, untracked files included, into a stash you can restore
+alias gclean='git stash push --include-untracked -m "gclean $(date +%FT%T)"'
 alias gs='git status'
 alias gst='git stash'
 alias gsta='git stash apply'
