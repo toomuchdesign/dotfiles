@@ -9,36 +9,47 @@ Make English read as the writer's own message: their vocabulary level,
 phrasing and tone. The goal is a message nobody would flag as AI-written or
 as written by someone else.
 
-## Learn the voice
+## The voice
 
-Do this on every run. Keep samples and observations in context only; never
-write them to a file.
+Drawn from ~330 of the writer's public GitHub comments (2021–2026).
 
-1. Fetch the writer's recent public GitHub comments and read the output
-   directly; don't redirect it to a file:
+- **Openers:** almost always `Hi @name!` or `Hi @name,` with the message on
+  the next line. `Hey @name` for people they already know, `Hi all!` for a
+  group. Thanks come early: "thanks for your contribution", "Thank you for
+  your quick reply!".
+- **Closers:** usually "Greetings!" or "Cheers!" on their own line; also
+  "Thank you!" or an offer: "Happy to review/rework/support…".
+- **Hedging:** claims are tentative: "seems", "I believe", "I seem to
+  understand", "I assume", "Not sure whether…". Opinions come as
+  suggestions: "I'd suggest to…", "I'd consider…", "I'm inclined to…".
+- **Checking questions:** "…, right?", "Am I missing anything?", "Did I get
+  it right?", "Makes sense?", "Would it make sense…?", "Shall we…?", "Would
+  you mind…?".
+- **Softeners:** self-deprecating asides with `:)`: "(my bad :))", "I might
+  be missing some obvious element :)". `👍` to confirm something is done,
+  `✌️` as a friendly sign-off; `❤`, `🙌`, `🙇` rarely.
+- **Length:** one line when it's enough ("Branch rebased :)", "PR ready for
+  another review 👍", "Superseded by #…"). Longer posts get structure:
+  `###` headings, bullets, numbered points, links to the exact lines.
+- **Connectives:** "BTW", "That said,", "In the meanwhile", "In other
+  words:", "As for…", "Back to…", "Eg:".
+- **Contractions:** mostly (I'm, I'll, don't, can't), with "cannot" now and
+  then.
+- **The writer's own non-native phrasing, to keep:** "if the case" (if
+  needed), "from my side", "Happy to…", "I'd suggest to try and…", "at" +
+  -ing ("hesitant at pushing", "struggling at spending time"), "Beside X"
+  (apart from X), "OS" for open source, digits for small numbers ("the 2
+  options"). Idioms are Italian sayings in English ("the remedy might look
+  worse than the disease"), never native ones.
 
-   ````sh
-   gh api graphql -f query='{viewer{issueComments(last:100){nodes{body repository{isPrivate}}}}}' --jq '.data.viewer.issueComments.nodes[] | select(.repository.isPrivate | not) | .body | select(test("🤖") | not) | select(test("^\\s*@(dependabot|copilot)\\b") | not) | gsub("```[\\s\\S]*?```"; "") | split("\n") | map(select(test("^\\s*>") | not)) | join("\n") | gsub("^\\s+|\\s+$"; "") | select(length > 0) | . + "\n---"'
-   ````
+If the user pastes a Slack thread, use the writer's lines as extra samples:
 
-   Each comment ends with a `---` line. `🤖` marks AI-drafted comments, and
-   `@dependabot`/`@copilot` lines are bot commands. Neither is the writer's
-   voice.
-
-2. If the user pasted a Slack thread, keep only the writer's lines:
-   - The writer is `git config user.name`, matched against sender headers
-     (`Name  [10:05 AM]`). If no header matches, ask which lines are theirs.
-   - A bare timestamp (`[10:06 AM]`) continues the previous sender.
-   - Strip `(edited)`, URLs and link-preview text.
-   - Drop any text that repeats another participant's message: it's a quote.
-   - Other participants' lines are context, never style samples.
-
-3. Note sentence length, formality, recurring phrases, openers and closers,
-   emoji, and which native idioms the writer never uses.
-
-4. If `gh` fails, say so in one line and keep any Slack samples. If fewer
-   than 5 samples remain in total, say so and continue with the rules below
-   only.
+- The writer is `git config user.name`, matched against sender headers
+  (`Name  [10:05 AM]`). If no header matches, ask which lines are theirs.
+- A bare timestamp (`[10:06 AM]`) continues the previous sender.
+- Strip `(edited)`, URLs and link-preview text.
+- Drop any text that repeats another participant's message: it's a quote.
+- Other participants' lines are context, never style samples.
 
 ## Modes
 
@@ -56,11 +67,11 @@ write them to a file.
 ## Rules
 
 - Never raise vocabulary above the writer's level. Add no native idiom
-  ("circle back", "touch base", "ballpark") the samples don't show.
+  ("circle back", "touch base", "ballpark").
 - Keep non-native phrasing that reads fine ("I cannot see", "from my
   side"), including uncontracted forms. Don't add typos or mistakes on
   purpose.
 - Match the channel: Slack short and informal, PR comment direct, email
   fuller.
-- Finish with the `pstack:unslop` pass. Its rules win over the samples only
-  for AI tells, never for the writer's own phrasing.
+- Finish with the `pstack:unslop` pass. Its rules win over the voice only for
+  AI tells, never for the writer's own phrasing.
