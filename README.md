@@ -185,6 +185,12 @@ A hook only fires once it's wired in `~/.claude/settings.json`. `settings.json` 
       "Edit(~/.npmrc)",
       "Read(~/.config/gh/**)",
       "Edit(~/.config/gh/**)"
+    ],
+    "ask": [
+      "Bash(gh pr review *)",
+      "Bash(gh pr comment *)",
+      "Bash(glab mr note *)",
+      "Bash(glab mr approve *)"
     ]
   },
   "hooks": {
@@ -205,6 +211,7 @@ A hook only fires once it's wired in `~/.claude/settings.json`. `settings.json` 
 
 - `timeFormat` puts the date on Claude Code's per-turn `done` line.
 - `permissions.deny` stops agents reading or editing SSH keys, AWS credentials and the npm and `gh` tokens.
+- `permissions.ask` makes Claude Code ask before `gh`/`glab` commands that publish PR/MR feedback at once (they have no draft mode), even in auto mode. Draft reviews go through `too-pr-draft-review`.
 - The `PreToolUse` hook wires the push guard.
 
 ## Post-install
