@@ -181,3 +181,13 @@ readable: find them with `cmux tree`, read with
 `cmux read-screen --surface <ref> --scrollback --lines 200`. Match panes by
 tab title when I name one ("the server pane"). Ask before `cmux send`-ing
 anything into a pane that isn't yours.
+
+## Keep project notes current
+
+When something in a project or its CI blocks you, behaves unexpectedly, or
+takes a while to figure out, record the solution once it works in that
+project's notes skill under `install/claude/skills.untracked/`. Write only
+what you verified in the session, mark anything inferred, and fix a wrong
+note in place rather than appending. Mention each addition in one line of
+your reply. Project- and client-specific knowledge stays in those untracked
+files; ask before changing any tracked memory or instruction file.
