@@ -19,14 +19,4 @@ If `worktree` is gone, recreate it as `too-review-all` step 1 does. If `git -C "
 
 ## Finish
 
-Build `review.json` from `comments/*.md`. Show every queued comment and the summary body together, ask for the event (`COMMENT`, or `REQUEST_CHANGES` only when a blocking 👍 comment is queued), and post only after the user approves:
-
-```sh
-gh api repos/{owner}/{repo}/pulls/<n>/reviews --input review.json
-```
-
-`review.json` holds `commit_id` (`head`), `event`, `body`, and `comments: [{path, line, side: "RIGHT", body}]`. `path` is repo-relative. Print the review URL from the response, then `git worktree remove "$wt"`.
-
-Without `gh` auth, stop at the preview.
-
-Post one review, not comment by comment: one review, one notification.
+Hand `comments/` to the `too-pr-draft-review` skill with `target` and `head`: its files are already in that skill's input format, and it previews, posts the draft review and reports. Pass the event to recommend: `Request changes` only when a blocking 👍 comment is queued, else `Comment`. Then `git worktree remove "$wt"`.

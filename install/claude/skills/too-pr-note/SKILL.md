@@ -100,7 +100,7 @@ outdated after the next amend.
 Print each note numbered, as `path:line`, its status and its text, then
 the count per status. If the queue is empty or missing, say so in one line.
 
-For `posted` notes, check the comment live with
+On GitHub, check `posted` notes live with
 `gh api repos/{owner}/{repo}/pulls/comments/<id>`, where `<id>` is the
 number after `#discussion_r` in the URL. A `null` `line` means GitHub
 marks it outdated: show `posted (outdated)`. A 404 means it was deleted:
@@ -114,14 +114,15 @@ lines. Editing a `posted` note only changes the queue; say so.
 Run when the user opens the PR, asks to create it, marks it ready for
 review, or asks to post the notes.
 
-1. Find the PR: `gh pr view --json number,headRefOid,baseRefName,url`. If
-   none exists, say so and stop; the queue stays. Fetch if `headRefOid`
-   isn't local (`git fetch origin <headRefOid>`). If the local branch is
+1. Find the PR/MR, its head and its base as the `too-pr-draft-review`
+   provider file says (`github.md`, `gitlab.md`). If none exists, say so
+   and stop; the queue stays. Fetch the head if it isn't local
+   (`git fetch origin <head>`). If the local branch is
    ahead of it, say the notes are placed against the pushed code, which
    lacks the unpushed commits, and offer to push first.
-2. Place each `queued` or `skipped` note in `git show <headRefOid>:<path>`:
+2. Place each `queued` or `skipped` note in `git show <head>:<path>`:
    - **Path gone:** look for a rename in
-     `git diff -M --name-status <Captured at> <headRefOid>` and use the new
+     `git diff -M --name-status <Captured at> <head>` and use the new
      path. The base branch won't show it when the branch added the file. If
      the snapshot is gone, skip: `file not found`.
    - **Exact:** find `Lines:` as consecutive lines, comparing each line
@@ -131,35 +132,22 @@ review, or asks to post the notes.
    - **Changed:** no match, or a tie the context can't break. If the
      `Captured at:` commit still exists locally (`git cat-file -e <sha>`),
      follow the header lines through
-     `git diff -M <sha> <headRefOid> -- <old path> <new path>` and offer the
+     `git diff -M <sha> <head> -- <old path> <new path>` and offer the
      result as a candidate. Otherwise skip: `code changed`.
-   - **Outside the diff:** GitHub accepts only lines inside one hunk of
-     `git diff <baseRefName>...<headRefOid> -- <path>`, and a range must
+   - **Outside the diff:** inline comments take only lines inside one hunk of
+     `git diff <base>...<head> -- <path>`, and a range must
      sit within a single hunk. Skip the rest: `outside the PR diff`.
 3. Show the user every note with its new `path:line`, marking candidates
    from **Changed** and listing the skipped ones with reasons. Post only
    after they confirm; they can rebind or drop any note first.
-4. Post one review. A range takes `start_line` and `line`; a single line
-   only `line`:
-
-   ```sh
-   gh api repos/{owner}/{repo}/pulls/<number>/reviews --input - <<'EOF'
-   {"commit_id": "<headRefOid>", "event": "COMMENT",
-    "comments": [
-      {"path": "src/foo.ts", "start_line": 40, "line": 48, "start_side": "RIGHT", "side": "RIGHT", "body": "..."},
-      {"path": "src/bar.ts", "line": 12, "side": "RIGHT", "body": "..."}
-    ]}
-   EOF
-   ```
-
-5. Read the review's comments
-   (`gh api repos/{owner}/{repo}/pulls/<number>/reviews/<review id>/comments`)
-   and set each posted note to `posted: <html_url>`. Set the unplaced ones
-   to `skipped: <reason>`. Print the review URL. A 422 rejects the whole
-   review, so nothing was posted: find the comment GitHub couldn't place,
-   skip it, and post the rest. If GitHub refuses the
-   review because the user already has a pending one on this PR, say so:
-   they submit or discard it, then post again.
+4. Write each placed note to a review directory as `too-pr-draft-review`
+   reads it (`path:line` or `path:start-end`, a blank line, the note text)
+   and hand it over with the PR/MR URL, recommending `Comment`, and say
+   the user confirmed step 3's preview. It posts the draft review and
+   reports.
+5. From its report, set each posted note to `posted: <comment URL>` (the
+   PR/MR URL when the provider gives none) and the rest to
+   `skipped: <reason>`.
 
 Post the note text as written: notes are the user's own words, so the
 `🤖 AI-flagged` label doesn't apply.

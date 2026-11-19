@@ -165,10 +165,10 @@ An alternative to the imperative plugin targets would be to declare each marketp
 
 The [`claude-config` Makefile target](./Makefile) symlinks the repo's Claude Code config into `~/.claude` (or `$CLAUDE_CONFIG_DIR`) so edits here apply live and stay the single source of truth:
 
-| Asset                                                    | Symlinked to          | What it does                                                                                                                                                                                                  |
-| -------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`install/claude/CLAUDE.md`](./install/claude/CLAUDE.md) | `~/.claude/CLAUDE.md` | Machine-wide instructions Claude loads for every project (push guardrails, always-unslop/deslop, minimal output, 🤖 labels on AI-raised PR comments, reading other cmux panes, folder-scoped commit identity) |
-| [`install/claude/hooks/`](./install/claude/hooks/)       | `~/.claude/hooks/`    | Agent hooks: `block-destructive-default-branch.py` hard-blocks force-pushes and remote deletes of `master`/`main`                                                                                             |
+| Asset                                                    | Symlinked to          | What it does                                                                                                                                                                                                                                    |
+| -------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`install/claude/CLAUDE.md`](./install/claude/CLAUDE.md) | `~/.claude/CLAUDE.md` | Machine-wide instructions Claude loads for every project (push guardrails, always-unslop/deslop, minimal output, PR reviews posted only as drafts, 🤖 labels on AI-raised PR comments, reading other cmux panes, folder-scoped commit identity) |
+| [`install/claude/hooks/`](./install/claude/hooks/)       | `~/.claude/hooks/`    | Agent hooks: `block-destructive-default-branch.py` hard-blocks force-pushes and remote deletes of `master`/`main`                                                                                                                               |
 
 A hook only fires once it's wired in `~/.claude/settings.json`. `settings.json` is machine-local and **not tracked here**, so on a fresh install merge this into it by hand:
 
@@ -208,6 +208,15 @@ A hook only fires once it's wired in `~/.claude/settings.json`. `settings.json` 
 - The `PreToolUse` hook wires the push guard.
 
 ## Post-install
+
+### GitHub & GitLab CLIs
+
+The Brewfile installs `gh` and `glab`; the Claude skills use them to read PRs/MRs and post draft reviews. Log in once per host:
+
+```sh
+gh auth login
+glab auth login   # add --hostname <host> for self-hosted GitLab
+```
 
 ### iTerm2
 

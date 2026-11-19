@@ -100,6 +100,24 @@ When a task wants multi-agent review or parallel candidates, suggest
 `/interrogate` or `/arena` instead of hand-typing reviewer/candidate
 prompts.
 
+## PR reviews are always drafts
+
+Any review, review comment or thread reply posted to a PR/MR (GitHub,
+GitLab, any provider, from any skill or tool) goes out as a draft I review
+online and publish myself. Never publish it.
+
+- GitHub: create the review without `event`, so it stays `PENDING`. Never
+  submit it (`/reviews/<id>/events`), and don't use `gh pr review`,
+  `gh pr comment` or standalone `/pulls/<n>/comments` posts: they publish at
+  once. Replies to existing threads go into the pending review.
+- GitLab: use `draft_notes`, never `notes`/`discussions` or `bulk_publish`.
+- With no draft mode (a provider or API that publishes at once): don't
+  post. Stop, say so, and let me decide.
+
+Post through the `too-pr-draft-review` skill, whatever produced the
+feedback. After posting, give me the PR link and say the review is waiting
+for me to submit.
+
 ## PR comments drafted by an agent
 
 Any review comment or thread reply an agent drafts for me to post must show

@@ -72,18 +72,17 @@ wired into my global [CLAUDE.md](../install/claude/CLAUDE.md), no need to invoke
 Only the **built-in** (unprefixed) skills post to GitHub; the plugin ones are
 either local reviewers (text output) or receive-side. Needs `gh auth login` done.
 
-| I want to…                                             | Reach for                                    |
-| ------------------------------------------------------ | -------------------------------------------- |
-| **Give** a review on someone's PR (by URL)             | `/review <pr-url>` — posts a summary comment |
-| **Give** inline comments on my checked-out branch      | `/code-review --comment`                     |
-| Deep local review first (no posting)                   | `/pstack:interrogate`                        |
-| **Receive** — pull the PR feedback into a to-do list   | `/pstack:get-pr-comments`                    |
-| **Receive** — work through feedback with judgment      | `/superpowers:receiving-code-review`         |
-| **Receive** — hands-off: fix CI + comments → mergeable | `/pstack:babysit`                            |
+| I want to…                                             | Reach for                            |
+| ------------------------------------------------------ | ------------------------------------ |
+| **Post** any feedback on a PR/MR as a draft review     | `/too-pr-draft-review`               |
+| Deep local review first (no posting)                   | `/pstack:interrogate`                |
+| **Receive** — pull the PR feedback into a to-do list   | `/pstack:get-pr-comments`            |
+| **Receive** — work through feedback with judgment      | `/superpowers:receiving-code-review` |
+| **Receive** — hands-off: fix CI + comments → mergeable | `/pstack:babysit`                    |
 
 `/too-review-all <pr-url>` runs interrogate, requesting-code-review and the
 built-in `/code-review` together and writes the reconciled findings to `findings.md`.
-`/too-1-by-1 <findings.md> [1,3,5]` then walks them and posts your picks as one inline review.
+`/too-1-by-1 <findings.md> [1,3,5]` then walks them and posts your picks as one draft review via `/too-pr-draft-review`, which you submit on GitHub.
 Each comment is labelled `🤖 AI-flagged` with your stance (`👍` / `🤔` / `FYI`);
 pick Other and type the stance plus a note (`👍 we hit this in prod`) to open the comment with your own line.
 
@@ -99,6 +98,7 @@ symlinked into `~/.claude/skills/`, so edits apply live:
 | `/too-relink`                      | Use a local sibling package as if published (npm/yarn/pnpm)                                                 |
 | `/too-1-by-1 [source]`             | Decide on findings in a picker, then fixes land in the background (`loop` to fix as you go)                 |
 | `/too-review-all [pr]`             | Run every reviewer, reconcile into `findings.md`; feed it to `/too-1-by-1`                                  |
+| `/too-pr-draft-review`             | Post review feedback on a GitHub PR or GitLab MR as a draft I submit myself, never published                |
 | `/too-write-task`                  | Write a bug, feature or refactor task from the conversation, with permalinks                                |
 | `/too-voice`                       | Polish or write English that reads as mine, learned from my GitHub comments and Slack                       |
 | `/too-sync-master [rebase\|merge]` | Catch the branch up with its base (master/main/PR base), fix conflicts and lockfiles, lint, typecheck, push |
